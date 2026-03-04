@@ -13,7 +13,7 @@ extends Control
 @onready var detail_meta: Label = $VBox/DetailPanel/VBox/Meta
 @onready var detail_body: Label = $VBox/DetailPanel/VBox/Body
 @onready var empty_label: Label = $VBox/EntriesScroll/Entries/EmptyLabel
-@onready var count_label: Label = $VBox/Header/CountLabel
+@onready var count_label: Label = $VBox/Header/HBox/CountLabel
 
 var _active_category: String = "all"
 var _tab_buttons: Dictionary = {}
@@ -143,7 +143,7 @@ func _build_entry_card(note: Dictionary) -> Control:
 	sev_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var cat_label := Label.new()
-	cat_label.text = GameState.CATEGORY_LABELS.get(note.get("category", ""), "")
+	cat_label.text = GameState.CATEGORY_LABELS.get(note.get("category", ""), "") as String
 	cat_label.add_theme_color_override("font_color", Color(0.35, 0.35, 0.5, 1))
 	cat_label.add_theme_font_size_override("font_size", 9)
 
