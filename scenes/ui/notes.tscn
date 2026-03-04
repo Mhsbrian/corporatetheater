@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://notes"]
+
+[ext_resource type="Script" path="res://scripts/core/notes.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_root"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.055, 0.055, 0.09, 1)
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.18, 1)
+content_margin_left = 16
+content_margin_right = 16
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tabbar"]
+bg_color = Color(0.05, 0.05, 0.085, 1)
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.18, 1)
+content_margin_left = 10
+content_margin_right = 10
+content_margin_top = 4
+content_margin_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_detail"]
+bg_color = Color(0.06, 0.06, 0.10, 1)
+border_width_top = 1
+border_color = Color(0.12, 0.12, 0.22, 1)
+content_margin_left = 20
+content_margin_right = 20
+content_margin_top = 14
+content_margin_bottom = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_entries"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+
+[node name="Notes" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="BG" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_root")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 0
+
+[node name="Header" type="Panel" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TitleLabel" type="Label" parent="VBox/Header/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.2, 1.0, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "GHOST  //  investigation notes"
+vertical_alignment = 1
+
+[node name="CountLabel" type="Label" parent="VBox/Header/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.35, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 entries"
+vertical_alignment = 1
+
+[node name="TabBar" type="Panel" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_tabbar")
+
+[node name="TabBar" type="HBoxContainer" parent="VBox/TabBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+theme_override_constants/separation = 2
+
+[node name="EntriesScroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Entries" type="VBoxContainer" parent="VBox/EntriesScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="EmptyLabel" type="Label" parent="VBox/EntriesScroll/Entries"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.25, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 12
+text = "no entries yet.\nkeep digging."
+horizontal_alignment = 1
+
+[node name="DetailPanel" type="Panel" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 160)
+theme_override_styles/panel = SubResource("StyleBoxFlat_detail")
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="VBox/DetailPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="VBox/DetailPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+text = ""
+autowrap_mode = 3
+
+[node name="Meta" type="Label" parent="VBox/DetailPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = ""
+
+[node name="Divider" type="ColorRect" parent="VBox/DetailPanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 1)
+color = Color(0.12, 0.12, 0.22, 1)
+
+[node name="Body" type="Label" parent="VBox/DetailPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.86, 1)
+theme_override_font_sizes/font_size = 13
+text = ""
+autowrap_mode = 3

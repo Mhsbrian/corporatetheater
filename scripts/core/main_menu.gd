@@ -30,11 +30,12 @@ func _ready() -> void:
 
 
 func _on_new_game() -> void:
+	GameState.new_game()
 	get_tree().change_scene_to_file(INTRO_SCENE)
 
 
 func _on_continue() -> void:
-	# TODO: load save state before transitioning
+	GameState.load_save()
 	get_tree().change_scene_to_file(DESKTOP_SCENE)
 
 

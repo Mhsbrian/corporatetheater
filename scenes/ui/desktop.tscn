@@ -15,8 +15,16 @@ border_color = Color(0.12, 0.12, 0.2, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_appwindow"]
 bg_color = Color(0.04, 0.04, 0.07, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_notif"]
-bg_color = Color(0.0, 0.0, 0.0, 0.0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.8, 0.15, 0.15, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+content_margin_left = 4
+content_margin_right = 4
+content_margin_top = 1
+content_margin_bottom = 1
 
 [node name="Desktop" type="Control"]
 layout_mode = 3
@@ -59,16 +67,12 @@ layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 32.0
-offset_left = 0.0
-offset_right = 0.0
 horizontal_scroll_mode = 0
 
 [node name="ZFeed" type="VBoxContainer" parent="MainArea/ZPanel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
-offset_left = 0.0
-offset_right = 0.0
 
 [node name="AppWindow" type="Panel" parent="MainArea"]
 theme_override_styles/panel = SubResource("StyleBoxFlat_appwindow")
@@ -115,12 +119,37 @@ theme_override_font_sizes/font_size = 12
 text = "[ BROWSER ]"
 flat = true
 
-[node name="BtnPhone" type="Button" parent="Taskbar/TaskbarItems"]
+[node name="BtnMessenger" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.6, 1, 1)
 theme_override_font_sizes/font_size = 12
 text = "[ Z MSG ]"
 flat = true
+
+[node name="BtnNotes" type="Button" parent="Taskbar/TaskbarItems"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "[ NOTES ]"
+flat = true
+clip_contents = false
+
+[node name="Badge" type="Label" parent="Taskbar/TaskbarItems/BtnNotes"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -8.0
+offset_top = 2.0
+offset_right = 8.0
+offset_bottom = 14.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 9
+text = "0"
+horizontal_alignment = 1
+visible = false
 
 [node name="BtnNetwork" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2

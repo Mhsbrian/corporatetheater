@@ -3,70 +3,104 @@
     "author": "Maxwell Holt",
     "handle": "@maxwellholt_cai",
     "verified": true,
+    "avatar_color": "#1a6aff",
     "timestamp": "2h",
     "content": "At ClosedAI, we believe the future of intelligence belongs to everyone. Not just the privileged few. We are building that future — openly, transparently, for all of humanity. #OpenFuture #ClosedAI",
     "likes": "48.2K",
     "reposts": "12.1K",
-    "clue_id": ""
+    "clue_id": "",
+    "link_site": "",
+    "link_article": ""
   },
   {
     "author": "ClosedAI",
     "handle": "@ClosedAI",
     "verified": true,
+    "avatar_color": "#1a6aff",
     "timestamp": "5h",
-    "content": "Proud to announce our continued partnership with Project Clear Sky. Together we are building infrastructure that protects citizens. Safety is not a feature — it is a foundation. 🌐",
+    "content": "Proud to announce our continued partnership with Project Clear Sky. Together we are building infrastructure that protects citizens. Safety is not a feature — it is a foundation.",
     "likes": "31.7K",
     "reposts": "8.4K",
-    "clue_id": "clue_clearsky_partnership"
+    "clue_id": "clue_clearsky_partnership",
+    "link_site": "cnxtech.com",
+    "link_article": "cnx_001"
   },
   {
     "author": "Maxwell Holt",
     "handle": "@maxwellholt_cai",
     "verified": true,
+    "avatar_color": "#1a6aff",
     "timestamp": "1d",
-    "content": "Some say competition is healthy. I say cooperation is stronger. That is why we have reached out to every major AI lab with our Unity Accord. The ones who declined... well. The market has a memory. #AIUnity",
+    "content": "Some say competition is healthy. I say cooperation is stronger. That is why we reached out to every major AI lab with our Unity Accord. The ones who declined... the market has a memory. #AIUnity",
     "likes": "22.9K",
     "reposts": "5.6K",
-    "clue_id": "clue_unity_accord_threat"
+    "clue_id": "clue_unity_accord_threat",
+    "link_site": "cnxtech.com",
+    "link_article": "cnx_002"
   },
   {
     "author": "ClosedAI PR",
     "handle": "@ClosedAI_Press",
     "verified": true,
+    "avatar_color": "#1155cc",
     "timestamp": "2d",
-    "content": "We want to be clear: ClosedAI does not collect user data beyond what is strictly necessary for product improvement. Your privacy is sacred to us. Read our updated policy: [link]",
+    "content": "We want to be clear: ClosedAI does not collect user data beyond what is strictly necessary for product improvement. Your privacy is sacred to us.",
     "likes": "9.1K",
     "reposts": "1.2K",
-    "clue_id": "clue_data_collection_lie"
+    "clue_id": "clue_data_collection_lie",
+    "link_site": "redit.com",
+    "link_article": "redit_002"
   },
   {
     "author": "Maxwell Holt",
     "handle": "@maxwellholt_cai",
     "verified": true,
+    "avatar_color": "#1a6aff",
     "timestamp": "3d",
     "content": "Freedom of thought. Freedom of expression. Freedom to choose. These are the values ClosedAI was built on. We will never compromise them. Ever.",
     "likes": "67.4K",
     "reposts": "19.8K",
-    "clue_id": ""
+    "clue_id": "",
+    "link_site": "",
+    "link_article": ""
   },
   {
     "author": "CNX Tech",
     "handle": "@CNXTech",
     "verified": true,
+    "avatar_color": "#cc6600",
     "timestamp": "4d",
-    "content": "EXCLUSIVE: ClosedAI CEO Maxwell Holt sat down with us to discuss the future of AI regulation. 'We welcome oversight,' he said. 'We have nothing to hide.' Full interview: [link]",
+    "content": "EXCLUSIVE: ClosedAI CEO Maxwell Holt sits down with us. 'We welcome oversight. We have nothing to hide.' Full interview inside.",
     "likes": "5.3K",
     "reposts": "2.1K",
-    "clue_id": "clue_media_narrative_control"
+    "clue_id": "clue_media_narrative_control",
+    "link_site": "cnxtech.com",
+    "link_article": "cnx_001"
   },
   {
     "author": "Maxwell Holt",
     "handle": "@maxwellholt_cai",
     "verified": true,
+    "avatar_color": "#1a6aff",
     "timestamp": "5d",
-    "content": "Grateful to the team at Project Clear Sky for their continued trust in ClosedAI's infrastructure. Serving the public good is the highest calling. 🇺🇸",
+    "content": "Grateful to the team at Project Clear Sky for their continued trust in ClosedAI's infrastructure. Serving the public good is the highest calling.",
     "likes": "14.6K",
     "reposts": "3.8K",
-    "clue_id": "clue_clearsky_depth"
+    "clue_id": "clue_clearsky_depth",
+    "link_site": "thewarden.net",
+    "link_article": "warden_002"
+  },
+  {
+    "author": "The Warden",
+    "handle": "@TheWardenNews",
+    "verified": true,
+    "avatar_color": "#cc3333",
+    "timestamp": "6d",
+    "content": "Inside ClosedAI's campus: immaculate, considered, and just slightly unsettling. Our reporter noticed something at the security desk. Read the full piece.",
+    "likes": "18.2K",
+    "reposts": "6.7K",
+    "clue_id": "",
+    "link_site": "thewarden.net",
+    "link_article": "warden_002"
   }
 ]

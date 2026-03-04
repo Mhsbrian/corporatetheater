@@ -1,41 +1,54 @@
 extends Control
 
 # Corporate Theater — Desktop
-# The player's persistent online workspace.
-# Left panel: live Z feed (always on, always scrolling).
-# Right panel: active app window (terminal, browser, etc.)
-# Bottom: taskbar with clock and app launchers.
+# Central hub. Powered by GameState for all persistence.
+# Z feed links navigate browser. Clues auto-populate Notes.
 
-@onready var taskbar_btns: HBoxContainer = $Taskbar/TaskbarItems
 @onready var btn_terminal: Button = $Taskbar/TaskbarItems/BtnTerminal
 @onready var btn_browser: Button = $Taskbar/TaskbarItems/BtnBrowser
-@onready var btn_phone: Button = $Taskbar/TaskbarItems/BtnPhone
+@onready var btn_messenger: Button = $Taskbar/TaskbarItems/BtnMessenger
+@onready var btn_notes: Button = $Taskbar/TaskbarItems/BtnNotes
 @onready var btn_network: Button = $Taskbar/TaskbarItems/BtnNetwork
 @onready var clock_label: Label = $Taskbar/TaskbarItems/ClockLabel
+@onready var notification_bar: Label = $Taskbar/TaskbarItems/NotificationBar
 @onready var app_window: Control = $MainArea/AppWindow
 @onready var z_feed_container: VBoxContainer = $MainArea/ZPanel/ScrollContainer/ZFeed
-@onready var notification_bar: Label = $Taskbar/TaskbarItems/NotificationBar
+@onready var notes_badge: Label = $Taskbar/TaskbarItems/BtnNotes/Badge
+
+const POST_DATA_PATH    := "res://data/posts/z_posts.json"
+const TERMINAL_SCENE   := "res://scenes/ui/terminal.tscn"
+const BROWSER_SCENE    := "res://scenes/ui/browser.tscn"
+const MESSENGER_SCENE  := "res://scenes/ui/z_messenger.tscn"
+const NOTES_SCENE      := "res://scenes/ui/notes.tscn"
 
 var _feed_posts: Array = []
 var _feed_index: int = 0
 var _active_app: String = ""
-
-const POST_DATA_PATH := "res://data/posts/z_posts.json"
-const TERMINAL_SCENE := "res://scenes/ui/terminal.tscn"
-const BROWSER_SCENE := "res://scenes/ui/browser.tscn"
-const MESSENGER_SCENE := "res://scenes/ui/z_messenger.tscn"
+var _active_browser: Control = null
+var _notes_unseen: int = 0
 
 
 func _ready() -> void:
+	GameState.load_save()
+
 	btn_terminal.pressed.connect(func(): _launch_app("terminal"))
 	btn_browser.pressed.connect(func(): _launch_app("browser"))
-	btn_phone.pressed.connect(func(): _launch_app("phone"))
+	btn_messenger.pressed.connect(func(): _launch_app("messenger"))
+	btn_notes.pressed.connect(func(): _launch_app("notes"))
 	btn_network.pressed.connect(func(): _launch_app("network"))
+
+	GameState.clue_added.connect(_on_clue_added)
+	GameState.browser_navigate.connect(_on_browser_navigate)
 
 	_load_feed()
 	_render_feed()
 	_start_feed_ticker()
-	_show_notification("new message from [ UNKNOWN ] — check your terminal")
+	_update_notes_badge()
+
+	if not GameState.get_messages("elena_vasquez").is_empty():
+		_show_notification("conversation history restored")
+	else:
+		_show_notification("new message from [ UNKNOWN ] — check Z messages")
 
 
 func _process(_delta: float) -> void:
@@ -45,6 +58,23 @@ func _process(_delta: float) -> void:
 func _update_clock() -> void:
 	var t := Time.get_time_dict_from_system()
 	clock_label.text = "%02d:%02d" % [t.hour, t.minute]
+
+
+# ── Clue / Notes Badge ────────────────────────────────────────────────────────
+
+func _on_clue_added(note: Dictionary) -> void:
+	_notes_unseen += 1
+	_update_notes_badge()
+	_show_notification("evidence logged: " + note.get("title", ""))
+
+
+func _update_notes_badge() -> void:
+	var total := GameState.notes.size()
+	if total == 0:
+		notes_badge.visible = false
+	else:
+		notes_badge.visible = true
+		notes_badge.text = str(total)
 
 
 # ── Z Feed ────────────────────────────────────────────────────────────────────
@@ -66,9 +96,8 @@ func _render_feed() -> void:
 
 
 func _start_feed_ticker() -> void:
-	# Every 18 seconds, a new "live" post trickles in
 	var timer := Timer.new()
-	timer.wait_time = 18.0
+	timer.wait_time = 20.0
 	timer.autostart = true
 	timer.timeout.connect(_tick_feed)
 	add_child(timer)
@@ -77,23 +106,17 @@ func _start_feed_ticker() -> void:
 func _tick_feed() -> void:
 	if _feed_posts.is_empty():
 		return
-	# Cycle through posts as if they're live
 	_feed_index = (_feed_index + 1) % _feed_posts.size()
-	var post = _feed_posts[_feed_index]
+	var post: Dictionary = _feed_posts[_feed_index]
 	var card := _build_post_card(post)
 	card.modulate.a = 0.0
 	z_feed_container.add_child(card)
 	z_feed_container.move_child(card, 0)
-
 	var tween := create_tween()
 	tween.tween_property(card, "modulate:a", 1.0, 0.6)
-
-	# Remove oldest if too many
 	if z_feed_container.get_child_count() > 8:
-		var oldest := z_feed_container.get_child(z_feed_container.get_child_count() - 1)
-		oldest.queue_free()
-
-	_show_notification("@%s posted on Z" % post.get("handle", "").trim_prefix("@"))
+		z_feed_container.get_child(z_feed_container.get_child_count() - 1).queue_free()
+	_show_notification(post.get("handle", "") + " posted on Z")
 
 
 func _build_post_card(post: Dictionary) -> PanelContainer:
@@ -115,10 +138,7 @@ func _build_post_card(post: Dictionary) -> PanelContainer:
 
 	var header := HBoxContainer.new()
 	var author := Label.new()
-	var author_text: String = post.get("author", "")
-	if post.get("verified", false):
-		author_text += " ✓"
-	author.text = author_text
+	author.text = post.get("author", "") + (" ✓" if post.get("verified", false) else "")
 	author.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9, 1))
 	author.add_theme_font_size_override("font_size", 11)
 
@@ -138,16 +158,47 @@ func _build_post_card(post: Dictionary) -> PanelContainer:
 	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
+	var bottom_row := HBoxContainer.new()
+
 	var stats := Label.new()
 	stats.text = "♥ %s   ↺ %s" % [post.get("likes", "0"), post.get("reposts", "0")]
 	stats.add_theme_color_override("font_color", Color(0.35, 0.35, 0.45, 1))
 	stats.add_theme_font_size_override("font_size", 10)
+	stats.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	# Link button if post has a link_to field
+	var link_site: String = post.get("link_site", "")
+	var link_article: String = post.get("link_article", "")
+	if link_site != "":
+		var link_btn := Button.new()
+		link_btn.text = "read →"
+		link_btn.flat = true
+		link_btn.add_theme_color_override("font_color", Color(0.4, 0.65, 1.0, 1))
+		link_btn.add_theme_font_size_override("font_size", 10)
+		link_btn.pressed.connect(func():
+			_launch_app("browser")
+			await get_tree().process_frame
+			GameState.navigate_browser(link_site, link_article)
+		)
+		bottom_row.add_child(stats)
+		bottom_row.add_child(link_btn)
+	else:
+		bottom_row.add_child(stats)
 
 	vbox.add_child(header)
 	vbox.add_child(content)
-	vbox.add_child(stats)
+	vbox.add_child(bottom_row)
 	card.add_child(vbox)
 	return card
+
+
+# ── Browser Navigation ────────────────────────────────────────────────────────
+
+func _on_browser_navigate(url: String, article_id: String) -> void:
+	_launch_app("browser")
+	await get_tree().process_frame
+	if _active_browser and is_instance_valid(_active_browser):
+		_active_browser.navigate_to_url(url, article_id)
 
 
 # ── App Launcher ──────────────────────────────────────────────────────────────
@@ -156,43 +207,38 @@ func _launch_app(app: String) -> void:
 	if _active_app == app:
 		return
 	_active_app = app
+	_active_browser = null
 
 	for child in app_window.get_children():
 		child.queue_free()
 
-	match app:
-		"terminal":
-			var scene := load(TERMINAL_SCENE)
-			if scene:
-				var node: Control = scene.instantiate()
-				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-				app_window.add_child(node)
-		"browser":
-			var scene := load(BROWSER_SCENE)
-			if scene:
-				var node: Control = scene.instantiate()
-				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-				app_window.add_child(node)
-		"phone":
-			var scene := load(MESSENGER_SCENE)
-			if scene:
-				var node: Control = scene.instantiate()
-				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-				app_window.add_child(node)
-		_:
-			_show_placeholder(app)
+	if app == "notes":
+		_notes_unseen = 0
+		_update_notes_badge()
+
+	var scene_path := {
+		"terminal": TERMINAL_SCENE,
+		"browser": BROWSER_SCENE,
+		"messenger": MESSENGER_SCENE,
+		"notes": NOTES_SCENE
+	}.get(app, "")
+
+	if scene_path != "":
+		var scene := load(scene_path)
+		if scene:
+			var node: Control = scene.instantiate()
+			node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			app_window.add_child(node)
+			if app == "browser":
+				_active_browser = node
+	else:
+		_show_placeholder(app)
 
 
 func _show_placeholder(app: String) -> void:
-	var labels := {
-		"browser": ["NEXUS BROWSER", Color(0.4, 0.7, 1, 1)],
-		"phone": ["iSPHERE", Color(0.8, 0.6, 1, 1)],
-		"network": ["NETWORK MAP", Color(1, 0.6, 0.2, 1)],
-	}
-	var info: Array = labels.get(app, ["UNKNOWN", Color.WHITE])
 	var label := Label.new()
-	label.text = "[ %s ]\n\ncoming soon." % info[0]
-	label.add_theme_color_override("font_color", info[1])
+	label.text = "[ %s ]\n\ncoming soon." % app.to_upper()
+	label.add_theme_color_override("font_color", Color(0.2, 0.2, 0.3, 1))
 	label.add_theme_font_size_override("font_size", 20)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -200,11 +246,11 @@ func _show_placeholder(app: String) -> void:
 	app_window.add_child(label)
 
 
-# ── Notification Bar ──────────────────────────────────────────────────────────
+# ── Notification ──────────────────────────────────────────────────────────────
 
 func _show_notification(text: String) -> void:
 	notification_bar.text = "  //  " + text
 	notification_bar.modulate.a = 1.0
 	var tween := create_tween()
-	tween.tween_interval(4.0)
-	tween.tween_property(notification_bar, "modulate:a", 0.0, 1.0)
+	tween.tween_interval(5.0)
+	tween.tween_property(notification_bar, "modulate:a", 0.0, 1.2)

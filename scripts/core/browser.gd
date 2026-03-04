@@ -296,3 +296,17 @@ func _add_spacer(height: int) -> void:
 
 func _set_status(text: String) -> void:
 	status_bar.text = "  " + text
+
+
+func navigate_to_url(url: String, article_id: String = "") -> void:
+	# Called externally from desktop when Z feed links are clicked
+	for site in _sites:
+		if site.get("url", "") == url:
+			if article_id != "":
+				for article in site.get("articles", []):
+					if article.get("id", "") == article_id:
+						_open_article(article, site)
+						return
+			_navigate_to_site(site)
+			return
+	_set_status("could not resolve: " + url)
