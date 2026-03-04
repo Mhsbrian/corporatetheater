@@ -1,0 +1,32 @@
+# Godot 4 .gitignore
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_credentials.cfg
+*.translation
+*.import
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build output
+builds/
+*.apk
+*.aab
+*.ipa
+*.pck
+
+# Editor metadata
+.godot/
