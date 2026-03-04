@@ -121,7 +121,7 @@ func _build_post_card(post: Dictionary) -> Control:
 	var header_row := HBoxContainer.new()
 
 	var author_label := Label.new()
-	var author_text := post.get("author", "Unknown")
+	var author_text: String = post.get("author", "Unknown")
 	if post.get("verified", false):
 		author_text += "  ✓"
 	author_label.text = author_text

@@ -224,13 +224,13 @@ func _launch_app(app: String) -> void:
 		_notes_unseen = 0
 		_update_notes_badge()
 
-	var scene_path := {
+	var scene_path: String = ({
 		"terminal": TERMINAL_SCENE,
 		"browser": BROWSER_SCENE,
 		"messenger": MESSENGER_SCENE,
 		"notes": NOTES_SCENE,
 		"network": NETMAP_SCENE
-	}.get(app, "")
+	} as Dictionary).get(app, "") as String
 
 	if scene_path != "":
 		var scene := load(scene_path)
