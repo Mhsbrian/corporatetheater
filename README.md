@@ -60,7 +60,7 @@ corporatetheater/
 
 ## Play
 
-Coming soon at: https://mhsbrian.github.io/corporatetheater
+Live at: https://mhsbrian.github.io/corporatetheater
 
 ## License
 
