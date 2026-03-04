@@ -1,0 +1,279 @@
+{
+  "sites": [
+    {
+      "id": "thewarden",
+      "name": "The Warden",
+      "url": "thewarden.net",
+      "tagline": "Clarity in a noisy world.",
+      "bias": "pro_closedai",
+      "color": "#cc3333",
+      "articles": [
+        {
+          "id": "warden_001",
+          "headline": "ClosedAI's Safety Compact: A New Era of Responsible Innovation",
+          "author": "Patricia Hale",
+          "timestamp": "2 hours ago",
+          "body": "In a ceremony attended by senior government officials and technology leaders, ClosedAI CEO Maxwell Holt signed the Global AI Safety Compact — a sweeping agreement that critics and supporters alike are calling a watershed moment.\n\n'We didn't have to do this,' Holt told reporters afterward, his voice measured and sincere. 'No one forced our hand. We did it because it was right.'\n\nThe Compact commits ClosedAI to regular independent audits of its AI systems, mandatory incident reporting, and a pledge to share safety research freely with the broader scientific community.\n\nAnalysts say the move puts enormous pressure on ClosedAI's competitors to follow suit. Three companies — Vertex Mind, Parallax AI, and NeuralForge — declined to sign. All three have since faced heightened regulatory scrutiny.\n\n'That's not our doing,' Holt said when asked about the regulatory pressure. 'We simply showed what leadership looks like. The market responds to leadership.'\n\nIndustry observers note that ClosedAI's valuation has increased by 34% since the signing was announced.",
+          "comments": [
+            {
+              "user": "TruthSeeker_99",
+              "text": "Anyone else notice how all three companies that didn't sign suddenly have regulators at their doors? Just asking.",
+              "likes": 847,
+              "replies": [
+                {
+                  "user": "PatriciaHale_Warden",
+                  "text": "Correlation is not causation. Please read the article carefully.",
+                  "likes": 12
+                },
+                {
+                  "user": "TruthSeeker_99",
+                  "text": "I did read it. That's why I'm asking.",
+                  "likes": 1204
+                }
+              ]
+            },
+            {
+              "user": "AIOptimist2026",
+              "text": "Maxwell Holt is genuinely one of the good ones. We're lucky to have him.",
+              "likes": 203,
+              "replies": []
+            },
+            {
+              "user": "greyhat_anon",
+              "text": "34% valuation increase after signing a 'safety' agreement. Safety is good business apparently.",
+              "likes": 2341,
+              "replies": [
+                {
+                  "user": "MarketWatcher",
+                  "text": "That's literally how markets work. Good PR = value. Nothing sinister.",
+                  "likes": 88
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "warden_002",
+          "headline": "Inside ClosedAI's Campus: Where the Future is Being Built",
+          "author": "Daniel Cross",
+          "timestamp": "1 day ago",
+          "body": "The campus is immaculate. That's the first thing you notice. Every surface, every sight line, every detail has been considered. It feels less like a tech company and more like a monument to a particular idea — that the future can be designed.\n\nMaxwell Holt walks me through the open-plan research floor with the ease of a man entirely comfortable in his domain. Engineers glance up and smile. He knows names. He stops to ask about someone's project. It looks effortless.\n\n'We hire people who genuinely care,' he says. 'Not people who are impressive on paper. People who lose sleep over getting it right.'\n\nI ask if any employees ever push back on the direction of the company. He pauses — just a fraction of a second too long.\n\n'That's what we want,' he says. 'Dissent is data. We learn from disagreement.'\n\nLater, in the lobby, I notice the security desk has a screen showing real-time employee badge locations. I ask a PR handler about it. She smiles. 'Safety,' she says.",
+          "comments": [
+            {
+              "user": "FormerTechJournalist",
+              "text": "That pause when asked about employees pushing back. I've interviewed a lot of CEOs. That pause means something.",
+              "likes": 3102,
+              "replies": [
+                {
+                  "user": "DanielCross_Warden",
+                  "text": "I noted it. I reported it. Draw your own conclusions.",
+                  "likes": 1876
+                }
+              ]
+            },
+            {
+              "user": "ClosedAI_Fan",
+              "text": "The badge tracking thing is completely normal for enterprise security. Every big company does this.",
+              "likes": 44,
+              "replies": [
+                {
+                  "user": "privacy_matters_01",
+                  "text": "Real-time location of every employee on a screen in the lobby though?",
+                  "likes": 2890
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cnx",
+      "name": "CNX Tech",
+      "url": "cnxtech.com",
+      "tagline": "The pulse of the industry.",
+      "bias": "neutral_leaning_pro",
+      "color": "#cc6600",
+      "articles": [
+        {
+          "id": "cnx_001",
+          "headline": "Project Clear Sky: What We Know, What We Don't",
+          "author": "Jess Marlowe",
+          "timestamp": "3 hours ago",
+          "body": "The government's partnership with ClosedAI under the Project Clear Sky initiative has been described in official communications as 'a public safety infrastructure project.' Beyond that, details are scarce.\n\nWhat we know: ClosedAI was awarded a $4.2 billion federal contract in March. The contract is classified under national security provisions, which means standard FOIA requests are blocked. ClosedAI's public statement calls it 'critical infrastructure work that protects citizens.'\n\nWhat we don't know: What the infrastructure does. Who it monitors. What data it collects. Who has access to that data.\n\nWe reached out to twelve current and former ClosedAI employees for comment. Ten declined. One did not respond. One agreed to speak anonymously.\n\n'I can't tell you what it does,' the source said. 'I can tell you that the team working on it is kept completely separate from the rest of the company. They don't eat in the same cafeteria. They don't use the same Slack channels. They don't talk about it.'\n\nWhen asked if that was unusual, the source laughed quietly.\n\n'At ClosedAI? Nothing is unusual if Maxwell says it isn't.'",
+          "comments": [
+            {
+              "user": "concerned_citizen_88",
+              "text": "$4.2 billion. Classified. Separate team. Separate cafeteria. What are they building.",
+              "likes": 8821,
+              "replies": [
+                {
+                  "user": "NothingToSeeHere",
+                  "text": "Government contracts are often classified for legitimate reasons. This is hysteria.",
+                  "likes": 103
+                },
+                {
+                  "user": "concerned_citizen_88",
+                  "text": "Separate cafeteria isn't a national security requirement. That's culture.",
+                  "likes": 5440
+                }
+              ]
+            },
+            {
+              "user": "JessMarlowe_CNX",
+              "text": "For anyone asking: yes, we tried harder. Three sources refused after initially agreeing. One cited their NDA. Two cited fear.",
+              "likes": 12003,
+              "replies": []
+            },
+            {
+              "user": "xray_vision_1",
+              "text": "The anonymous source laughing quietly is haunting me.",
+              "likes": 6712,
+              "replies": []
+            }
+          ]
+        },
+        {
+          "id": "cnx_002",
+          "headline": "Vertex Mind Files for Bankruptcy — Months After Declining AI Safety Compact",
+          "author": "Jess Marlowe",
+          "timestamp": "6 hours ago",
+          "body": "Vertex Mind, one of three AI companies that declined to sign ClosedAI's Global AI Safety Compact, has filed for Chapter 11 bankruptcy protection.\n\nThe company, once valued at $800 million, cited 'insurmountable regulatory headwinds and loss of key government contracts' as primary factors.\n\nVertex Mind CEO Sandra Okafor did not mince words in her statement: 'We were systematically excluded from every major government procurement process following our decision not to sign the Compact. I cannot prove why. I can only describe what happened.'\n\nClosedAI's spokesperson responded: 'We wish Vertex Mind well. Competition makes everyone better. We hope they find a path forward.'\n\nParallax AI, also a Compact holdout, announced last week it was laying off 40% of its staff. NeuralForge has not commented publicly but has reportedly entered acquisition talks.\n\nAcquisition talks with ClosedAI.",
+          "comments": [
+            {
+              "user": "SandraOkafor_VM",
+              "text": "I built that company for eleven years. Eleven years. And then we made one decision — one principled decision — and watched everything disappear in four months. I want people to understand what happened here.",
+              "likes": 41230,
+              "replies": [
+                {
+                  "user": "WeStandWithVertex",
+                  "text": "We hear you Sandra. This isn't right.",
+                  "likes": 8832
+                },
+                {
+                  "user": "ClosedAI_PR_Official",
+                  "text": "We respect Sandra's perspective and wish her team well in their next chapter.",
+                  "likes": 201
+                }
+              ]
+            },
+            {
+              "user": "monopoly_watch",
+              "text": "First Vertex. Then Parallax. NeuralForge being acquired. At what point does the DOJ step in.",
+              "likes": 19004,
+              "replies": [
+                {
+                  "user": "LegalEagle_DC",
+                  "text": "When they can prove it. Right now everything is circumstantial. That's the genius of it.",
+                  "likes": 14221
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "redit",
+      "name": "Redit",
+      "url": "redit.com",
+      "tagline": "The front page of everything.",
+      "bias": "unfiltered",
+      "color": "#ff6600",
+      "articles": [
+        {
+          "id": "redit_001",
+          "headline": "r/conspiracy_or_not — I work at ClosedAI. I can't say much. But something is very wrong.",
+          "author": "throwaway_cai_emp",
+          "timestamp": "14 hours ago",
+          "body": "Throwaway for obvious reasons. Long time lurker.\n\nI've worked at ClosedAI for two years in a mid-level engineering role. I signed an NDA that would ruin my life if I violated it materially, so I'm going to be careful here.\n\nI'm not going to tell you what Project Clear Sky does. I genuinely don't know the full scope. What I can tell you is what I've observed.\n\nSix months ago, a colleague of mine — someone I respected enormously, smart, careful, ethical — raised a concern internally about data handling practices. Used the official channel. The one Maxwell talks about in every interview. 'Dissent is data. We learn from disagreement.'\n\nThree weeks later she was on a performance improvement plan. Six weeks after that she was gone. The official reason was 'culture fit.' I've never heard that phrase used to describe her before or since.\n\nI'm not saying they silenced her. I'm saying the timing is what it is.\n\nI'm not leaving yet because I have a family. But I think about it every day.\n\nIf anyone is looking into this, there are threads worth pulling. The Clear Sky team is called 'Horizon' internally. That's all I'll say.",
+          "comments": [
+            {
+              "user": "ghost_in_the_feed",
+              "text": "Horizon. Writing that down.",
+              "likes": 3341,
+              "replies": []
+            },
+            {
+              "user": "skeptic_prime",
+              "text": "This could be completely fabricated. No way to verify.",
+              "likes": 234,
+              "replies": [
+                {
+                  "user": "throwaway_cai_emp",
+                  "text": "You're right. I can't prove anything. That's also sort of the point.",
+                  "likes": 7823
+                }
+              ]
+            },
+            {
+              "user": "DataWatchdog",
+              "text": "The 'culture fit' firing after raising a concern is a documented pattern at multiple large AI companies. This is not unique to ClosedAI but it's worth noting.",
+              "likes": 4102,
+              "replies": []
+            },
+            {
+              "user": "just_asking_q",
+              "text": "Has anyone tried to look up what federal contracts reference the word Horizon?",
+              "likes": 6610,
+              "replies": [
+                {
+                  "user": "fed_contract_nerd",
+                  "text": "I did. Three results. All redacted. One has ClosedAI as the contractor. Contract ID: CAI-GOV-0091-HS. Amount: classified.",
+                  "likes": 9883
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "redit_002",
+          "headline": "r/technology — ClosedAI's new ToS quietly gives them rights to all generated outputs forever. Nobody is talking about this.",
+          "author": "fine_print_finder",
+          "timestamp": "2 days ago",
+          "body": "Section 14, paragraph 3 of the updated Terms of Service, buried between sections about cookie preferences and newsletter opt-outs:\n\n'By using ClosedAI services, you grant ClosedAI a perpetual, irrevocable, worldwide, royalty-free license to use, reproduce, modify, adapt, publish, and distribute any content generated through or in connection with ClosedAI services for any purpose, including but not limited to training, product development, and commercial use, without compensation or notification.'\n\nTranslation: everything you make with their AI, they own forever. The data you feed it. The outputs you generate. Your creative work, your business strategy, your private documents.\n\nForever.\n\nWithout telling you.\n\nThis was updated six days ago. No announcement. No email. No pop-up. Just a quiet change to a page most people never read.\n\nThis is a companion piece to the data collection practices change in Section 7 which now includes 'behavioral pattern analysis for service improvement.'",
+          "comments": [
+            {
+              "user": "legalese_decoder",
+              "text": "I'm a lawyer. This is real. This is aggressive. And it's almost certainly enforceable in most jurisdictions.",
+              "likes": 28441,
+              "replies": []
+            },
+            {
+              "user": "ClosedAI_Community_Mgr",
+              "text": "Hi! We want to clarify that this language is standard across the industry and is designed to improve our services for all users. We never sell your data. Your privacy is important to us.",
+              "likes": 89,
+              "replies": [
+                {
+                  "user": "fine_print_finder",
+                  "text": "The ToS doesn't say 'we won't sell it.' It says you can't stop us from using it for 'any purpose.' Those are different things.",
+                  "likes": 31002
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "darkpulse",
+      "name": "DarkPulse",
+      "url": "darkpulse.onion",
+      "tagline": "What they don't want indexed.",
+      "bias": "underground",
+      "color": "#44ff88",
+      "locked": true,
+      "unlock_clue": "clue_clearsky_depth",
+      "articles": [
+        {
+          "id": "dp_001",
+          "headline": "Contract CAI-GOV-0091-HS: What Horizon Actually Does",
+          "author": "Anonymous Contributor",
+          "timestamp": "unknown",
+          "body": "This document was provided to us by a source inside ClosedAI. We have verified its authenticity through three independent means we will not disclose.\n\nProject Horizon — the operational name for the Clear Sky initiative — is a real-time behavioral prediction and influence system. It does not merely monitor communications. It models them.\n\nUsing ClosedAI's VEIL language model (not publicly disclosed, not the same model sold commercially), Horizon ingests data from partnered platforms — social media, search, financial transactions, location data purchased from third-party brokers — and constructs predictive behavioral profiles for flagged individuals.\n\n'Flagged' does not mean criminal. It means statistically deviant from expected behavioral norms.\n\nThe system can then — and this is the part that should alarm you — generate synthetic content designed to nudge flagged individuals toward less deviant behavior. This content is delivered through normal channels. A search result. A suggested article. A targeted advertisement. A recommended Z post.\n\nYou will not know it is happening.\n\nThe government calls this 'soft stabilization.' ClosedAI calls it 'prosocial infrastructure.'\n\nMaxwell Holt has personally presented this system to the National Security Council. He called it 'the most important thing we have ever built.'\n\nHe was not wrong.",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}

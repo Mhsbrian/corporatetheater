@@ -22,6 +22,8 @@ var _active_app: String = ""
 
 const POST_DATA_PATH := "res://data/posts/z_posts.json"
 const TERMINAL_SCENE := "res://scenes/ui/terminal.tscn"
+const BROWSER_SCENE := "res://scenes/ui/browser.tscn"
+const MESSENGER_SCENE := "res://scenes/ui/z_messenger.tscn"
 
 
 func _ready() -> void:
@@ -161,6 +163,18 @@ func _launch_app(app: String) -> void:
 	match app:
 		"terminal":
 			var scene := load(TERMINAL_SCENE)
+			if scene:
+				var node: Control = scene.instantiate()
+				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+				app_window.add_child(node)
+		"browser":
+			var scene := load(BROWSER_SCENE)
+			if scene:
+				var node: Control = scene.instantiate()
+				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+				app_window.add_child(node)
+		"phone":
+			var scene := load(MESSENGER_SCENE)
 			if scene:
 				var node: Control = scene.instantiate()
 				node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

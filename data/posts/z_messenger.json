@@ -1,0 +1,845 @@
+{
+  "contacts": [
+    {
+      "id": "elena_vasquez",
+      "handle": "@e.vasquez",
+      "display_name": "Elena V.",
+      "role": "Senior Research Engineer, ClosedAI",
+      "avatar_color": "#7b68ee",
+      "status": "online",
+      "unlocked": true,
+      "unlock_clue": "",
+      "profile_note": "Posts about coffee and hiking. Hasn't posted publicly in 3 weeks.",
+      "conversations": [
+        {
+          "id": "elena_ch1",
+          "trigger": "start",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Hey. You don't know me.",
+              "delay": 0.8
+            },
+            {
+              "from": "elena",
+              "text": "I found your handle through someone who said you ask the right questions.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "I don't know if I should be doing this.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Who are you?",
+              "leads_to": "elena_ch2_who"
+            },
+            {
+              "text": "What do you want?",
+              "leads_to": "elena_ch2_what"
+            },
+            {
+              "text": "Then don't.",
+              "leads_to": "elena_ch2_cold"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch2_who",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I work at ClosedAI. Research team. Not Horizon — I want to be clear about that.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "I write the safety evaluations for the public-facing models.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "Or I did. Until I filed a concern six months ago.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "Now I sit in a room and I review documentation no one will ever read.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What concern did you file?",
+              "leads_to": "elena_ch3_concern"
+            },
+            {
+              "text": "What's Horizon?",
+              "leads_to": "elena_ch3_horizon"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch2_what",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I want someone to know what's happening.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "Before I convince myself to stay quiet forever.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "I've been at this company three years. I believed in it. I genuinely believed in it.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "That's the worst part.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What changed?",
+              "leads_to": "elena_ch3_changed"
+            },
+            {
+              "text": "What are you afraid of?",
+              "leads_to": "elena_ch3_fear"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch2_cold",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "...",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "Yeah. Maybe you're right.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "But I've been sitting on this for six months and it's eating me alive.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "If you change your mind, I'm here.",
+              "delay": 1.0
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Tell me what you know.",
+              "leads_to": "elena_ch3_changed"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch3_concern",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Our evaluation framework has a gap. A deliberate one, I think.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "We test for harmful outputs. Bias, toxicity, misinformation.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "But we don't test for subtle persuasion. Outputs that are factually correct but systematically framed to shape behavior.",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "I flagged it. I wrote a twelve-page internal report.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "The response was: 'This is outside the scope of current evaluation priorities.'",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "Signed by Maxwell's office directly.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you still have the report?",
+              "leads_to": "elena_ch4_report"
+            },
+            {
+              "text": "What's Horizon?",
+              "leads_to": "elena_ch3_horizon"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch3_horizon",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I only know what I've pieced together.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "It's a government project. Classified. The team is siloed — they don't mix with the rest of us.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "But I've seen the model architecture referenced in internal tooling.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "It's not one of our public models. It's something else. Something much more capable of... targeted output.",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "I don't know what that means exactly. I'm afraid I do.",
+              "delay": 1.6
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Can you get me anything from the Horizon systems?",
+              "leads_to": "elena_ch4_access"
+            },
+            {
+              "text": "Do you still have your safety report?",
+              "leads_to": "elena_ch4_report"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch3_changed",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I found a draft document on a shared drive. Accidentally. Someone left folder permissions open.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "It was a strategy brief. Internal. Titled 'Market Capture — Phase 3.'",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "I only read two paragraphs before I closed it.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "It referenced 'voluntary market exit' of competitors. And it had a timeline.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "The timeline matched exactly when Vertex Mind, Parallax, and NeuralForge started collapsing.",
+              "delay": 2.0
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Can you get that document?",
+              "leads_to": "elena_ch4_doc"
+            },
+            {
+              "text": "What does 'voluntary market exit' mean?",
+              "leads_to": "elena_ch4_meaning"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch3_fear",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Of being wrong.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "...",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "No. That's not true. I'm afraid of being right and no one caring.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "And I'm afraid of what happened to my colleague happening to me.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "She raised a concern internally. She's gone now. Not fired officially. Just... gone.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "Her Z account was deactivated the same day she left.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What was her name?",
+              "leads_to": "elena_ch4_colleague"
+            },
+            {
+              "text": "What did she report?",
+              "leads_to": "elena_ch4_what_reported"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch4_report",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "...",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "I deleted it after the PIP started. I was scared.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "But I printed a copy. Physical paper. Like an idiot.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "I can photograph it. It'll take me a few days to get it out of the building without triggering the scanner.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Take your time. Be careful.",
+              "leads_to": "elena_ch5_careful",
+              "unlocks_clue": "clue_elena_report_incoming"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch4_access",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I can't get into Horizon. I don't have clearance.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "But I know someone who might. Or did.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "His name is Marcus Tull. He was a systems architect on the project before he was rotated out.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "He's not at ClosedAI anymore. He left eight months ago. I don't know where he went.",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "His Z handle was @m_tull_builds. It might still exist.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "I'll find him.",
+              "leads_to": "elena_ch5_find_marcus",
+              "unlocks_clue": "clue_marcus_tull",
+              "unlocks_contact": "marcus_tull"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch4_doc",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I can try. The folder was on a shared research drive.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "But if I access it again from my account they'll see it in the logs.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "You'd need to get in from outside. Find an entry point in their external network.",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "closedai-pub.net has a legacy API endpoint that wasn't fully deprecated. /api/v1/research/shared",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "That's all I'll say.",
+              "delay": 1.0
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Got it.",
+              "leads_to": "elena_ch5_got_it",
+              "unlocks_clue": "clue_api_endpoint"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch4_meaning",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "It means exactly what it sounds like.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "They didn't destroy those companies. They created conditions where those companies destroyed themselves.",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "Regulatory pressure. Loss of contracts. Key employees poached. Strategic leaks to press.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "All deniable. All circumstantial. All coordinated.",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "I'm going to be sick.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "You're not imagining this. Keep going.",
+              "leads_to": "elena_ch4_doc"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch4_colleague",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Priya Nair.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "She was the best engineer I've ever worked with.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "She's not dead or anything. She just... disappeared. No forwarding info. No LinkedIn update. Nothing.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "I tried to find her last month. She signed an NDA exit agreement. The kind that includes a non-disparagement clause and a financial settlement.",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "They bought her silence. I don't blame her.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you know how to reach her?",
+              "leads_to": "elena_ch5_priya",
+              "unlocks_clue": "clue_priya_nair"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch5_careful",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I will.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "Thank you for listening. I know that sounds small.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "It doesn't feel small.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": []
+        },
+        {
+          "id": "elena_ch5_find_marcus",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Be careful with him. He's not... stable. What he saw changed him.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "But if anyone knows what Horizon actually does, it's Marcus.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": []
+        },
+        {
+          "id": "elena_ch5_got_it",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "Please don't get caught.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "And if you do — you didn't get that from me.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": []
+        },
+        {
+          "id": "elena_ch5_priya",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I have an old personal email. I don't know if she still checks it.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "p.nair.personal@protonmail.com",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "Tell her Elena sent you. And... tell her I'm sorry I didn't speak up sooner.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [],
+          "unlocks_clue": "clue_priya_contact"
+        }
+      ]
+    },
+    {
+      "id": "marcus_tull",
+      "handle": "@m_tull_builds",
+      "display_name": "Marcus T.",
+      "role": "Former Systems Architect, ClosedAI",
+      "avatar_color": "#ff6b35",
+      "status": "away",
+      "unlocked": false,
+      "unlock_clue": "clue_marcus_tull",
+      "profile_note": "Last active 3 months ago. No posts. Account barely exists.",
+      "conversations": [
+        {
+          "id": "marcus_ch1",
+          "trigger": "start",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "Who is this.",
+              "delay": 0.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Elena Vasquez sent me.",
+              "leads_to": "marcus_ch2_elena"
+            },
+            {
+              "text": "Someone who wants to know about Horizon.",
+              "leads_to": "marcus_ch2_horizon"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch2_elena",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "...",
+              "delay": 2.5
+            },
+            {
+              "from": "marcus",
+              "text": "Elena's still there?",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "God. I told her to leave six months ago.",
+              "delay": 1.5
+            },
+            {
+              "from": "marcus",
+              "text": "What do you want.",
+              "delay": 1.0
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Tell me what Horizon does.",
+              "leads_to": "marcus_ch3_truth"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch2_horizon",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "Then you already know too much.",
+              "delay": 1.0
+            },
+            {
+              "from": "marcus",
+              "text": "How did you find me.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Elena Vasquez.",
+              "leads_to": "marcus_ch2_elena"
+            },
+            {
+              "text": "I followed the threads.",
+              "leads_to": "marcus_ch3_threads"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch3_threads",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "Then you're either very good or very dead and you don't know it yet.",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "Horizon watches for pattern-matching behavior. People who connect dots that shouldn't be connected.",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "You're probably already flagged.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Tell me what Horizon does.",
+              "leads_to": "marcus_ch3_truth"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch3_truth",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "I built the ingestion pipeline.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "That's the part that pulls in the data. Social feeds, search history, location, financial.",
+              "delay": 1.6
+            },
+            {
+              "from": "marcus",
+              "text": "I thought it was threat detection. Terrorism, organized crime. That's what they told us.",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "Then I saw the target profiles.",
+              "delay": 1.5
+            },
+            {
+              "from": "marcus",
+              "text": "Journalists. Academics. Politicians who voted against the Compact. A school teacher in Ohio who kept posting critical things about ClosedAI.",
+              "delay": 2.2
+            },
+            {
+              "from": "marcus",
+              "text": "A school teacher.",
+              "delay": 1.5
+            },
+            {
+              "from": "marcus",
+              "text": "I left the next morning. Took nothing. Said I had a family emergency.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you have any of the target profiles?",
+              "leads_to": "marcus_ch4_profiles"
+            },
+            {
+              "text": "What does Horizon do to the targets?",
+              "leads_to": "marcus_ch4_what_happens"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch4_profiles",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "I took one screenshot. One.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "I've been staring at it for eight months wondering if I'm crazy.",
+              "delay": 1.5
+            },
+            {
+              "from": "marcus",
+              "text": "I'll send it. But after I do, I need you to delete my contact info.",
+              "delay": 1.6
+            },
+            {
+              "from": "marcus",
+              "text": "I have a kid. I need you to understand that.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "I understand. Send it.",
+              "leads_to": "marcus_ch5_send",
+              "unlocks_clue": "clue_horizon_profile"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch4_what_happens",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "It nudges them.",
+              "delay": 1.0
+            },
+            {
+              "from": "marcus",
+              "text": "Synthetic content injected into their feeds. Articles. Ads. Search results. All designed by VEIL to shift behavior.",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "Soft targets get nudged toward apathy. 'You're one voice. It doesn't matter.'",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "Hard targets — people with platforms, people who could actually cause damage — get something different.",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "Reputation pressure. Algorithmic suppression. Coordinated social responses that look organic.",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "They don't silence you. They make you irrelevant.",
+              "delay": 1.6
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you have proof?",
+              "leads_to": "marcus_ch4_profiles"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch5_send",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "[file attached: horizon_profile_redacted.img]",
+              "delay": 1.0,
+              "is_attachment": true,
+              "attachment_clue": "clue_horizon_profile"
+            },
+            {
+              "from": "marcus",
+              "text": "The name is redacted. But look at the behavioral tags.",
+              "delay": 1.4
+            },
+            {
+              "from": "marcus",
+              "text": "Category 7: 'Narrative Threat — Organic.' That's what they call journalists who find the truth on their own.",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "Please don't contact me again.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": []
+        }
+      ]
+    }
+  ]
+}
