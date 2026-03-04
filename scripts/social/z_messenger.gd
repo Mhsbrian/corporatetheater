@@ -229,7 +229,7 @@ func _play_conversation(contact: Dictionary, conv: Dictionary) -> void:
 	var unlocks_clue: String = conv.get("unlocks_clue", "")
 	if unlocks_clue != "":
 		GameState.discover_clue(unlocks_clue)
-		var sys_text := "[ clue logged: " + GameState.CLUE_DEFINITIONS.get(unlocks_clue, {}).get("title", unlocks_clue) + " ]"
+		var sys_text: String = "[ clue logged: " + (GameState.CLUE_DEFINITIONS.get(unlocks_clue, {}) as Dictionary).get("title", unlocks_clue) as String + " ]"
 		_add_system_message(sys_text)
 		GameState.append_message(contact_id, "system", sys_text)
 
