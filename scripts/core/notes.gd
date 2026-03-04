@@ -114,7 +114,6 @@ func _build_entry_card(note: Dictionary) -> Control:
 	style.border_width_left = 3
 	style.border_color = sev_color
 	style.border_width_bottom = 1
-	style.border_color_bottom = Color(0.1, 0.1, 0.18, 1)
 	style.content_margin_left = 14
 	style.content_margin_right = 14
 	style.content_margin_top = 10
