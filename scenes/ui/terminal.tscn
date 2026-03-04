@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://terminal"]
+
+[ext_resource type="Script" path="res://scripts/hacking/terminal.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.05, 0.04, 0.97)
+border_width_top = 1
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 1, 0.4, 0.4)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
+bg_color = Color(0.03, 0.04, 0.03, 1)
+border_width_bottom = 1
+border_color = Color(0.2, 1, 0.4, 0.3)
+
+[node name="Terminal" type="Panel" size=Vector2(780, 480)]
+script = ExtResource("1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 4
+
+[node name="Output" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+theme_override_colors/default_color = Color(0.2, 1, 0.4, 1)
+theme_override_font_sizes/normal_font_size = 13
+
+[node name="InputRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 28)
+
+[node name="Prompt" type="Label" parent="VBox/InputRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 13
+text = "ghost@localhost $ "
+vertical_alignment = 1
+
+[node name="Input" type="LineEdit" parent="VBox/InputRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
+theme_override_colors/caret_color = Color(0.2, 1, 0.4, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_font_sizes/font_size = 13
+placeholder_text = ""
