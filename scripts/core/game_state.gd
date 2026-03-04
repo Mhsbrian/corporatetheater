@@ -149,6 +149,27 @@ const CLUE_DEFINITIONS: Dictionary = {
 		"summary": "The two people who escorted Priya Nair out of ClosedAI wore Project Clear Sky lanyards — not ClosedAI badges. Government personnel were directly involved in removing an engineer who filed an AI misconduct report.",
 		"source": "Z Messenger / Priya N.",
 		"severity": "critical"
+	},
+	"clue_internal_safety_suppression": {
+		"title": "Safety Gap — Executive Suppression Confirmed",
+		"category": "evidence",
+		"summary": "Internal file on ClosedAI's legacy API confirms the safety evaluation gap was known. The decision to exclude persuasion testing was an 'executive mandate' — memo MH-EVL-2024-03-11 (Maxwell Holt's office). This is exactly what Elena flagged.",
+		"source": "Terminal / closedai-pub.net",
+		"severity": "critical"
+	},
+	"clue_horizon_contract_confirmed": {
+		"title": "Horizon Contract — Primary Evidence",
+		"category": "evidence",
+		"summary": "Partner integration file confirms 'client_horizon_gen' is real. Contract ID CAI-GOV-0091-HS. Volume tier: NATIONAL. Content type: social-formatted text. Distribution: third-party platform injection. Zero human review.",
+		"source": "Terminal / closedai-pub.net",
+		"severity": "critical"
+	},
+	"clue_market_capture_evidence": {
+		"title": "Market Capture — System Log Evidence",
+		"category": "evidence",
+		"summary": "Internal daemon log confirms coordinated actions against Vertex Mind, Parallax AI, and NeuralForge. Actions: regulatory pressure, key personnel departure, narrative suppression. Timestamps match their public collapses exactly. Referenced as 'Market Capture Phase 3.'",
+		"source": "Terminal / closedai-internal.net",
+		"severity": "critical"
 	}
 }
 
