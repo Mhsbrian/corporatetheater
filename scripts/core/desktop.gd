@@ -20,6 +20,7 @@ const TERMINAL_SCENE   := "res://scenes/ui/terminal.tscn"
 const BROWSER_SCENE    := "res://scenes/ui/browser.tscn"
 const MESSENGER_SCENE  := "res://scenes/ui/z_messenger.tscn"
 const NOTES_SCENE      := "res://scenes/ui/notes.tscn"
+const NETMAP_SCENE     := "res://scenes/ui/network_map.tscn"
 
 var _feed_posts: Array = []
 var _feed_index: int = 0
@@ -220,7 +221,8 @@ func _launch_app(app: String) -> void:
 		"terminal": TERMINAL_SCENE,
 		"browser": BROWSER_SCENE,
 		"messenger": MESSENGER_SCENE,
-		"notes": NOTES_SCENE
+		"notes": NOTES_SCENE,
+		"network": NETMAP_SCENE
 	}.get(app, "")
 
 	if scene_path != "":

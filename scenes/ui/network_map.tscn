@@ -1,0 +1,178 @@
+[gd_scene load_steps=7 format=3 uid="uid://netmap"]
+
+[ext_resource type="Script" path="res://scripts/core/network_map.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_root"]
+bg_color = Color(0.03, 0.03, 0.06, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info"]
+bg_color = Color(0.06, 0.07, 0.12, 1)
+border_width_left = 2
+border_width_right = 0
+border_width_top = 2
+border_width_bottom = 0
+border_color = Color(0.2, 0.45, 0.7, 0.6)
+corner_radius_top_left = 4
+corner_radius_bottom_left = 4
+content_margin_left = 16
+content_margin_right = 16
+content_margin_top = 12
+content_margin_bottom = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_legend"]
+bg_color = Color(0.04, 0.04, 0.08, 0.85)
+border_width_bottom = 1
+border_width_right = 1
+border_color = Color(0.12, 0.12, 0.22, 1)
+content_margin_left = 12
+content_margin_right = 12
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_closebtn"]
+bg_color = Color(0.08, 0.08, 0.14, 1)
+border_width_top = 1
+border_color = Color(0.2, 0.2, 0.35, 1)
+content_margin_left = 10
+content_margin_right = 10
+content_margin_top = 4
+content_margin_bottom = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_closehover"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+border_width_bottom = 1
+border_color = Color(0.12, 0.12, 0.22, 1)
+content_margin_left = 16
+content_margin_right = 16
+content_margin_top = 8
+content_margin_bottom = 8
+
+[node name="NetworkMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_root")
+script = ExtResource("1")
+
+[node name="Header" type="PanelContainer" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="HBox" type="HBoxContainer" parent="Header"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Header/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "NETWORK MAP"
+
+[node name="Subtitle" type="Label" parent="Header/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.35, 0.35, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "// click a node for details  ·  use terminal to access nodes"
+
+[node name="GraphArea" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 36.0
+mouse_filter = 0
+
+[node name="Legend" type="PanelContainer" parent="GraphArea"]
+layout_mode = 1
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -110.0
+offset_right = 200.0
+offset_bottom = -12.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_legend")
+
+[node name="LegendVBox" type="VBoxContainer" parent="GraphArea/Legend"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LegendTitle" type="Label" parent="GraphArea/Legend/LegendVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "LEGEND"
+
+[node name="L1" type="Label" parent="GraphArea/Legend/LegendVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1.0, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "● reachable"
+
+[node name="L2" type="Label" parent="GraphArea/Legend/LegendVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "◉ accessed (files retrieved)"
+
+[node name="L3" type="Label" parent="GraphArea/Legend/LegendVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "○ locked (find more clues)"
+
+[node name="InfoPanel" type="PanelContainer" parent="GraphArea"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -180.0
+offset_right = -12.0
+offset_bottom = -12.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_info")
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="GraphArea/InfoPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="GraphArea/InfoPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1.0, 1)
+theme_override_font_sizes/font_size = 14
+text = "NODE"
+
+[node name="Sub" type="Label" parent="GraphArea/InfoPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "hostname"
+
+[node name="Divider" type="ColorRect" parent="GraphArea/InfoPanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 1)
+color = Color(0.15, 0.15, 0.28, 1)
+
+[node name="Status" type="Label" parent="GraphArea/InfoPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.6, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 11
+text = "status"
+autowrap_mode = 3
+
+[node name="CloseBtn" type="Button" parent="GraphArea/InfoPanel/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_closebtn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_closehover")
+theme_override_colors/font_color = Color(0.4, 0.4, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "[ dismiss ]"
+flat = false
