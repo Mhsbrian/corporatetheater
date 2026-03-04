@@ -3,42 +3,42 @@
 [ext_resource type="Script" path="res://scripts/social/z_messenger.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_root"]
-bg_color = Color(0.05, 0.05, 0.08, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_contact_panel"]
-bg_color = Color(0.06, 0.06, 0.10, 1)
-border_width_right = 1
-border_color = Color(0.12, 0.12, 0.2, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
-bg_color = Color(0.07, 0.07, 0.11, 1)
-border_width_bottom = 1
-border_color = Color(0.12, 0.12, 0.22, 1)
-content_margin_left = 14
-content_margin_right = 14
-content_margin_top = 8
-content_margin_bottom = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_messages"]
 bg_color = Color(0.04, 0.04, 0.07, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_contact_panel"]
+bg_color = Color(0.055, 0.055, 0.09, 1)
+border_width_right = 1
+border_color = Color(0.11, 0.11, 0.18, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.065, 0.065, 0.105, 1)
+border_width_bottom = 1
+border_color = Color(0.12, 0.12, 0.22, 1)
+content_margin_left = 16
+content_margin_right = 16
+content_margin_top = 10
+content_margin_bottom = 10
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choices"]
-bg_color = Color(0.06, 0.07, 0.06, 1)
+bg_color = Color(0.055, 0.07, 0.055, 1)
 border_width_top = 1
-border_color = Color(0.15, 0.25, 0.15, 1)
-content_margin_left = 10
-content_margin_right = 10
-content_margin_top = 8
-content_margin_bottom = 8
+border_color = Color(0.12, 0.22, 0.12, 1)
+content_margin_left = 12
+content_margin_right = 12
+content_margin_top = 10
+content_margin_bottom = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_z_header"]
 bg_color = Color(0.05, 0.05, 0.09, 1)
 border_width_bottom = 1
 border_color = Color(0.1, 0.1, 0.18, 1)
-content_margin_left = 12
-content_margin_right = 12
-content_margin_top = 6
-content_margin_bottom = 6
+content_margin_left = 14
+content_margin_right = 14
+content_margin_top = 7
+content_margin_bottom = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_messages_bg"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
 
 [node name="ZMessenger" type="Control"]
 layout_mode = 3
@@ -57,7 +57,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_root")
 [node name="TopBar" type="Panel" parent="."]
 layout_mode = 1
 anchor_right = 1.0
-offset_bottom = 30.0
+offset_bottom = 32.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_z_header")
 
 [node name="ZLabel" type="Label" parent="TopBar"]
@@ -65,7 +65,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color(0.25, 0.25, 0.4, 1)
+theme_override_colors/font_color = Color(0.22, 0.22, 0.38, 1)
 theme_override_font_sizes/font_size = 11
 text = "Z  //  messages"
 vertical_alignment = 1
@@ -74,21 +74,21 @@ vertical_alignment = 1
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 30.0
-split_offset = 200
+offset_top = 32.0
+split_offset = 240
 dragger_visibility = 1
 
 [node name="ContactPanel" type="Panel" parent="Split"]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(200, 0)
 theme_override_styles/panel = SubResource("StyleBoxFlat_contact_panel")
 
 [node name="ContactHeader" type="Label" parent="Split/ContactPanel"]
 layout_mode = 1
 anchor_right = 1.0
-offset_left = 10.0
-offset_top = 8.0
-offset_bottom = 26.0
-theme_override_colors/font_color = Color(0.3, 0.3, 0.45, 1)
+offset_left = 14.0
+offset_top = 10.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.28, 0.28, 0.42, 1)
 theme_override_font_sizes/font_size = 10
 text = "CONTACTS"
 
@@ -96,13 +96,13 @@ text = "CONTACTS"
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 30.0
+offset_top = 32.0
 horizontal_scroll_mode = 0
 
 [node name="ContactList" type="VBoxContainer" parent="Split/ContactPanel/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 2
+theme_override_constants/separation = 1
 
 [node name="ChatPanel" type="Control" parent="Split"]
 layout_mode = 2
@@ -113,7 +113,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color(0.25, 0.25, 0.35, 1)
+theme_override_colors/font_color = Color(0.2, 0.2, 0.3, 1)
 theme_override_font_sizes/font_size = 13
 text = "select a contact to begin."
 horizontal_alignment = 1
@@ -122,33 +122,33 @@ vertical_alignment = 1
 [node name="Header" type="Panel" parent="Split/ChatPanel"]
 layout_mode = 1
 anchor_right = 1.0
-offset_bottom = 52.0
+offset_bottom = 58.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_header")
 visible = false
 
 [node name="Name" type="Label" parent="Split/ChatPanel/Header"]
 layout_mode = 1
 anchor_right = 1.0
-offset_bottom = 20.0
-theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 1)
-theme_override_font_sizes/font_size = 13
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0.92, 0.92, 0.96, 1)
+theme_override_font_sizes/font_size = 14
 text = ""
 
 [node name="Status" type="Label" parent="Split/ChatPanel/Header"]
 layout_mode = 1
 anchor_right = 1.0
-offset_top = 20.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.3, 0.8, 0.4, 1)
-theme_override_font_sizes/font_size = 10
+offset_top = 24.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0.3, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 11
 text = ""
 
 [node name="Role" type="Label" parent="Split/ChatPanel/Header"]
 layout_mode = 1
 anchor_right = 1.0
-offset_top = 34.0
-offset_bottom = 52.0
-theme_override_colors/font_color = Color(0.4, 0.4, 0.5, 1)
+offset_top = 38.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.38, 0.38, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = ""
 
@@ -156,36 +156,40 @@ text = ""
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 52.0
-offset_bottom = -120.0
+offset_top = 58.0
+offset_bottom = -148.0
+offset_left = 0.0
+offset_right = 0.0
 horizontal_scroll_mode = 0
 
 [node name="Messages" type="VBoxContainer" parent="Split/ChatPanel/MessagesScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 6
-offset_left = 10.0
-offset_right = -10.0
+theme_override_constants/separation = 8
+offset_left = 14.0
+offset_right = -14.0
+offset_top = 10.0
 
 [node name="ChoicesPanel" type="Panel" parent="Split/ChatPanel"]
 layout_mode = 1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -120.0
+offset_top = -148.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_choices")
 
 [node name="ChoicesLabel" type="Label" parent="Split/ChatPanel/ChoicesPanel"]
 layout_mode = 1
 anchor_right = 1.0
-offset_bottom = 16.0
-theme_override_colors/font_color = Color(0.3, 0.4, 0.3, 1)
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(0.25, 0.38, 0.25, 1)
 theme_override_font_sizes/font_size = 10
 text = "YOUR RESPONSE"
+visible = false
 
 [node name="Choices" type="VBoxContainer" parent="Split/ChatPanel/ChoicesPanel"]
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 18.0
-theme_override_constants/separation = 4
+offset_top = 20.0
+theme_override_constants/separation = 6

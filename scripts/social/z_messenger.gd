@@ -1,14 +1,16 @@
 extends Control
 
 # Corporate Theater — Z Messenger
-# Direct messages with ClosedAI insiders who are cracking.
-# Conversation trees branch based on player choices.
-# Clues are unlocked through dialogue.
+# Realistic paced DM conversations with ClosedAI insiders.
+# Typing indicators, natural delays, branching choices, clue triggers.
 
 signal clue_discovered(clue_id: String)
 signal contact_unlocked(contact_id: String)
 
 const MESSENGER_DATA_PATH := "res://data/posts/z_messenger.json"
+const TYPING_DELAY_PER_CHAR := 0.045  # seconds per character — feels like real typing
+const TYPING_INDICATOR_MIN := 1.2     # minimum "typing..." time before message appears
+const READ_PAUSE := 0.6               # pause after message appears before next one
 
 @onready var contact_list: VBoxContainer = $Split/ContactPanel/Scroll/ContactList
 @onready var chat_header_name: Label = $Split/ChatPanel/Header/Name
@@ -16,20 +18,26 @@ const MESSENGER_DATA_PATH := "res://data/posts/z_messenger.json"
 @onready var chat_header_role: Label = $Split/ChatPanel/Header/Role
 @onready var messages_container: VBoxContainer = $Split/ChatPanel/MessagesScroll/Messages
 @onready var choices_container: VBoxContainer = $Split/ChatPanel/ChoicesPanel/Choices
+@onready var choices_label: Label = $Split/ChatPanel/ChoicesPanel/ChoicesLabel
 @onready var empty_state: Label = $Split/ChatPanel/EmptyState
 @onready var messages_scroll: ScrollContainer = $Split/ChatPanel/MessagesScroll
+@onready var chat_panel: Control = $Split/ChatPanel
+@onready var header_panel: Panel = $Split/ChatPanel/Header
 
 var _contacts: Array = []
 var _active_contact: Dictionary = {}
-var _active_conversation_id: String = ""
 var _discovered_clues: Array[String] = []
 var _unlocked_contacts: Array[String] = ["elena_vasquez"]
 var _conversation_states: Dictionary = {}
+var _typing_indicator: Control = null
+var _is_playing: bool = false
 
 
 func _ready() -> void:
 	_load_contacts()
 	_build_contact_list()
+	header_panel.visible = false
+	choices_label.visible = false
 
 
 func _load_contacts() -> void:
@@ -41,77 +49,96 @@ func _load_contacts() -> void:
 		_contacts = json.data.get("contacts", [])
 
 
+# ── Contact List ──────────────────────────────────────────────────────────────
+
 func _build_contact_list() -> void:
 	for child in contact_list.get_children():
 		child.queue_free()
 
 	for contact in _contacts:
-		var contact_id: String = contact.get("id", "")
-		var is_unlocked: bool = contact_id in _unlocked_contacts
-
-		var btn := _build_contact_button(contact, is_unlocked)
-		contact_list.add_child(btn)
+		var is_unlocked: bool = contact.get("id", "") in _unlocked_contacts
+		contact_list.add_child(_build_contact_row(contact, is_unlocked))
 
 
-func _build_contact_button(contact: Dictionary, is_unlocked: bool) -> Control:
+func _build_contact_row(contact: Dictionary, is_unlocked: bool) -> Control:
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.07, 0.07, 0.11, 1)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
+	style.border_width_bottom = 1
+	style.border_color = Color(0.1, 0.1, 0.18, 1)
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
 	panel.add_theme_stylebox_override("panel", style)
-	panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 	var hbox := HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 8)
+	hbox.add_theme_constant_override("separation", 10)
 
-	# Avatar dot
-	var dot := ColorRect.new()
-	var av_color := Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
-	dot.color = av_color if is_unlocked else Color(0.25, 0.25, 0.3, 1)
-	dot.custom_minimum_size = Vector2(10, 10)
+	# Avatar circle (colored dot as placeholder)
+	var avatar := ColorRect.new()
+	var av_col := Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
+	avatar.color = av_col if is_unlocked else Color(0.2, 0.2, 0.25, 1)
+	avatar.custom_minimum_size = Vector2(32, 32)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 2)
+	vbox.add_theme_constant_override("separation", 3)
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
+	var name_row := HBoxContainer.new()
 	var name_lbl := Label.new()
-	name_lbl.text = contact.get("display_name", "") if is_unlocked else "[ LOCKED ]"
+	name_lbl.text = contact.get("display_name", "") if is_unlocked else "???"
 	name_lbl.add_theme_color_override("font_color",
-		Color(0.88, 0.88, 0.92, 1) if is_unlocked else Color(0.3, 0.3, 0.35, 1))
-	name_lbl.add_theme_font_size_override("font_size", 12)
+		Color(0.92, 0.92, 0.96, 1) if is_unlocked else Color(0.3, 0.3, 0.38, 1))
+	name_lbl.add_theme_font_size_override("font_size", 13)
+	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	var handle_lbl := Label.new()
-	handle_lbl.text = contact.get("handle", "") if is_unlocked else "unlock through investigation"
-	handle_lbl.add_theme_color_override("font_color", Color(0.4, 0.4, 0.5, 1))
-	handle_lbl.add_theme_font_size_override("font_size", 10)
+	if is_unlocked and contact.get("status", "") == "online":
+		var online_dot := Label.new()
+		online_dot.text = "●"
+		online_dot.add_theme_color_override("font_color", Color(0.3, 0.9, 0.4, 1))
+		online_dot.add_theme_font_size_override("font_size", 10)
+		name_row.add_child(name_lbl)
+		name_row.add_child(online_dot)
+	else:
+		name_row.add_child(name_lbl)
 
-	vbox.add_child(name_lbl)
-	vbox.add_child(handle_lbl)
-	hbox.add_child(dot)
+	var sub_lbl := Label.new()
+	sub_lbl.text = contact.get("handle", "") if is_unlocked else "[ locked contact ]"
+	sub_lbl.add_theme_color_override("font_color", Color(0.38, 0.38, 0.5, 1))
+	sub_lbl.add_theme_font_size_override("font_size", 10)
+
+	vbox.add_child(name_row)
+	vbox.add_child(sub_lbl)
+	hbox.add_child(avatar)
 	hbox.add_child(vbox)
 	panel.add_child(hbox)
 
 	if is_unlocked:
+		panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		panel.gui_input.connect(func(event: InputEvent):
 			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-				_open_contact(contact)
+				if not _is_playing:
+					_open_contact(contact)
 		)
 
 	return panel
 
 
+# ── Conversation Flow ─────────────────────────────────────────────────────────
+
 func _open_contact(contact: Dictionary) -> void:
 	_active_contact = contact
 	empty_state.visible = false
+	header_panel.visible = true
+
 	chat_header_name.text = contact.get("display_name", "")
-	chat_header_status.text = "● " + contact.get("status", "offline")
 	chat_header_role.text = contact.get("role", "")
 
-	var status_color := Color(0.3, 0.8, 0.4, 1) if contact.get("status") == "online" else Color(0.5, 0.5, 0.3, 1)
-	chat_header_status.add_theme_color_override("font_color", status_color)
+	var online: bool = contact.get("status", "") == "online"
+	chat_header_status.text = "● online" if online else "● away"
+	chat_header_status.add_theme_color_override("font_color",
+		Color(0.3, 0.85, 0.4, 1) if online else Color(0.65, 0.55, 0.2, 1))
 
 	_clear_messages()
 	_clear_choices()
@@ -120,14 +147,12 @@ func _open_contact(contact: Dictionary) -> void:
 	var saved_state: String = _conversation_states.get(contact_id, "")
 
 	if saved_state == "":
-		# Start fresh — find the trigger:"start" conversation
 		var start_conv := _find_conversation(contact, "start")
-		if start_conv:
+		if not start_conv.is_empty():
 			await _play_conversation(contact, start_conv)
 	else:
-		# Resume from saved state
 		var conv := _find_conversation_by_id(contact, saved_state)
-		if conv:
+		if not conv.is_empty():
 			_show_choices(contact, conv)
 
 
@@ -138,46 +163,64 @@ func _find_conversation(contact: Dictionary, trigger: String) -> Dictionary:
 	return {}
 
 
-func _find_conversation_by_id(contact: Dictionary, id: String) -> Dictionary:
+func _find_conversation_by_id(contact: Dictionary, conv_id: String) -> Dictionary:
 	for conv in contact.get("conversations", []):
-		if conv.get("id", "") == id:
+		if conv.get("id", "") == conv_id:
 			return conv
 	return {}
 
 
 func _play_conversation(contact: Dictionary, conv: Dictionary) -> void:
+	_is_playing = true
 	_clear_choices()
-	var contact_id: String = contact.get("id", "")
-	_conversation_states[contact_id] = conv.get("id", "")
+	choices_label.visible = false
+	_conversation_states[contact.get("id", "")] = conv.get("id", "")
 
 	for msg in conv.get("messages", []):
-		var delay: float = msg.get("delay", 1.0)
-		await get_tree().create_timer(delay * 0.6).timeout
+		var text: String = msg.get("text", "")
+		var from: String = msg.get("from", "contact")
 
+		if from == "player":
+			_add_player_bubble(text)
+			await _scroll_to_bottom()
+			await get_tree().create_timer(0.4).timeout
+			continue
+
+		# Calculate realistic typing time based on message length
+		var char_count: int = text.length()
+		var typing_time: float = max(TYPING_INDICATOR_MIN, char_count * TYPING_DELAY_PER_CHAR)
+		typing_time = min(typing_time, 4.5)  # cap at 4.5s
+
+		# Show typing indicator
+		_show_typing_indicator(contact)
+		await _scroll_to_bottom()
+		await get_tree().create_timer(typing_time).timeout
+		_hide_typing_indicator()
+
+		# Show message
 		if msg.get("is_attachment", false):
 			_add_attachment_bubble(msg, contact)
-		elif msg.get("from", "") == "player":
-			_add_player_bubble(msg.get("text", ""))
 		else:
-			_add_contact_bubble(msg.get("text", ""), contact)
+			_add_contact_bubble(text, contact)
 
-		_scroll_to_bottom()
+		await _scroll_to_bottom()
+		await get_tree().create_timer(READ_PAUSE).timeout
 
-	# Check for clues unlocked by this conversation
-	var unlocks: String = conv.get("unlocks_clue", "")
-	if unlocks != "" and unlocks not in _discovered_clues:
-		_discovered_clues.append(unlocks)
-		emit_signal("clue_discovered", unlocks)
-		_add_system_bubble("[ CLUE DISCOVERED: " + unlocks + " ]")
+	# Fire conversation-level clue/contact unlocks
+	var unlocks_clue: String = conv.get("unlocks_clue", "")
+	if unlocks_clue != "" and unlocks_clue not in _discovered_clues:
+		_discovered_clues.append(unlocks_clue)
+		emit_signal("clue_discovered", unlocks_clue)
+		_add_system_message("[ clue discovered ]")
 
 	var unlocks_contact: String = conv.get("unlocks_contact", "")
 	if unlocks_contact != "" and unlocks_contact not in _unlocked_contacts:
 		_unlocked_contacts.append(unlocks_contact)
 		emit_signal("contact_unlocked", unlocks_contact)
 		_build_contact_list()
-		_add_system_bubble("[ NEW CONTACT AVAILABLE ]")
+		_add_system_message("[ new contact available ]")
 
-	# Show player choices
+	_is_playing = false
 	_show_choices(contact, conv)
 
 
@@ -186,167 +229,316 @@ func _show_choices(contact: Dictionary, conv: Dictionary) -> void:
 	var choices: Array = conv.get("player_choices", [])
 
 	if choices.is_empty():
+		choices_label.visible = false
 		return
 
+	choices_label.visible = true
+
 	for choice in choices:
-		var btn := Button.new()
-		btn.text = choice.get("text", "")
-		btn.flat = false
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		btn.add_theme_color_override("font_color", Color(0.75, 0.9, 1.0, 1))
-		btn.add_theme_font_size_override("font_size", 12)
-
-		var next_id: String = choice.get("leads_to", "")
-		var choice_text: String = choice.get("text", "")
-		var unlocks_clue: String = choice.get("unlocks_clue", "")
-		var unlocks_contact_id: String = choice.get("unlocks_contact", "")
-
-		btn.pressed.connect(func():
-			_clear_choices()
-			_add_player_bubble(choice_text)
-			_scroll_to_bottom()
-
-			if unlocks_clue != "" and unlocks_clue not in _discovered_clues:
-				_discovered_clues.append(unlocks_clue)
-				emit_signal("clue_discovered", unlocks_clue)
-
-			if unlocks_contact_id != "" and unlocks_contact_id not in _unlocked_contacts:
-				_unlocked_contacts.append(unlocks_contact_id)
-				emit_signal("contact_unlocked", unlocks_contact_id)
-				_build_contact_list()
-
-			if next_id != "":
-				var next_conv := _find_conversation_by_id(contact, next_id)
-				if next_conv:
-					await _play_conversation(contact, next_conv)
-		)
+		var btn := _make_choice_button(choice, contact)
 		choices_container.add_child(btn)
+
+
+func _make_choice_button(choice: Dictionary, contact: Dictionary) -> Button:
+	var btn := Button.new()
+	btn.text = choice.get("text", "")
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.add_theme_font_size_override("font_size", 13)
+	btn.add_theme_color_override("font_color", Color(0.8, 0.92, 1.0, 1))
+	btn.add_theme_color_override("font_hover_color", Color(1.0, 1.0, 1.0, 1))
+
+	var style_normal := StyleBoxFlat.new()
+	style_normal.bg_color = Color(0.08, 0.10, 0.14, 1)
+	style_normal.border_width_left = 2
+	style_normal.border_color = Color(0.2, 0.45, 0.7, 0.6)
+	style_normal.corner_radius_top_left = 4
+	style_normal.corner_radius_top_right = 4
+	style_normal.corner_radius_bottom_left = 4
+	style_normal.corner_radius_bottom_right = 4
+	style_normal.content_margin_left = 12
+	style_normal.content_margin_right = 12
+	style_normal.content_margin_top = 8
+	style_normal.content_margin_bottom = 8
+	btn.add_theme_stylebox_override("normal", style_normal)
+
+	var style_hover := StyleBoxFlat.new()
+	style_hover.bg_color = Color(0.10, 0.14, 0.20, 1)
+	style_hover.border_width_left = 2
+	style_hover.border_color = Color(0.3, 0.6, 1.0, 0.9)
+	style_hover.corner_radius_top_left = 4
+	style_hover.corner_radius_top_right = 4
+	style_hover.corner_radius_bottom_left = 4
+	style_hover.corner_radius_bottom_right = 4
+	style_hover.content_margin_left = 12
+	style_hover.content_margin_right = 12
+	style_hover.content_margin_top = 8
+	style_hover.content_margin_bottom = 8
+	btn.add_theme_stylebox_override("hover", style_hover)
+
+	var next_id: String = choice.get("leads_to", "")
+	var choice_text: String = choice.get("text", "")
+	var unlocks_clue: String = choice.get("unlocks_clue", "")
+	var unlocks_contact_id: String = choice.get("unlocks_contact", "")
+
+	btn.pressed.connect(func():
+		if _is_playing:
+			return
+		_clear_choices()
+		choices_label.visible = false
+		_add_player_bubble(choice_text)
+
+		# Fire choice-level unlocks immediately
+		if unlocks_clue != "" and unlocks_clue not in _discovered_clues:
+			_discovered_clues.append(unlocks_clue)
+			emit_signal("clue_discovered", unlocks_clue)
+
+		if unlocks_contact_id != "" and unlocks_contact_id not in _unlocked_contacts:
+			_unlocked_contacts.append(unlocks_contact_id)
+			emit_signal("contact_unlocked", unlocks_contact_id)
+			_build_contact_list()
+
+		await _scroll_to_bottom()
+
+		if next_id != "":
+			var next_conv := _find_conversation_by_id(contact, next_id)
+			if not next_conv.is_empty():
+				await _play_conversation(contact, next_conv)
+	)
+
+	return btn
+
+
+# ── Typing Indicator ──────────────────────────────────────────────────────────
+
+func _show_typing_indicator(contact: Dictionary) -> void:
+	if _typing_indicator != null:
+		return
+
+	var row := HBoxContainer.new()
+	row.name = "TypingRow"
+	row.add_theme_constant_override("separation", 8)
+
+	var avatar := ColorRect.new()
+	avatar.color = Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
+	avatar.custom_minimum_size = Vector2(8, 8)
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+
+	var bubble := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.09, 0.09, 0.14, 1)
+	style.border_width_left = 2
+	style.border_color = Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_right = 6
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	bubble.add_theme_stylebox_override("panel", style)
+
+	var dots := Label.new()
+	dots.text = "···"
+	dots.add_theme_color_override("font_color", Color(0.5, 0.5, 0.6, 1))
+	dots.add_theme_font_size_override("font_size", 16)
+	bubble.add_child(dots)
+
+	row.add_child(avatar)
+	row.add_child(bubble)
+	messages_container.add_child(row)
+	_typing_indicator = row
+
+	# Animate the dots
+	var tween := create_tween().set_loops()
+	tween.tween_callback(func(): dots.text = "·  ")
+	tween.tween_interval(0.3)
+	tween.tween_callback(func(): dots.text = "·· ")
+	tween.tween_interval(0.3)
+	tween.tween_callback(func(): dots.text = "···")
+	tween.tween_interval(0.3)
+	row.set_meta("tween", tween)
+
+
+func _hide_typing_indicator() -> void:
+	if _typing_indicator == null:
+		return
+	if _typing_indicator.has_meta("tween"):
+		(_typing_indicator.get_meta("tween") as Tween).kill()
+	_typing_indicator.queue_free()
+	_typing_indicator = null
 
 
 # ── Bubble Builders ───────────────────────────────────────────────────────────
 
 func _add_contact_bubble(text: String, contact: Dictionary) -> void:
+	var av_color := Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
+
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
+	row.add_theme_constant_override("separation", 8)
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	var dot := ColorRect.new()
-	dot.color = Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
-	dot.custom_minimum_size = Vector2(8, 8)
-	dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	# Avatar
+	var avatar := ColorRect.new()
+	avatar.color = av_color
+	avatar.custom_minimum_size = Vector2(8, 8)
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
-	var bubble := _make_bubble(text, Color(0.09, 0.09, 0.14, 1),
-		Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY),
-		Color(0.82, 0.82, 0.88, 1), false)
+	# Bubble — left aligned, max 65% width
+	var bubble := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.09, 0.09, 0.14, 1)
+	style.border_width_left = 2
+	style.border_color = av_color
+	style.corner_radius_top_left = 0
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+	style.content_margin_left = 12
+	style.content_margin_right = 14
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	bubble.add_theme_stylebox_override("panel", style)
+	bubble.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
-	row.add_child(dot)
+	var lbl := Label.new()
+	lbl.text = text
+	lbl.add_theme_color_override("font_color", Color(0.86, 0.86, 0.92, 1))
+	lbl.add_theme_font_size_override("font_size", 13)
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.custom_minimum_size = Vector2(60, 0)
+	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bubble.add_child(lbl)
+	bubble.custom_minimum_size = Vector2(0, 0)
+
+	# Spacer to limit bubble to ~60% width
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	row.add_child(avatar)
 	row.add_child(bubble)
+	row.add_child(spacer)
 	messages_container.add_child(row)
 
 
 func _add_player_bubble(text: String) -> void:
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_END
 
-	var bubble := _make_bubble(text, Color(0.08, 0.14, 0.10, 1),
-		Color(0.2, 1, 0.4, 0.6), Color(0.88, 0.95, 0.88, 1), true)
+	# Spacer on left to push right
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
+	var bubble := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.15, 0.10, 1)
+	style.border_width_right = 2
+	style.border_color = Color(0.2, 0.85, 0.45, 0.7)
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 0
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+	style.content_margin_left = 14
+	style.content_margin_right = 12
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	bubble.add_theme_stylebox_override("panel", style)
+	bubble.size_flags_horizontal = Control.SIZE_SHRINK_END
+
+	var lbl := Label.new()
+	lbl.text = text
+	lbl.add_theme_color_override("font_color", Color(0.88, 0.96, 0.88, 1))
+	lbl.add_theme_font_size_override("font_size", 13)
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.custom_minimum_size = Vector2(60, 0)
+	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bubble.add_child(lbl)
+
+	row.add_child(spacer)
 	row.add_child(bubble)
 	messages_container.add_child(row)
 
 
-func _add_system_bubble(text: String) -> void:
+func _add_system_message(text: String) -> void:
 	var lbl := Label.new()
 	lbl.text = text
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.add_theme_color_override("font_color", Color(0.4, 0.4, 0.5, 1))
+	lbl.add_theme_color_override("font_color", Color(0.28, 0.28, 0.4, 1))
 	lbl.add_theme_font_size_override("font_size", 10)
 	messages_container.add_child(lbl)
 
 
 func _add_attachment_bubble(msg: Dictionary, contact: Dictionary) -> void:
+	var av_color := Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
+	row.add_theme_constant_override("separation", 8)
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	var dot := ColorRect.new()
-	dot.color = Color.from_string(contact.get("avatar_color", "#888"), Color.GRAY)
-	dot.custom_minimum_size = Vector2(8, 8)
-	dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var avatar := ColorRect.new()
+	avatar.color = av_color
+	avatar.custom_minimum_size = Vector2(8, 8)
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
-	var panel := PanelContainer.new()
+	var bubble := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.07, 0.10, 0.07, 1)
+	style.bg_color = Color(0.07, 0.11, 0.08, 1)
 	style.border_width_left = 2
-	style.border_color = Color(0.2, 1, 0.4, 0.5)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
-	panel.add_theme_stylebox_override("panel", style)
-	panel.custom_minimum_size = Vector2(200, 0)
+	style.border_color = Color(0.2, 0.85, 0.45, 0.6)
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+	style.content_margin_left = 12
+	style.content_margin_right = 14
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	bubble.add_theme_stylebox_override("panel", style)
+	bubble.custom_minimum_size = Vector2(220, 0)
 
 	var vbox := VBoxContainer.new()
-	var icon_lbl := Label.new()
-	icon_lbl.text = "📎 " + msg.get("text", "[file]")
-	icon_lbl.add_theme_color_override("font_color", Color(0.4, 0.9, 0.6, 1))
-	icon_lbl.add_theme_font_size_override("font_size", 11)
+	vbox.add_theme_constant_override("separation", 4)
 
-	var clue_lbl := Label.new()
-	clue_lbl.text = "[ click to examine ]"
-	clue_lbl.add_theme_color_override("font_color", Color(0.4, 0.6, 0.4, 1))
-	clue_lbl.add_theme_font_size_override("font_size", 10)
+	var file_lbl := Label.new()
+	file_lbl.text = "  " + msg.get("text", "[file]")
+	file_lbl.add_theme_color_override("font_color", Color(0.45, 0.95, 0.65, 1))
+	file_lbl.add_theme_font_size_override("font_size", 12)
 
-	vbox.add_child(icon_lbl)
-	vbox.add_child(clue_lbl)
-	panel.add_child(vbox)
+	var tap_lbl := Label.new()
+	tap_lbl.text = "  tap to examine"
+	tap_lbl.add_theme_color_override("font_color", Color(0.35, 0.55, 0.4, 1))
+	tap_lbl.add_theme_font_size_override("font_size", 10)
+
+	vbox.add_child(file_lbl)
+	vbox.add_child(tap_lbl)
+	bubble.add_child(vbox)
 
 	var clue_id: String = msg.get("attachment_clue", "")
 	if clue_id != "":
-		panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		panel.gui_input.connect(func(event: InputEvent):
-			if event is InputEventMouseButton and event.pressed:
+		bubble.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		bubble.gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 				if clue_id not in _discovered_clues:
 					_discovered_clues.append(clue_id)
 					emit_signal("clue_discovered", clue_id)
-					_add_system_bubble("[ EVIDENCE COLLECTED: " + clue_id + " ]")
+					tap_lbl.text = "  evidence collected"
+					tap_lbl.add_theme_color_override("font_color", Color(0.2, 0.9, 0.4, 1))
 		)
 
-	row.add_child(dot)
-	row.add_child(panel)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	row.add_child(avatar)
+	row.add_child(bubble)
+	row.add_child(spacer)
 	messages_container.add_child(row)
 
 
-func _make_bubble(text: String, bg: Color, border: Color, font_color: Color, is_player: bool) -> PanelContainer:
-	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = bg
-	if is_player:
-		style.border_width_right = 2
-	else:
-		style.border_width_left = 2
-	style.border_color = border
-	style.corner_radius_top_left = 6
-	style.corner_radius_top_right = 6
-	style.corner_radius_bottom_left = 6 if is_player else 0
-	style.corner_radius_bottom_right = 0 if is_player else 6
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
-	panel.add_theme_stylebox_override("panel", style)
-	panel.custom_minimum_size = Vector2(80, 0)
-
-	var lbl := Label.new()
-	lbl.text = text
-	lbl.add_theme_color_override("font_color", font_color)
-	lbl.add_theme_font_size_override("font_size", 12)
-	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.custom_minimum_size = Vector2(100, 0)
-	panel.add_child(lbl)
-	return panel
-
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
 func _clear_messages() -> void:
+	_hide_typing_indicator()
 	for child in messages_container.get_children():
 		child.queue_free()
 
@@ -357,6 +549,7 @@ func _clear_choices() -> void:
 
 
 func _scroll_to_bottom() -> void:
+	await get_tree().process_frame
 	await get_tree().process_frame
 	messages_scroll.scroll_vertical = messages_scroll.get_v_scroll_bar().max_value
 
