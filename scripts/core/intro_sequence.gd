@@ -19,8 +19,8 @@ const DESKTOP_SCENE := "res://scenes/ui/desktop.tscn"
 @onready var char_right_name: Label = $CharacterLayer/CharRight/Name
 @onready var char_right_text: Label = $CharacterLayer/CharRight/Text
 @onready var skip_hint: Label = $SkipHint
-@onready var title_label: Label = $TitleLayer/TitleLabel
-@onready var subtitle_label: Label = $TitleLayer/SubtitleLabel
+@onready var title_label: Label = $TitleLayer/TitleVBox/TitleLabel
+@onready var subtitle_label: Label = $TitleLayer/TitleVBox/SubtitleLabel
 @onready var overlay: ColorRect = $Overlay
 
 var _sequence: Array = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://intro_sequence"]
+[gd_scene load_steps=5 format=3 uid="uid://intro_sequence"]
 
 [ext_resource type="Script" path="res://scripts/core/intro_sequence.gd" id="1"]
 
@@ -50,18 +50,6 @@ offset_top = 24.0
 offset_right = -24.0
 offset_bottom = -24.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="FeedLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-horizontal_scroll_mode = 0
-
-[node name="Feed" type="VBoxContainer" parent="FeedLayer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
 [node name="FeedHeader" type="Label" parent="FeedLayer"]
 layout_mode = 1
 anchor_right = 1.0
@@ -69,6 +57,19 @@ offset_bottom = 28.0
 theme_override_colors/font_color = Color(0.3, 0.3, 0.4, 1)
 theme_override_font_sizes/font_size = 11
 text = "Z  //  live feed"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="FeedLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+horizontal_scroll_mode = 0
+
+[node name="Feed" type="VBoxContainer" parent="FeedLayer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
 [node name="CharacterLayer" type="Control" parent="."]
 layout_mode = 1
@@ -80,24 +81,20 @@ offset_right = -12.0
 
 [node name="CharLeft" type="PanelContainer" parent="CharacterLayer"]
 layout_mode = 1
-anchor_top = 0.6
+anchor_top = 0.65
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 520.0
 offset_top = -12.0
 offset_bottom = -80.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_char_left")
 
-[node name="VBox" type="VBoxContainer" parent="CharacterLayer/CharLeft"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Name" type="Label" parent="CharacterLayer/CharLeft/VBox"]
+[node name="Name" type="Label" parent="CharacterLayer/CharLeft"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
 theme_override_font_sizes/font_size = 11
 text = "GHOST"
 
-[node name="Text" type="Label" parent="CharacterLayer/CharLeft/VBox"]
+[node name="Text" type="Label" parent="CharacterLayer/CharLeft"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
 theme_override_font_sizes/font_size = 14
@@ -105,27 +102,22 @@ autowrap_mode = 3
 
 [node name="CharRight" type="PanelContainer" parent="CharacterLayer"]
 layout_mode = 1
-anchor_left = 1.0
-anchor_top = 0.6
+anchor_left = 0.0
+anchor_top = 0.65
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -520.0
 offset_top = -12.0
 offset_bottom = -80.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_char_right")
 
-[node name="VBox" type="VBoxContainer" parent="CharacterLayer/CharRight"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Name" type="Label" parent="CharacterLayer/CharRight/VBox"]
+[node name="Name" type="Label" parent="CharacterLayer/CharRight"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
 theme_override_font_sizes/font_size = 11
 text = "[ UNKNOWN ]"
 horizontal_alignment = 2
 
-[node name="Text" type="Label" parent="CharacterLayer/CharRight/VBox"]
+[node name="Text" type="Label" parent="CharacterLayer/CharRight"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
 theme_override_font_sizes/font_size = 14
@@ -159,18 +151,18 @@ anchor_bottom = 0.65
 offset_left = 12.0
 offset_right = -12.0
 
-[node name="VBox" type="VBoxContainer" parent="TitleLayer"]
+[node name="TitleVBox" type="VBoxContainer" parent="TitleLayer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TitleLabel" type="Label" parent="TitleLayer/VBox"]
+[node name="TitleLabel" type="Label" parent="TitleLayer/TitleVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_font_sizes/font_size = 42
 text = ""
 horizontal_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="TitleLayer/VBox"]
+[node name="SubtitleLabel" type="Label" parent="TitleLayer/TitleVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.55, 1)
 theme_override_font_sizes/font_size = 15
