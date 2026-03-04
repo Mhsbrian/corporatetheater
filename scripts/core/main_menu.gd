@@ -5,6 +5,7 @@ extends Control
 @onready var btn_quit: Button = $CenterContainer/VBoxContainer/BtnQuit
 @onready var tagline: Label = $CenterContainer/VBoxContainer/Tagline
 
+const INTRO_SCENE = "res://scenes/menus/intro_sequence.tscn"
 const DESKTOP_SCENE = "res://scenes/ui/desktop.tscn"
 
 var _taglines: Array[String] = [
@@ -29,7 +30,7 @@ func _ready() -> void:
 
 
 func _on_new_game() -> void:
-	get_tree().change_scene_to_file(DESKTOP_SCENE)
+	get_tree().change_scene_to_file(INTRO_SCENE)
 
 
 func _on_continue() -> void:

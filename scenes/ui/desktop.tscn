@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://desktop"]
+[gd_scene load_steps=5 format=3 uid="uid://desktop"]
 
 [ext_resource type="Script" path="res://scripts/core/desktop.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taskbar"]
+bg_color = Color(0.05, 0.05, 0.08, 1)
+border_width_top = 1
+border_color = Color(0.15, 0.15, 0.25, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_zpanel"]
+bg_color = Color(0.055, 0.055, 0.09, 1)
+border_width_right = 1
+border_color = Color(0.12, 0.12, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_appwindow"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_notif"]
+bg_color = Color(0.0, 0.0, 0.0, 0.0)
 
 [node name="Desktop" type="Control"]
 layout_mode = 3
@@ -14,66 +30,116 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.06, 0.06, 0.09, 1)
+color = Color(0.04, 0.04, 0.07, 1)
+
+[node name="MainArea" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -36.0
+split_offset = 300
+dragger_visibility = 1
+
+[node name="ZPanel" type="Panel" parent="MainArea"]
+custom_minimum_size = Vector2(260, 0)
+theme_override_styles/panel = SubResource("StyleBoxFlat_zpanel")
+
+[node name="ZHeader" type="Label" parent="MainArea/ZPanel"]
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.25, 0.25, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "Z  //  live"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainArea/ZPanel"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+offset_left = 0.0
+offset_right = 0.0
+horizontal_scroll_mode = 0
+
+[node name="ZFeed" type="VBoxContainer" parent="MainArea/ZPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+offset_left = 0.0
+offset_right = 0.0
+
+[node name="AppWindow" type="Panel" parent="MainArea"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_appwindow")
+
+[node name="AppPlaceholder" type="Label" parent="MainArea/AppWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.2, 0.2, 0.3, 1)
+theme_override_font_sizes/font_size = 13
+text = "select an app from the taskbar below"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Taskbar" type="Panel" parent="."]
 layout_mode = 1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
+offset_top = -36.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_taskbar")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taskbar"]
-bg_color = Color(0.08, 0.08, 0.12, 1)
-border_width_top = 1
-border_color = Color(0.2, 1, 0.4, 0.3)
 
 [node name="TaskbarItems" type="HBoxContainer" parent="Taskbar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/separation = 4
+offset_left = 8.0
+offset_right = -8.0
+theme_override_constants/separation = 2
 
 [node name="BtnTerminal" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
-theme_override_font_sizes/font_size = 13
-text = "[TERM]"
-tooltip_text = "Terminal"
+theme_override_font_sizes/font_size = 12
+text = "[ TERM ]"
+flat = true
 
 [node name="BtnBrowser" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
-theme_override_font_sizes/font_size = 13
-text = "[BROWSER]"
-tooltip_text = "NEXUS Browser"
+theme_override_font_sizes/font_size = 12
+text = "[ BROWSER ]"
+flat = true
 
 [node name="BtnPhone" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.6, 1, 1)
-theme_override_font_sizes/font_size = 13
-text = "[ISPHERE]"
-tooltip_text = "iSphere"
+theme_override_font_sizes/font_size = 12
+text = "[ iSPHERE ]"
+flat = true
 
 [node name="BtnNetwork" type="Button" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
-theme_override_font_sizes/font_size = 13
-text = "[NETMAP]"
-tooltip_text = "Network Map"
+theme_override_font_sizes/font_size = 12
+text = "[ NETMAP ]"
+flat = true
+
+[node name="NotificationBar" type="Label" parent="Taskbar/TaskbarItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+text = ""
+horizontal_alignment = 0
 
 [node name="ClockLabel" type="Label" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_colors/font_color = Color(0.4, 0.4, 0.55, 1)
 theme_override_font_sizes/font_size = 12
 text = "00:00"
 horizontal_alignment = 2
-
-[node name="WindowArea" type="Control" parent="."]
-layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -40.0
