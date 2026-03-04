@@ -8,11 +8,6 @@
 
 config_version=5
 
-[autoload]
-
-GameState="*res://scripts/core/game_state.gd"
-AudioManager="*res://scripts/core/audio_manager.gd"
-
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -25,6 +20,15 @@ config/version="0.1.0"
 run/main_scene="res://scenes/menus/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/images/icon.svg"
+
+[autoload]
+
+GameState="*res://scripts/core/game_state.gd"
+AudioManager="*res://scripts/core/audio_manager.gd"
+
+[gui]
+
+theme/custom="res://assets/fonts/default_theme.tres"
 
 [display]
 

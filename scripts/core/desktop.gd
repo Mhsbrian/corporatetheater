@@ -169,7 +169,7 @@ func _build_post_card(post: Dictionary) -> PanelContainer:
 	var bottom_row := HBoxContainer.new()
 
 	var stats := Label.new()
-	stats.text = "♥ %s   ↺ %s" % [post.get("likes", "0"), post.get("reposts", "0")]
+	stats.text = "\u2665 %s   \u2B6F %s" % [post.get("likes", "0"), post.get("reposts", "0")]
 	stats.add_theme_color_override("font_color", Color(0.35, 0.35, 0.45, 1))
 	stats.add_theme_font_size_override("font_size", 10)
 	stats.size_flags_horizontal = Control.SIZE_EXPAND_FILL

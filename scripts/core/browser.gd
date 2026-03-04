@@ -62,7 +62,7 @@ func _build_site_list() -> void:
 	for site in _sites:
 		var locked: bool = site.get("locked", false)
 		var btn := Button.new()
-		btn.text = ("🔒 " if locked else "  ") + site.get("name", "")
+		btn.text = ("[locked] " if locked else "  ") + site.get("name", "")
 		btn.flat = true
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		var col := Color.from_string(site.get("color", "#888888"), Color.GRAY)

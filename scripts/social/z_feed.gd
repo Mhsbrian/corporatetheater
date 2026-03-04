@@ -51,7 +51,7 @@ func _load_placeholder_posts() -> void:
 			"handle": "@ClosedAI",
 			"verified": true,
 			"timestamp": "5h",
-			"content": "Proud to announce our continued partnership with Project Clear Sky. Together we are building infrastructure that protects citizens. Safety is not a feature — it is a foundation. 🌐",
+			"content": "Proud to announce our continued partnership with Project Clear Sky. Together we are building infrastructure that protects citizens. Safety is not a feature — it is a foundation.",
 			"likes": "31.7K",
 			"reposts": "8.4K",
 			"clue_id": "clue_clearsky_partnership"
@@ -159,7 +159,7 @@ func _build_post_card(post: Dictionary) -> Control:
 	likes.add_theme_font_size_override("font_size", 11)
 
 	var reposts := Label.new()
-	reposts.text = "  ↺ " + post.get("reposts", "0")
+	reposts.text = "  \u2B6F " + post.get("reposts", "0")
 	reposts.add_theme_color_override("font_color", Color(0.3, 0.8, 0.5, 1))
 	reposts.add_theme_font_size_override("font_size", 11)
 
