@@ -6,11 +6,11 @@ extends Control
 
 const SITES_DATA_PATH := "res://data/news/browser_sites.json"
 
-@onready var address_bar: LineEdit = $Chrome/AddressBar
-@onready var site_list: VBoxContainer = $SidePanel/SiteList
-@onready var content_area: ScrollContainer = $ContentArea
-@onready var content_body: VBoxContainer = $ContentArea/Body
-@onready var status_bar: Label = $Chrome/StatusBar
+@onready var address_bar: LineEdit = $Chrome/HBox/AddressBar
+@onready var site_list: VBoxContainer = $MainArea/SidePanel/SideScroll/SiteList
+@onready var content_area: ScrollContainer = $MainArea/ContentArea
+@onready var content_body: VBoxContainer = $MainArea/ContentArea/Body
+@onready var status_bar: Label = $StatusPanel/StatusBar
 
 var _sites: Array = []
 var _current_site: Dictionary = {}

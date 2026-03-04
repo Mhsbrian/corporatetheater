@@ -84,7 +84,7 @@ theme_override_font_sizes/font_size = 12
 text = "nexus://home"
 placeholder_text = "enter url..."
 
-[node name="StatusBar" type="Panel" parent="."]
+[node name="StatusPanel" type="Panel" parent="."]
 layout_mode = 1
 anchor_top = 1.0
 anchor_right = 1.0
@@ -92,7 +92,7 @@ anchor_bottom = 1.0
 offset_top = -20.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_statusbar")
 
-[node name="StatusBar" type="Label" parent="StatusBar"]
+[node name="StatusBar" type="Label" parent="StatusPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
