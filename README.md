@@ -27,19 +27,6 @@ Using a combination of terminal hacking, social media analysis, fake news invest
 - **Export:** HTML5 / WebAssembly
 - **Deploy:** GitHub Pages (auto via GitHub Actions)
 
-## Fake World
-
-| Real World | In-Game |
-|---|---|
-| X / Twitter | Z |
-| OpenAI | ClosedAI |
-| The Guardian | The Warden |
-| CNN | CNX |
-| Reddit | Redit |
-| iPhone | iSphere |
-| Government surveillance | Project Clear Sky / Horizon |
-| OpenAI model (secret) | VEIL |
-| Maxwell (CEO name) | Maxwell Holt |
 
 ## Project Structure
 
