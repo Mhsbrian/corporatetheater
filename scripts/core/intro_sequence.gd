@@ -212,7 +212,7 @@ func _typewrite(label: Label, text: String) -> void:
 	label.text = ""
 	for i in text.length():
 		label.text += text[i]
-		await get_tree().create_timer(0.025).timeout
+		await get_tree().create_timer(0.045).timeout
 
 
 func _build_feed_card(post: Dictionary) -> PanelContainer:

@@ -14,7 +14,7 @@ extends Control
 @onready var clock_label: Label = $Taskbar/TaskbarItems/ClockLabel
 @onready var app_window: Control = $MainArea/AppWindow
 @onready var z_feed_container: VBoxContainer = $MainArea/ZPanel/ScrollContainer/ZFeed
-@onready var notification_bar: Label = $NotificationBar
+@onready var notification_bar: Label = $Taskbar/TaskbarItems/NotificationBar
 
 var _feed_posts: Array = []
 var _feed_index: int = 0

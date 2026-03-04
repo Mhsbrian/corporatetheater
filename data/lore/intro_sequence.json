@@ -2,17 +2,17 @@
   {
     "type": "narration",
     "text": "It's 2:47 AM.",
-    "delay": 0.0
+    "delay": 2.5
   },
   {
     "type": "narration",
     "text": "You haven't slept in two days.",
-    "delay": 1.8
+    "delay": 2.8
   },
   {
     "type": "narration",
     "text": "The feed never stops. Neither do you.",
-    "delay": 1.8
+    "delay": 3.0
   },
   {
     "type": "feed_post",
@@ -23,17 +23,17 @@
     "content": "Excited to announce ClosedAI has officially signed the Global AI Safety Compact. We believe in a future where AI uplifts all of humanity — not just a privileged few. This is what we stand for. This is why we exist. #SafeAI #ClosedAI #ForEveryone",
     "likes": "142.3K",
     "reposts": "44.7K",
-    "delay": 1.2
+    "delay": 2.5
   },
   {
     "type": "narration",
     "text": "142,000 likes in three hours.",
-    "delay": 1.5
+    "delay": 2.5
   },
   {
     "type": "narration",
     "text": "Everyone believes him.",
-    "delay": 1.4
+    "delay": 2.8
   },
   {
     "type": "character",
@@ -41,7 +41,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "I don't.",
-    "delay": 1.2
+    "delay": 2.5
   },
   {
     "type": "feed_post",
@@ -52,7 +52,7 @@
     "content": "BREAKING: ClosedAI signs landmark AI safety agreement with federal government. Critics call it 'the most significant moment in tech policy history.' CEO Maxwell Holt calls it 'just the beginning.'",
     "likes": "28.1K",
     "reposts": "19.4K",
-    "delay": 1.0
+    "delay": 2.0
   },
   {
     "type": "feed_post",
@@ -63,7 +63,7 @@
     "content": "ClosedAI's Maxwell Holt: 'We are not here to win. We are here to serve.' The humble billionaire reshaping the future of artificial intelligence — full interview inside.",
     "likes": "11.2K",
     "reposts": "5.8K",
-    "delay": 0.8
+    "delay": 2.0
   },
   {
     "type": "character",
@@ -71,7 +71,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "Humble. Right.",
-    "delay": 1.0
+    "delay": 2.5
   },
   {
     "type": "character",
@@ -79,7 +79,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "Every outlet saying the same thing. Same words. Same angle. Same timing.",
-    "delay": 2.2
+    "delay": 3.5
   },
   {
     "type": "character",
@@ -87,7 +87,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "That's not journalism. That's a press release with bylines.",
-    "delay": 2.0
+    "delay": 3.2
   },
   {
     "type": "feed_post",
@@ -98,7 +98,7 @@
     "content": "To the other AI companies who chose not to sign: I understand. Change is hard. The door remains open. We are all in this together. 🤝",
     "likes": "89.4K",
     "reposts": "31.2K",
-    "delay": 1.0
+    "delay": 2.0
   },
   {
     "type": "character",
@@ -106,7 +106,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "Three companies declined to sign.",
-    "delay": 1.4
+    "delay": 2.8
   },
   {
     "type": "character",
@@ -114,7 +114,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "All three lost their government contracts within the week.",
-    "delay": 2.0
+    "delay": 3.5
   },
   {
     "type": "character",
@@ -122,17 +122,17 @@
     "portrait": "ghost",
     "side": "left",
     "text": "Coincidence.",
-    "delay": 1.0
+    "delay": 2.8
   },
   {
     "type": "narration",
     "text": "Sure.",
-    "delay": 0.8
+    "delay": 2.5
   },
   {
     "type": "system",
     "text": "NEW MESSAGE — encrypted — source unknown",
-    "delay": 1.5
+    "delay": 2.5
   },
   {
     "type": "character",
@@ -140,7 +140,7 @@
     "portrait": "unknown",
     "side": "right",
     "text": "You've been watching. Good.",
-    "delay": 1.5
+    "delay": 3.0
   },
   {
     "type": "character",
@@ -148,7 +148,7 @@
     "portrait": "unknown",
     "side": "right",
     "text": "ClosedAI's internal network has a crack in it. Small. But it's there.",
-    "delay": 2.2
+    "delay": 3.5
   },
   {
     "type": "character",
@@ -156,7 +156,7 @@
     "portrait": "unknown",
     "side": "right",
     "text": "What's inside will end them. Or it'll end you.",
-    "delay": 2.0
+    "delay": 3.5
   },
   {
     "type": "character",
@@ -164,7 +164,7 @@
     "portrait": "unknown",
     "side": "right",
     "text": "Your call.",
-    "delay": 1.2
+    "delay": 3.0
   },
   {
     "type": "character",
@@ -172,7 +172,7 @@
     "portrait": "ghost",
     "side": "left",
     "text": "...",
-    "delay": 2.0
+    "delay": 3.5
   },
   {
     "type": "character",
@@ -180,21 +180,21 @@
     "portrait": "ghost",
     "side": "left",
     "text": "I'm already in.",
-    "delay": 1.2
+    "delay": 2.5
   },
   {
     "type": "narration",
     "text": "CORPORATE THEATER",
-    "delay": 1.5,
+    "delay": 3.0,
     "is_title": true
   },
   {
     "type": "narration",
     "text": "the performance is about to begin.",
-    "delay": 1.2
+    "delay": 3.5
   },
   {
     "type": "end",
-    "delay": 2.0
+    "delay": 2.5
   }
 ]
