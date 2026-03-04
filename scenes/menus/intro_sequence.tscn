@@ -1,31 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://intro_sequence"]
+[gd_scene load_steps=9 format=3 uid="uid://intro_sequence"]
 
 [ext_resource type="Script" path="res://scripts/core/intro_sequence.gd" id="1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feed"]
-bg_color = Color(0, 0, 0, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.03, 0.03, 0.055, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_char_left"]
-bg_color = Color(0.06, 0.08, 0.06, 0.95)
-border_width_left = 3
-border_color = Color(0.2, 1, 0.4, 0.8)
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feed_panel"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+border_width_right = 1
+border_color = Color(0.1, 0.1, 0.18, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msg_panel"]
+bg_color = Color(0.04, 0.04, 0.07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msg_header"]
+bg_color = Color(0.055, 0.055, 0.09, 1)
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.2, 1)
+content_margin_left = 16
+content_margin_right = 16
+content_margin_top = 10
+content_margin_bottom = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble_ghost"]
+bg_color = Color(0.1, 0.18, 0.1, 1)
+border_width_left = 2
+border_color = Color(0.2, 0.85, 0.35, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 2
+content_margin_left = 12
+content_margin_right = 12
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble_unknown"]
+bg_color = Color(0.14, 0.1, 0.1, 1)
+border_width_right = 2
+border_color = Color(0.85, 0.3, 0.3, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 2
+content_margin_left = 12
+content_margin_right = 12
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_system_bubble"]
+bg_color = Color(0.07, 0.07, 0.12, 1)
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.15, 0.15, 0.28, 1)
 content_margin_left = 14
-content_margin_right = 18
-content_margin_top = 10
-content_margin_bottom = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_char_right"]
-bg_color = Color(0.08, 0.06, 0.06, 0.95)
-border_width_right = 3
-border_color = Color(1.0, 0.35, 0.35, 0.8)
-corner_radius_top_left = 8
-corner_radius_bottom_left = 8
-content_margin_left = 18
 content_margin_right = 14
-content_margin_top = 10
-content_margin_bottom = 12
+content_margin_top = 6
+content_margin_bottom = 6
 
 [node name="IntroSequence" type="Control"]
 layout_mode = 3
@@ -34,146 +65,143 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
-[node name="Skyline" type="ColorRect" parent="."]
+[node name="BG" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.03, 0.03, 0.06, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="FeedLayer" type="Control" parent="."]
+[node name="HSplit" type="HSplitContainer" parent="."]
 layout_mode = 1
-anchor_right = 0.42
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = -24.0
-
-[node name="FeedHeader" type="Label" parent="FeedLayer"]
-layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(0.3, 0.3, 0.4, 1)
+anchor_bottom = 1.0
+offset_bottom = -30.0
+split_offset = 420
+dragger_visibility = 2
+
+[node name="FeedPanel" type="Panel" parent="HSplit"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_feed_panel")
+
+[node name="FeedLayer" type="VBoxContainer" parent="HSplit/FeedPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+theme_override_constants/separation = 10
+
+[node name="FeedHeader" type="Label" parent="HSplit/FeedPanel/FeedLayer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.28, 0.28, 0.42, 1)
 theme_override_font_sizes/font_size = 11
 text = "Z  //  live feed"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="FeedLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 32.0
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplit/FeedPanel/FeedLayer"]
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Feed" type="VBoxContainer" parent="FeedLayer/ScrollContainer"]
+[node name="Feed" type="VBoxContainer" parent="HSplit/FeedPanel/FeedLayer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="CharacterLayer" type="Control" parent="."]
+[node name="MessengerPanel" type="Panel" parent="HSplit"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_msg_panel")
+
+[node name="MsgVBox" type="VBoxContainer" parent="HSplit/MessengerPanel"]
 layout_mode = 1
-anchor_left = 0.42
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
-offset_right = -12.0
+theme_override_constants/separation = 0
 
-[node name="CharLeft" type="PanelContainer" parent="CharacterLayer"]
+[node name="MsgHeader" type="Panel" parent="HSplit/MessengerPanel/MsgVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+theme_override_styles/panel = SubResource("StyleBoxFlat_msg_header")
+
+[node name="HeaderVBox" type="VBoxContainer" parent="HSplit/MessengerPanel/MsgVBox/MsgHeader"]
 layout_mode = 1
-anchor_top = 0.72
-anchor_right = 0.46
-anchor_bottom = 1.0
-offset_top = 0.0
-offset_bottom = -12.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_char_left")
-
-[node name="VBox" type="VBoxContainer" parent="CharacterLayer/CharLeft"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Name" type="Label" parent="CharacterLayer/CharLeft/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "GHOST"
-
-[node name="Text" type="Label" parent="CharacterLayer/CharLeft/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
-theme_override_font_sizes/font_size = 13
-autowrap_mode = 3
-
-[node name="CharRight" type="PanelContainer" parent="CharacterLayer"]
-layout_mode = 1
-anchor_left = 0.54
-anchor_top = 0.72
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.0
-offset_bottom = -12.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_char_right")
+theme_override_constants/separation = 2
 
-[node name="VBox" type="VBoxContainer" parent="CharacterLayer/CharRight"]
+[node name="AppLabel" type="Label" parent="HSplit/MessengerPanel/MsgVBox/MsgHeader/HeaderVBox"]
 layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Name" type="Label" parent="CharacterLayer/CharRight/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_colors/font_color = Color(0.22, 0.22, 0.38, 1)
 theme_override_font_sizes/font_size = 10
-text = "[ UNKNOWN ]"
-horizontal_alignment = 2
+text = "Z  //  messages"
 
-[node name="Text" type="Label" parent="CharacterLayer/CharRight/VBox"]
+[node name="ContactName" type="Label" parent="HSplit/MessengerPanel/MsgVBox/MsgHeader/HeaderVBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
-theme_override_font_sizes/font_size = 13
-autowrap_mode = 3
-horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.88, 0.88, 0.94, 1)
+theme_override_font_sizes/font_size = 14
+text = ""
+
+[node name="ContactStatus" type="Label" parent="HSplit/MessengerPanel/MsgVBox/MsgHeader/HeaderVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.75, 0.35, 1)
+theme_override_font_sizes/font_size = 10
+text = ""
+
+[node name="MsgScroll" type="ScrollContainer" parent="HSplit/MessengerPanel/MsgVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MsgContainer" type="VBoxContainer" parent="HSplit/MessengerPanel/MsgVBox/MsgScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+offset_left = 16.0
+offset_right = -16.0
+offset_top = 12.0
 
 [node name="NarrationLayer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchor_left = 0.42
+anchor_left = 0.0
+anchor_top = 0.85
 anchor_right = 1.0
-anchor_top = 0.3
-anchor_bottom = 0.6
-offset_left = 12.0
-offset_right = -12.0
+anchor_bottom = 1.0
+offset_bottom = -30.0
 
 [node name="NarrationLabel" type="Label" parent="NarrationLayer"]
 layout_mode = 2
-custom_minimum_size = Vector2(480, 0)
-theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
-theme_override_font_sizes/font_size = 16
+custom_minimum_size = Vector2(600, 0)
+theme_override_colors/font_color = Color(0.55, 0.55, 0.62, 1)
+theme_override_font_sizes/font_size = 13
 text = ""
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="TitleLayer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchor_left = 0.42
+anchors_preset = 15
 anchor_right = 1.0
-anchor_top = 0.35
-anchor_bottom = 0.65
-offset_left = 12.0
-offset_right = -12.0
+anchor_bottom = 1.0
 
 [node name="TitleVBox" type="VBoxContainer" parent="TitleLayer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="TitleLayer/TitleVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_font_sizes/font_size = 42
+theme_override_font_sizes/font_size = 48
 text = ""
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="TitleLayer/TitleVBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.5, 0.55, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.45, 0.45, 0.52, 1)
+theme_override_font_sizes/font_size = 14
 text = ""
 horizontal_alignment = 1
 
@@ -182,11 +210,11 @@ layout_mode = 1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -30.0
+offset_top = -28.0
 offset_right = -16.0
-offset_bottom = -8.0
-theme_override_colors/font_color = Color(0.35, 0.35, 0.4, 1)
-theme_override_font_sizes/font_size = 11
+offset_bottom = -6.0
+theme_override_colors/font_color = Color(0.28, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 10
 text = "SPACE / ENTER to skip"
 horizontal_alignment = 2
 
