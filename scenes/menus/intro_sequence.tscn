@@ -81,46 +81,46 @@ offset_right = -12.0
 
 [node name="CharLeft" type="PanelContainer" parent="CharacterLayer"]
 layout_mode = 1
-anchor_top = 0.65
-anchor_right = 0.48
+anchor_top = 0.72
+anchor_right = 0.46
 anchor_bottom = 1.0
-offset_top = -12.0
-offset_bottom = -80.0
+offset_top = 0.0
+offset_bottom = -12.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_char_left")
 
 [node name="Name" type="Label" parent="CharacterLayer/CharLeft"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "GHOST"
 
 [node name="Text" type="Label" parent="CharacterLayer/CharLeft"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
 [node name="CharRight" type="PanelContainer" parent="CharacterLayer"]
 layout_mode = 1
-anchor_left = 0.52
-anchor_top = 0.65
+anchor_left = 0.54
+anchor_top = 0.72
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -12.0
-offset_bottom = -80.0
+offset_top = 0.0
+offset_bottom = -12.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_char_right")
 
 [node name="Name" type="Label" parent="CharacterLayer/CharRight"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "[ UNKNOWN ]"
 horizontal_alignment = 2
 
 [node name="Text" type="Label" parent="CharacterLayer/CharRight"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.88, 0.88, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 horizontal_alignment = 2
 

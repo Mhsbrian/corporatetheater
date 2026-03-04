@@ -61,8 +61,8 @@ func _reset_ui() -> void:
 	subtitle_label.modulate.a = 0.0
 	overlay.modulate.a = 1.0
 	skip_hint.modulate.a = 0.0
-	char_left.visible = true
-	char_right.visible = true
+	char_left.visible = false
+	char_right.visible = false
 
 	# Fade in from black
 	var tween := create_tween()
@@ -173,14 +173,14 @@ func _show_character(step: Dictionary) -> void:
 	name_label.text = name_text
 	text_label.text = ""
 
-	# Dim the other character
-	if other.modulate.a > 0.1:
-		var dim := create_tween()
-		dim.tween_property(other, "modulate:a", 0.3, 0.2)
+	# Hide the inactive character completely so boxes never overlap
+	other.visible = false
 
 	# Fade in active character
+	container.visible = true
+	container.modulate.a = 0.0
 	var tween := create_tween()
-	tween.tween_property(container, "modulate:a", 1.0, 0.3)
+	tween.tween_property(container, "modulate:a", 1.0, 0.35)
 	await tween.finished
 
 	# Typewriter effect
