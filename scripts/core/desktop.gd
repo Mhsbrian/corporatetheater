@@ -40,6 +40,7 @@ func _ready() -> void:
 
 	GameState.clue_added.connect(_on_clue_added)
 	GameState.browser_navigate.connect(_on_browser_navigate)
+	GameState.contact_unlocked.connect(_on_contact_unlocked)
 
 	_load_feed()
 	_render_feed()
@@ -63,10 +64,16 @@ func _update_clock() -> void:
 
 # ── Clue / Notes Badge ────────────────────────────────────────────────────────
 
+func _on_contact_unlocked(contact_id: String) -> void:
+	_show_notification("new contact unlocked: " + contact_id.replace("_", " "))
+	AudioManager.play_contact_unlock()
+
+
 func _on_clue_added(note: Dictionary) -> void:
 	_notes_unseen += 1
 	_update_notes_badge()
 	_show_notification("evidence logged: " + note.get("title", ""))
+	AudioManager.play_clue_sting()
 
 
 func _update_notes_badge() -> void:

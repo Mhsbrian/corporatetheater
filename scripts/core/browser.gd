@@ -52,6 +52,7 @@ func _on_clue_added(clue: Dictionary) -> void:
 	if did_unlock:
 		_build_site_list()
 		_show_darkpulse_notification()
+		AudioManager.play_darkpulse_unlock()
 
 
 func _build_site_list() -> void:

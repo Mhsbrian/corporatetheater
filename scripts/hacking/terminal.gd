@@ -140,6 +140,7 @@ func _on_command_submitted(text: String) -> void:
 	var trimmed := text.strip_edges()
 	if trimmed.is_empty():
 		return
+	AudioManager.play_terminal_keypress()
 	_add_to_history(trimmed)
 	_print_line("> " + trimmed, Color(0.2, 1, 0.4, 1))
 	_parse_command(trimmed)
