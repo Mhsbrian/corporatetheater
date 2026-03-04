@@ -8,10 +8,6 @@
 
 config_version=5
 
-[autoload]
-
-GameState="*res://scripts/core/game_state.gd"
-
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -29,7 +25,6 @@ config/icon="res://assets/images/icon.svg"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/initial_screen=0
 window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"

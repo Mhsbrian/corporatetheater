@@ -128,6 +128,27 @@ const CLUE_DEFINITIONS: Dictionary = {
 		"summary": "The government refers to Horizon's influence operations as 'soft stabilization.' ClosedAI internally calls it 'prosocial infrastructure.' Both are euphemisms for behavioral manipulation.",
 		"source": "DarkPulse / Anonymous",
 		"severity": "critical"
+	},
+	"clue_elena_report_full": {
+		"title": "Elena's Safety Report — Received",
+		"category": "evidence",
+		"summary": "Elena's 12-page internal safety evaluation report. Pages 8–11 document a deliberate gap in persuasion testing. Signed rejection from Maxwell Holt's office citing 'out of scope.' This is the clearest internal admission that the gap was known and ignored.",
+		"source": "Z Messenger / Elena V.",
+		"severity": "critical"
+	},
+	"clue_priya_logs_possible": {
+		"title": "Priya Nair — API Logs May Exist",
+		"category": "evidence",
+		"summary": "Priya Nair emailed herself server logs showing 'client_horizon_gen' generating synthetic social content at scale. She is determining whether sharing them violates her NDA. If she sends them, this is primary evidence of VEIL deployment.",
+		"source": "Z Messenger / Priya N.",
+		"severity": "critical"
+	},
+	"clue_clearsky_escort": {
+		"title": "Project Clear Sky — Personnel Presence",
+		"category": "organizations",
+		"summary": "The two people who escorted Priya Nair out of ClosedAI wore Project Clear Sky lanyards — not ClosedAI badges. Government personnel were directly involved in removing an engineer who filed an AI misconduct report.",
+		"source": "Z Messenger / Priya N.",
+		"severity": "critical"
 	}
 }
 

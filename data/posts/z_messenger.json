@@ -461,6 +461,42 @@
           ]
         },
         {
+          "id": "elena_ch4_what_reported",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "She found evidence that the models were being used to generate content for third-party platforms.",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "Not labeled as AI. Formatted as grassroots posts, comments, reviews.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "She had internal request logs. API calls from an anonymous internal client to a production model, thousands of them per day.",
+              "delay": 2.2
+            },
+            {
+              "from": "elena",
+              "text": "She filed it as a content policy violation.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "Two weeks later she was gone.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you know what happened to her?",
+              "leads_to": "elena_ch4_colleague"
+            }
+          ]
+        },
+        {
           "id": "elena_ch4_colleague",
           "messages": [
             {
@@ -516,7 +552,12 @@
               "delay": 1.2
             }
           ],
-          "player_choices": []
+          "player_choices": [
+            {
+              "text": "[ Check in — did you get it out? ]",
+              "leads_to": "elena_ch6_report_followup"
+            }
+          ]
         },
         {
           "id": "elena_ch5_find_marcus",
@@ -570,7 +611,148 @@
             }
           ],
           "player_choices": [],
-          "unlocks_clue": "clue_priya_contact"
+          "unlocks_clue": "clue_priya_contact",
+          "unlocks_contact": "priya_nair"
+        },
+        {
+          "id": "elena_ch6_report_followup",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I got it out.",
+              "delay": 0.9
+            },
+            {
+              "from": "elena",
+              "text": "Took me four days. I went through the fire exit stairwell where there are no cameras on floor 3.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "I'm sending the photos now. My hands are shaking.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "[file attached: safety_eval_report_partial.img]",
+              "delay": 1.0,
+              "is_attachment": true,
+              "attachment_clue": "clue_elena_report_full"
+            },
+            {
+              "from": "elena",
+              "text": "Pages 8 through 11 are the critical ones. The gap in persuasion evaluation. I laid it out clearly.",
+              "delay": 2.0
+            },
+            {
+              "from": "elena",
+              "text": "The response from Maxwell's office said it was 'outside scope.' Read that in context of everything else.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "This is solid. You did the right thing.",
+              "leads_to": "elena_ch7_comfort"
+            },
+            {
+              "text": "Are you still safe?",
+              "leads_to": "elena_ch7_safe"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch7_comfort",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I don't know if it matters.",
+              "delay": 1.2
+            },
+            {
+              "from": "elena",
+              "text": "I keep thinking about how much I wanted to believe in this company.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "The interviews were beautiful. Maxwell talked about democratizing intelligence. About lifting people up.",
+              "delay": 1.8
+            },
+            {
+              "from": "elena",
+              "text": "I think he believes it. That's the scariest part.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "He thinks what he's doing is good.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What are you going to do now?",
+              "leads_to": "elena_ch8_future"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch7_safe",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "For now.",
+              "delay": 0.9
+            },
+            {
+              "from": "elena",
+              "text": "I've been careful. Different device. New SIM.",
+              "delay": 1.3
+            },
+            {
+              "from": "elena",
+              "text": "But they have tools I don't fully understand. That's the honest answer.",
+              "delay": 1.6
+            },
+            {
+              "from": "elena",
+              "text": "If I go quiet suddenly — that means something.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What are you going to do now?",
+              "leads_to": "elena_ch8_future"
+            }
+          ]
+        },
+        {
+          "id": "elena_ch8_future",
+          "messages": [
+            {
+              "from": "elena",
+              "text": "I have enough saved to leave the country for a few months.",
+              "delay": 1.4
+            },
+            {
+              "from": "elena",
+              "text": "I haven't decided. Maybe I just disappear too.",
+              "delay": 1.5
+            },
+            {
+              "from": "elena",
+              "text": "Or maybe I don't.",
+              "delay": 1.0
+            },
+            {
+              "from": "elena",
+              "text": "I'm watching what you do with what I've given you.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": []
         }
       ]
     },
@@ -835,6 +1017,415 @@
               "from": "marcus",
               "text": "Please don't contact me again.",
               "delay": 1.5
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "One more thing. What is VEIL exactly?",
+              "leads_to": "marcus_ch6_veil"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch6_veil",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "I told you not to contact me.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "...",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "VEIL is a fine-tuned variant of their largest internal model. Not the one you can pay for. Not the one they demo at conferences.",
+              "delay": 2.2
+            },
+            {
+              "from": "marcus",
+              "text": "It was optimized specifically for persuasion tasks. Not harmful content — nothing that would trip a filter.",
+              "delay": 2.0
+            },
+            {
+              "from": "marcus",
+              "text": "Subtle persuasion. The kind that sounds like it came from a person. That feels earned.",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "You know how you read something and something shifts in you slightly but you can't explain why?",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "VEIL is what wrote it.",
+              "delay": 1.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "How widespread is the deployment?",
+              "leads_to": "marcus_ch7_scale",
+              "unlocks_clue": "clue_veil_model"
+            }
+          ]
+        },
+        {
+          "id": "marcus_ch7_scale",
+          "messages": [
+            {
+              "from": "marcus",
+              "text": "I don't know. That wasn't my part.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "But the ingestion pipeline I built was scaled for national traffic.",
+              "delay": 1.6
+            },
+            {
+              "from": "marcus",
+              "text": "Not thousands of people. Millions.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "I need you to understand what you're holding. This isn't a corporate misconduct story.",
+              "delay": 1.8
+            },
+            {
+              "from": "marcus",
+              "text": "This is infrastructure. It's already running.",
+              "delay": 1.4
+            },
+            {
+              "from": "marcus",
+              "text": "I have a daughter. She's five. I think about her reading things that VEIL wrote, and not knowing, and it changing who she becomes.",
+              "delay": 2.5
+            },
+            {
+              "from": "marcus",
+              "text": "Don't let this disappear.",
+              "delay": 1.2
+            },
+            {
+              "from": "marcus",
+              "text": "[ account goes offline ]",
+              "delay": 2.0
+            }
+          ],
+          "player_choices": []
+        }
+      ]
+    },
+    {
+      "id": "priya_nair",
+      "handle": "@p.nair.personal",
+      "display_name": "Priya N.",
+      "role": "Former Senior Engineer, ClosedAI (Signed NDA)",
+      "avatar_color": "#e8a045",
+      "status": "away",
+      "unlocked": false,
+      "unlock_clue": "clue_priya_contact",
+      "profile_note": "Completely scrubbed from public internet. No social presence. Email only.",
+      "conversations": [
+        {
+          "id": "priya_ch1",
+          "trigger": "start",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "I shouldn't be responding to this.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "Elena gave you this address.",
+              "delay": 1.2
+            },
+            {
+              "from": "priya",
+              "text": "I signed an agreement. I'm not supposed to discuss anything relating to my time at ClosedAI.",
+              "delay": 1.8
+            },
+            {
+              "from": "priya",
+              "text": "You need to understand the risk I'm taking just by opening this message.",
+              "delay": 1.5
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Elena says she's sorry she didn't speak up sooner.",
+              "leads_to": "priya_ch2_elena"
+            },
+            {
+              "text": "I'm not here to get you in trouble.",
+              "leads_to": "priya_ch2_safe"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch2_elena",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "...",
+              "delay": 2.5
+            },
+            {
+              "from": "priya",
+              "text": "She's still there.",
+              "delay": 1.0
+            },
+            {
+              "from": "priya",
+              "text": "They didn't get to her yet.",
+              "delay": 1.2
+            },
+            {
+              "from": "priya",
+              "text": "Tell her to leave. Tell her what happened to me doesn't have to happen to her.",
+              "delay": 1.6
+            },
+            {
+              "from": "priya",
+              "text": "The money isn't worth it. Nothing they offer you is worth it.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What did they offer you?",
+              "leads_to": "priya_ch3_offer"
+            },
+            {
+              "text": "What did you find that made them do this?",
+              "leads_to": "priya_ch3_found"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch2_safe",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "Everyone says that.",
+              "delay": 1.0
+            },
+            {
+              "from": "priya",
+              "text": "The lawyers said that. The HR mediator said that.",
+              "delay": 1.3
+            },
+            {
+              "from": "priya",
+              "text": "And then they handed me a twelve-page agreement and a check.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "I'm past trusting reassurances.",
+              "delay": 1.2
+            },
+            {
+              "from": "priya",
+              "text": "But I'm still responding. Draw your own conclusions.",
+              "delay": 1.4
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What did you find that made them do this?",
+              "leads_to": "priya_ch3_found"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch3_offer",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "Fourteen months salary. Full vesting of my equity cliff. A glowing reference they'd never actually give.",
+              "delay": 1.8
+            },
+            {
+              "from": "priya",
+              "text": "And no public record of why I left.",
+              "delay": 1.3
+            },
+            {
+              "from": "priya",
+              "text": "I had student loans. I have family depending on me.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "I told myself someone else would find it. Someone with nothing to lose.",
+              "delay": 1.8
+            },
+            {
+              "from": "priya",
+              "text": "...",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "And here you are.",
+              "delay": 1.0
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "What did you find?",
+              "leads_to": "priya_ch3_found"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch3_found",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "API request logs. I was auditing our rate limiting system.",
+              "delay": 1.4
+            },
+            {
+              "from": "priya",
+              "text": "There was an internal client ID I didn't recognize. 'client_horizon_gen'.",
+              "delay": 1.6
+            },
+            {
+              "from": "priya",
+              "text": "It was making generation requests at a scale that didn't match any product we had.",
+              "delay": 1.7
+            },
+            {
+              "from": "priya",
+              "text": "I pulled the output samples. They were... text. Lots of text. Formatted like social posts, news comments, product reviews.",
+              "delay": 2.0
+            },
+            {
+              "from": "priya",
+              "text": "The distribution target fields were set to real platform IDs. Z. Redit. iSphere App Store.",
+              "delay": 1.8
+            },
+            {
+              "from": "priya",
+              "text": "I filed an internal report. Two weeks later I was walked to my desk at 6pm by two people I had never seen before.",
+              "delay": 2.2
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you still have the logs?",
+              "leads_to": "priya_ch4_logs"
+            },
+            {
+              "text": "Who were the two people?",
+              "leads_to": "priya_ch4_people"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch4_people",
+          "unlocks_clue": "clue_clearsky_escort",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "I don't know. They weren't ClosedAI badges.",
+              "delay": 1.3
+            },
+            {
+              "from": "priya",
+              "text": "One of them sat and watched while I packed. The other stood at the door.",
+              "delay": 1.6
+            },
+            {
+              "from": "priya",
+              "text": "They didn't introduce themselves. They didn't say anything.",
+              "delay": 1.4
+            },
+            {
+              "from": "priya",
+              "text": "I remember one of them had a lanyard. The logo on it was Project Clear Sky.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Do you still have the logs?",
+              "leads_to": "priya_ch4_logs"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch4_logs",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "I emailed them to a personal account the morning I filed the report.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "I don't know why. Some instinct.",
+              "delay": 1.2
+            },
+            {
+              "from": "priya",
+              "text": "The NDA covers internal documents. But these are server logs. System output.",
+              "delay": 1.6
+            },
+            {
+              "from": "priya",
+              "text": "I've had lawyers tell me that's a gray area. Very gray.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "I'm going to think about this. Give me a few days.",
+              "delay": 1.3
+            },
+            {
+              "from": "priya",
+              "text": "If you don't hear from me — assume they found out I talked to you.",
+              "delay": 1.8
+            }
+          ],
+          "player_choices": [
+            {
+              "text": "Take your time. I'll be here.",
+              "leads_to": "priya_ch5_wait",
+              "unlocks_clue": "clue_priya_logs_possible"
+            }
+          ]
+        },
+        {
+          "id": "priya_ch5_wait",
+          "messages": [
+            {
+              "from": "priya",
+              "text": "One more thing.",
+              "delay": 1.2
+            },
+            {
+              "from": "priya",
+              "text": "Whatever you're building — whatever you're going to do with all of this.",
+              "delay": 1.5
+            },
+            {
+              "from": "priya",
+              "text": "Make it count.",
+              "delay": 1.0
+            },
+            {
+              "from": "priya",
+              "text": "I gave up a lot to stay quiet. I need it to have meant something — even if that something is someone else being louder than I was.",
+              "delay": 2.2
             }
           ],
           "player_choices": []
