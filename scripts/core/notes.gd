@@ -33,7 +33,7 @@ func _build_tabs() -> void:
 
 	var all_categories := ["all"] + GameState.CATEGORIES
 	for cat in all_categories:
-		var label := "ALL" if cat == "all" else GameState.CATEGORY_LABELS.get(cat, cat.to_upper())
+		var label: String = "ALL" if cat == "all" else GameState.CATEGORY_LABELS.get(cat, cat.to_upper()) as String
 		var btn := _make_tab_btn(label, cat)
 		tab_bar.add_child(btn)
 		_tab_buttons[cat] = btn
