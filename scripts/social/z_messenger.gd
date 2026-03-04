@@ -407,14 +407,13 @@ func _add_contact_bubble(text: String, contact: Dictionary) -> void:
 	lbl.add_theme_color_override("font_color", Color(0.86, 0.86, 0.92, 1))
 	lbl.add_theme_font_size_override("font_size", 13)
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.custom_minimum_size = Vector2(60, 0)
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bubble.add_child(lbl)
-	bubble.custom_minimum_size = Vector2(0, 0)
+	bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	# Spacer to limit bubble to ~60% width
+	# Small spacer so bubble takes ~85% of width
 	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	spacer.custom_minimum_size = Vector2(60, 0)
 
 	row.add_child(avatar)
 	row.add_child(bubble)
@@ -428,9 +427,9 @@ func _add_player_bubble(text: String) -> void:
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_END
 
-	# Spacer on left to push right
+	# Small spacer on left so bubble takes ~85% of width
 	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	spacer.custom_minimum_size = Vector2(60, 0)
 
 	var bubble := PanelContainer.new()
 	var style := StyleBoxFlat.new()
@@ -453,9 +452,9 @@ func _add_player_bubble(text: String) -> void:
 	lbl.add_theme_color_override("font_color", Color(0.88, 0.96, 0.88, 1))
 	lbl.add_theme_font_size_override("font_size", 13)
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.custom_minimum_size = Vector2(60, 0)
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bubble.add_child(lbl)
+	bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	row.add_child(spacer)
 	row.add_child(bubble)
