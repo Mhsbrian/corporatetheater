@@ -46,11 +46,11 @@ const EDGES: Array = [
 	["closedai-internal.net", "clearsky-relay.gov"]
 ]
 
-@onready var info_panel: PanelContainer = $InfoPanel
-@onready var info_title: Label = $InfoPanel/VBox/Title
-@onready var info_sub: Label = $InfoPanel/VBox/Sub
-@onready var info_status: Label = $InfoPanel/VBox/Status
-@onready var info_close: Button = $InfoPanel/VBox/CloseBtn
+@onready var info_panel: PanelContainer = $GraphArea/InfoPanel
+@onready var info_title: Label = $GraphArea/InfoPanel/VBox/Title
+@onready var info_sub: Label = $GraphArea/InfoPanel/VBox/Sub
+@onready var info_status: Label = $GraphArea/InfoPanel/VBox/Status
+@onready var info_close: Button = $GraphArea/InfoPanel/VBox/CloseBtn
 @onready var graph_area: Control = $GraphArea
 
 var _node_positions: Dictionary = {}  # id -> Vector2 (absolute px)
@@ -218,7 +218,7 @@ func _select_node(node_id: String) -> void:
 
 	if not accessible:
 		var req: String = nd.get("requires_clue", "")
-		var clue_title: String = GameState.CLUE_DEFINITIONS.get(req, {}).get("title", req)
+		var clue_title: String = (GameState.CLUE_DEFINITIONS.get(req, {}) as Dictionary).get("title", req) as String
 		info_status.text = "LOCKED\nRequires: %s" % clue_title
 		info_status.add_theme_color_override("font_color", Color(0.5, 0.5, 0.55, 1))
 	elif visited:
