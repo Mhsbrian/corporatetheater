@@ -6,8 +6,17 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  export-and-deploy:
+  export:
     name: Export Godot Project
     runs-on: ubuntu-latest
     container:
@@ -32,9 +41,20 @@ jobs:
       - name: Export HTML5
         run: godot --headless --verbose --export-release "HTML5" builds/web/index.html
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: builds/web
-          force_orphan: true
+          path: builds/web
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: export
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@v4
