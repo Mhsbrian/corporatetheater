@@ -87,7 +87,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 32)
 theme_override_styles/panel = SubResource("StyleBoxFlat_tabbar")
 
-[node name="TabBar" type="HBoxContainer" parent="VBox/TabBar"]
+[node name="TabButtons" type="HBoxContainer" parent="VBox/TabBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

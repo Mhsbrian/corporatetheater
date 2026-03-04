@@ -5,7 +5,7 @@ extends Control
 # Clues are sorted into tabs by category.
 # Each entry shows severity, source, summary.
 
-@onready var tab_bar: HBoxContainer = $VBox/TabBar
+@onready var tab_bar: HBoxContainer = $VBox/TabBar/TabButtons
 @onready var entries_scroll: ScrollContainer = $VBox/EntriesScroll
 @onready var entries_container: VBoxContainer = $VBox/EntriesScroll/Entries
 @onready var detail_panel: Panel = $VBox/DetailPanel
