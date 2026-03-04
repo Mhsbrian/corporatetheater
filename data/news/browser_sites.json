@@ -138,6 +138,7 @@
           "headline": "Vertex Mind Files for Bankruptcy — Months After Declining AI Safety Compact",
           "author": "Jess Marlowe",
           "timestamp": "6 hours ago",
+          "unlocks_clue": "clue_vertex_collapse",
           "body": "Vertex Mind, one of three AI companies that declined to sign ClosedAI's Global AI Safety Compact, has filed for Chapter 11 bankruptcy protection.\n\nThe company, once valued at $800 million, cited 'insurmountable regulatory headwinds and loss of key government contracts' as primary factors.\n\nVertex Mind CEO Sandra Okafor did not mince words in her statement: 'We were systematically excluded from every major government procurement process following our decision not to sign the Compact. I cannot prove why. I can only describe what happened.'\n\nClosedAI's spokesperson responded: 'We wish Vertex Mind well. Competition makes everyone better. We hope they find a path forward.'\n\nParallax AI, also a Compact holdout, announced last week it was laying off 40% of its staff. NeuralForge has not commented publicly but has reportedly entered acquisition talks.\n\nAcquisition talks with ClosedAI.",
           "comments": [
             {
@@ -186,6 +187,7 @@
           "headline": "r/conspiracy_or_not — I work at ClosedAI. I can't say much. But something is very wrong.",
           "author": "throwaway_cai_emp",
           "timestamp": "14 hours ago",
+          "unlocks_clue": "clue_horizon_internal_name",
           "body": "Throwaway for obvious reasons. Long time lurker.\n\nI've worked at ClosedAI for two years in a mid-level engineering role. I signed an NDA that would ruin my life if I violated it materially, so I'm going to be careful here.\n\nI'm not going to tell you what Project Clear Sky does. I genuinely don't know the full scope. What I can tell you is what I've observed.\n\nSix months ago, a colleague of mine — someone I respected enormously, smart, careful, ethical — raised a concern internally about data handling practices. Used the official channel. The one Maxwell talks about in every interview. 'Dissent is data. We learn from disagreement.'\n\nThree weeks later she was on a performance improvement plan. Six weeks after that she was gone. The official reason was 'culture fit.' I've never heard that phrase used to describe her before or since.\n\nI'm not saying they silenced her. I'm saying the timing is what it is.\n\nI'm not leaving yet because I have a family. But I think about it every day.\n\nIf anyone is looking into this, there are threads worth pulling. The Clear Sky team is called 'Horizon' internally. That's all I'll say.",
           "comments": [
             {
@@ -270,6 +272,7 @@
           "headline": "Contract CAI-GOV-0091-HS: What Horizon Actually Does",
           "author": "Anonymous Contributor",
           "timestamp": "unknown",
+          "unlocks_clue": "clue_soft_stabilization",
           "body": "This document was provided to us by a source inside ClosedAI. We have verified its authenticity through three independent means we will not disclose.\n\nProject Horizon — the operational name for the Clear Sky initiative — is a real-time behavioral prediction and influence system. It does not merely monitor communications. It models them.\n\nUsing ClosedAI's VEIL language model (not publicly disclosed, not the same model sold commercially), Horizon ingests data from partnered platforms — social media, search, financial transactions, location data purchased from third-party brokers — and constructs predictive behavioral profiles for flagged individuals.\n\n'Flagged' does not mean criminal. It means statistically deviant from expected behavioral norms.\n\nThe system can then — and this is the part that should alarm you — generate synthetic content designed to nudge flagged individuals toward less deviant behavior. This content is delivered through normal channels. A search result. A suggested article. A targeted advertisement. A recommended Z post.\n\nYou will not know it is happening.\n\nThe government calls this 'soft stabilization.' ClosedAI calls it 'prosocial infrastructure.'\n\nMaxwell Holt has personally presented this system to the National Security Council. He called it 'the most important thing we have ever built.'\n\nHe was not wrong.",
           "comments": []
         }

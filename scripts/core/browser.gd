@@ -15,14 +15,15 @@ const SITES_DATA_PATH := "res://data/news/browser_sites.json"
 var _sites: Array = []
 var _current_site: Dictionary = {}
 var _current_article: Dictionary = {}
-var _discovered_clues: Array[String] = []
 
 
 func _ready() -> void:
 	_load_sites()
+	_apply_gamestate_unlocks()
 	_build_site_list()
 	_show_home()
 	address_bar.text_submitted.connect(_on_address_submitted)
+	GameState.clue_added.connect(_on_clue_added)
 
 
 func _load_sites() -> void:
@@ -32,6 +33,25 @@ func _load_sites() -> void:
 	var json := JSON.new()
 	if json.parse(file.get_as_text()) == OK:
 		_sites = json.data.get("sites", [])
+
+
+func _apply_gamestate_unlocks() -> void:
+	for site in _sites:
+		var req: String = site.get("unlock_clue", "")
+		if req != "" and req in GameState.discovered_clues:
+			site["locked"] = false
+
+
+func _on_clue_added(clue: Dictionary) -> void:
+	var clue_id: String = clue.get("clue_id", "")
+	var did_unlock := false
+	for site in _sites:
+		if site.get("unlock_clue", "") == clue_id and site.get("locked", false):
+			site["locked"] = false
+			did_unlock = true
+	if did_unlock:
+		_build_site_list()
+		_show_darkpulse_notification()
 
 
 func _build_site_list() -> void:
@@ -108,6 +128,13 @@ func _open_article(article: Dictionary, site: Dictionary) -> void:
 	_current_article = article
 	address_bar.text = site.get("url", "") + "/" + article.get("id", "")
 	_set_status("reading — " + article.get("headline", ""))
+	GameState.mark_article_visited(article.get("id", ""))
+
+	# Discover any clue tied to reading this article
+	var article_clue: String = article.get("unlocks_clue", "")
+	if article_clue != "" and article_clue not in GameState.discovered_clues:
+		GameState.discover_clue(article_clue)
+
 	_clear_content()
 
 	# Back button
@@ -236,14 +263,14 @@ func _on_address_submitted(url: String) -> void:
 	_set_status("could not resolve: " + url)
 
 
-func unlock_site(clue_id: String) -> void:
-	_discovered_clues.append(clue_id)
-	for site in _sites:
-		if site.get("unlock_clue", "") == clue_id:
-			site["locked"] = false
-	_build_site_list()
-	if _current_site.is_empty():
-		_show_home()
+func _show_darkpulse_notification() -> void:
+	# Brief system message in current content view
+	var lbl := Label.new()
+	lbl.text = "\n  [ new site unlocked — check sidebar ]\n"
+	lbl.add_theme_color_override("font_color", Color(0.2, 1.0, 0.5, 0.8))
+	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content_body.add_child(lbl)
 
 
 # ── UI Helpers ────────────────────────────────────────────────────────────────
