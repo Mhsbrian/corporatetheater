@@ -610,7 +610,7 @@ func _draw_floor(itype: String) -> void:
 
 func _draw_floor_tile(gx: int, gy: int, itype: String, pal: RefCounted) -> void:
 	var checker := (gx + gy) % 2 == 0
-	var base := pal.floor_a if checker else pal.floor_b
+	var base: Color = pal.floor_a if checker else pal.floor_b
 
 	# Subtle depth darkening toward back
 	var depth := float(gy) / float(ROOM_D)
