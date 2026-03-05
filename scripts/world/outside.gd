@@ -575,6 +575,10 @@ func _draw_building(gx: int, gy: int, w: int, h: int,
 	# Windows on the front face
 	_draw_building_windows(gx, gy, w, h, gz_base, left_c)
 
+	# Fire escapes on right face (taller buildings only)
+	if h >= 4:
+		_draw_fire_escape(gx + w, gy, gz_base, gz_top, right_c)
+
 	# Rooftop details
 	_draw_rooftop(gx, gy, w, gz_top, top_c)
 
@@ -620,10 +624,48 @@ func _draw_building_windows(gx: int, gy: int, w: int, h: int,
 			draw_polyline(pts, Color(wall_col.r * 1.5, wall_col.g * 1.5, wall_col.b * 1.5, 0.5), 0.8, false)
 
 
+func _draw_fire_escape(gx: int, gy: int, gz_base: float, gz_top: float,
+		face_col: Color) -> void:
+	# Zigzag metal fire escape on the right face of a building.
+	# Drawn as thin platform boxes + diagonal railings.
+	var rail_col := Color(0.18, 0.17, 0.22, 0.85)
+	var platform_col := face_col.lightened(0.08)
+	var num_landings := int((gz_top - gz_base) / 1.5)
+	num_landings = clampi(num_landings, 1, 4)
+
+	var ex := float(gx)   # gx edge of right face
+	var ey := float(gy) + 0.2   # slightly off the wall (visual)
+
+	for li in num_landings:
+		var lz := gz_base + float(li + 1) * ((gz_top - gz_base) / float(num_landings + 1))
+		# Landing platform (small horizontal box)
+		var pf := PackedVector2Array()
+		pf.append(iso(ex,        ey,        lz))
+		pf.append(iso(ex,        ey + 0.35, lz))
+		pf.append(iso(ex + 0.35, ey + 0.35, lz))
+		pf.append(iso(ex + 0.35, ey,        lz))
+		draw_colored_polygon(pf, platform_col)
+		draw_polyline(pf, rail_col, 1.0, true)
+
+		# Railing vertical posts
+		for pi in 2:
+			var px := ex + float(pi) * 0.3
+			iso_line(px, ey, lz, px, ey, lz + 0.3, rail_col, 1.0)
+		iso_line(ex, ey, lz + 0.3, ex + 0.35, ey, lz + 0.3, rail_col, 0.8)
+
+		# Diagonal stair run going down from this landing
+		if li > 0:
+			var lz_prev := gz_base + float(li) * ((gz_top - gz_base) / float(num_landings + 1))
+			iso_line(ex + 0.05, ey + 0.3, lz,      ex + 0.3, ey, lz_prev, rail_col, 1.5)
+			iso_line(ex + 0.15, ey + 0.3, lz,      ex + 0.4, ey, lz_prev, rail_col, 1.0)
+		elif li == 0:
+			# Ground connection ladder
+			iso_line(ex + 0.1, ey + 0.2, gz_base, ex + 0.1, ey, lz, rail_col, 1.5)
+
+
 func _draw_rooftop(gx: int, gy: int, w: int, gz_top: float, top_c: Color) -> void:
-	# Water tower, HVAC boxes, antennas
-	var rx := float(gx) + w * 0.5 - 0.3
 	# HVAC box
+	var rx := float(gx) + w * 0.5 - 0.3
 	draw_iso_box(rx, float(gy), gz_top, gz_top + 0.4,
 			top_c.lightened(0.1), top_c.darkened(0.1), top_c)
 	# Antenna
@@ -631,15 +673,28 @@ func _draw_rooftop(gx: int, gy: int, w: int, gz_top: float, top_c: Color) -> voi
 			 rx + 0.2, float(gy) + 0.5, gz_top + 1.2,
 			 Color(0.2, 0.2, 0.3, 0.8), 1.5)
 
+	# AC unit (condensers on wider buildings)
+	if w >= 3:
+		var ax := float(gx) + 0.5
+		draw_iso_box(ax, float(gy) + 0.1, gz_top, gz_top + 0.35,
+				top_c.darkened(0.05), top_c.darkened(0.2), top_c.darkened(0.12))
+		# Condenser fan grille lines
+		var afp := iso(ax + 0.5, float(gy) + 0.1, gz_top + 0.36)
+		for fi in 4:
+			draw_line(afp + Vector2(-8 + fi * 4, -6), afp + Vector2(-8 + fi * 4, 6),
+					Color(0.06, 0.06, 0.09, 0.6), 0.8)
+		# Exhaust pipe stub
+		iso_line(ax + 0.8, float(gy) + 0.5, gz_top + 0.35,
+				ax + 0.8, float(gy) + 0.5, gz_top + 0.65,
+				Color(0.15, 0.14, 0.20, 0.7), 1.5)
+
 
 # ── Street details ────────────────────────────────────────────────────────────
 
 func _draw_street_details() -> void:
-	# Street lamps, manhole covers, yellow road lines, fire hydrants
-
 	# Lamp posts at regular intervals
 	var lamp_gxs := [2.0, 5.5, 9.0, 12.5, 16.0, 19.5]
-	var lamp_gy  := float(WALK_ROW) - 1.0   # back of walkable area
+	var lamp_gy  := float(WALK_ROW) - 1.0
 
 	for lx in lamp_gxs:
 		_draw_lamp_post(lx, lamp_gy)
@@ -654,13 +709,81 @@ func _draw_street_details() -> void:
 			pts.append(iso(gx + 0.2, 4.6, 0.001))
 			draw_colored_polygon(pts, Color(0.18, 0.16, 0.12, 0.55))
 
-	# Manhole covers
+	# Manhole covers + steam vents
 	for gx in [4, 10, 16]:
 		_draw_manhole(float(gx) + 0.5, 4.5)
+		_draw_steam_vent(float(gx) + 0.5, 4.5)
 
-	# Parked car silhouette
+	# Parked cars
 	_draw_parked_car(7.0, 5.5)
 	_draw_parked_car(14.0, 5.5)
+
+	# Trash bags near building bases
+	for tg in [[1.2, 2.6], [4.5, 2.7], [11.0, 2.5], [17.5, 2.6]]:
+		_draw_trash_bags(tg[0], tg[1])
+
+	# Newspaper / magazine stands near lamp posts
+	_draw_news_stand(3.0,  float(WALK_ROW) - 1.5)
+	_draw_news_stand(11.5, float(WALK_ROW) - 1.5)
+	_draw_news_stand(18.5, float(WALK_ROW) - 1.5)
+
+
+func _draw_steam_vent(gx: float, gy: float) -> void:
+	# Rising steam wisps above a manhole — animated with _time
+	for i in 5:
+		var t := fmod(_time * 0.6 + float(i) * 0.4, 1.0)
+		var sz := 1.5 + t * 3.5
+		var alpha := (1.0 - t) * 0.10
+		var sp := iso(gx + sin(_time + float(i)) * 0.04,
+				gy + cos(_time * 0.7 + float(i)) * 0.03,
+				0.05 + t * 0.55)
+		draw_circle(sp, sz, Color(0.7, 0.72, 0.80, alpha))
+
+
+func _draw_trash_bags(gx: float, gy: float) -> void:
+	# 2-3 garbage bags piled near a building base (on sidewalk)
+	var gz_sw := 1.0
+	var bag_c := Color(0.06, 0.06, 0.08, 1.0)
+	# Bag 1 (larger)
+	var b1 := PackedVector2Array()
+	b1.append(iso(gx,        gy, gz_sw))
+	b1.append(iso(gx + 0.35, gy, gz_sw))
+	b1.append(iso(gx + 0.35, gy, gz_sw + 0.38))
+	b1.append(iso(gx,        gy, gz_sw + 0.38))
+	draw_colored_polygon(b1, bag_c)
+	# Bag 2 (offset)
+	var b2 := PackedVector2Array()
+	b2.append(iso(gx + 0.28, gy + 0.15, gz_sw))
+	b2.append(iso(gx + 0.60, gy + 0.15, gz_sw))
+	b2.append(iso(gx + 0.60, gy + 0.15, gz_sw + 0.32))
+	b2.append(iso(gx + 0.28, gy + 0.15, gz_sw + 0.32))
+	draw_colored_polygon(b2, bag_c.lightened(0.04))
+	# Tie-off knot dots
+	draw_circle(iso(gx + 0.17, gy, gz_sw + 0.38), 2.5, bag_c.lightened(0.15))
+	draw_circle(iso(gx + 0.44, gy + 0.15, gz_sw + 0.32), 2.0, bag_c.lightened(0.12))
+
+
+func _draw_news_stand(gx: float, gy: float) -> void:
+	# Small metal newspaper/magazine stand
+	var gz_sw := 1.0
+	var metal := Color(0.14, 0.13, 0.18, 1.0)
+	var metal_d := metal.darkened(0.2)
+	# Box body
+	draw_iso_box(gx, gy, gz_sw, gz_sw + 0.9,
+			metal.lightened(0.05), metal, metal_d)
+	# Front face — stacked papers visible
+	var fp := iso(gx + 0.5, gy + 0.5, gz_sw + 0.5)
+	draw_rect(Rect2(fp.x - 10, fp.y - 8, 20, 16), Color(0.35, 0.32, 0.22, 0.8))
+	# Paper lines (headlines)
+	for hi in 3:
+		draw_rect(Rect2(fp.x - 8, fp.y - 5 + hi * 5, 16, 2),
+				Color(0.10, 0.10, 0.14, 0.6))
+	# Coin slot
+	draw_rect(Rect2(fp.x - 2, fp.y + 9, 4, 2), metal_d)
+	# Legs
+	for li in [[0.05, 0.05], [0.45, 0.05], [0.05, 0.45], [0.45, 0.45]]:
+		iso_line(gx + li[0], gy + li[1], gz_sw,
+				gx + li[0], gy + li[1], gz_sw - 0.15, metal_d, 1.0)
 
 
 func _draw_lamp_post(gx: float, gy: float) -> void:
@@ -886,52 +1009,80 @@ func _draw_player() -> void:
 	# Character is drawn in screen-space from the iso position
 	_draw_character_sprite(pos)
 
-	# Green indicator above head
-	var head_pos := pos - Vector2(0, 52)
+	# Green indicator above head (head is at pos - (0, 63), hair top ~76)
+	var head_pos := pos - Vector2(0, 76)
 	var marker_alpha := 0.7 + 0.3 * sin(_time * 2.5)
-	draw_circle(head_pos - Vector2(0, 8), 3.5, Color(0.3, 1.0, 0.4, marker_alpha))
+	draw_circle(head_pos - Vector2(0, 6), 3.5, Color(0.3, 1.0, 0.4, marker_alpha))
 
 
 func _draw_character_sprite(pos: Vector2) -> void:
-	# A modern-looking silhouette: hoodie/jacket, slim legs.
-	# All coords relative to pos (feet = pos)
-	var body  := Color(0.10, 0.10, 0.16, 1.0)
-	var acc   := Color(0.20, 0.20, 0.30, 1.0)   # highlight/collar
-	var bob   := sin(_player_walk_t) * 2.0 if _player_moving else 0.0
-	var flip  := -1.0 if _player_dir < 0 else 1.0
+	# Detailed character — jacket, lapels, belt, skin face/hands, hair, eyes, laptop bag.
+	# Matches the interior's _draw_detailed_character() visual style.
+	var bob  := sin(_player_walk_t) * 2.2 if _player_moving else 0.0
+	var flip := float(_player_dir)   # 1 = right, -1 = left
 
-	# Legs
-	var leg_sep := 4.0
-	var leg_h   := 20.0
-	var step1   :=  sin(_player_walk_t) * 5.0 if _player_moving else 0.0
-	var step2   := -step1
+	var body  := Color(0.09, 0.09, 0.14, 1.0)
+	var cloth := Color(0.20, 0.18, 0.28, 1.0)   # jacket colour (slightly purple-dark)
+	var skin  := Color(0.55, 0.42, 0.32, 1.0)
 
-	# Left leg
-	draw_rect(Rect2(pos.x - leg_sep * flip - 3.0, pos.y - leg_h + bob + step1, 5.0, leg_h), body)
-	# Right leg
-	draw_rect(Rect2(pos.x + (leg_sep - 2.0) * flip - 2.0, pos.y - leg_h + bob + step2, 5.0, leg_h), body)
-
-	# Torso (hoodie body)
-	draw_rect(Rect2(pos.x - 8.0, pos.y - leg_h - 22.0 + bob, 16.0, 24.0), body)
-	# Hood / collar accent
-	draw_rect(Rect2(pos.x - 7.0, pos.y - leg_h - 22.0 + bob, 14.0, 5.0), acc)
-
-	# Arms
+	var step1 :=  sin(_player_walk_t) * 5.0 if _player_moving else 0.0
+	var step2 := -step1
 	var arm_swing := sin(_player_walk_t) * 7.0 if _player_moving else 0.0
-	# Left arm
-	draw_rect(Rect2(pos.x - 14.0 * flip, pos.y - leg_h - 18.0 + bob + arm_swing * flip, 5.0, 15.0), body)
-	# Right arm
-	draw_rect(Rect2(pos.x + 9.0 * flip, pos.y - leg_h - 18.0 + bob - arm_swing * flip, 5.0, 15.0), body)
 
-	# Head
-	draw_circle(pos - Vector2(0.0, leg_h + 31.0 - bob), 8.0, body)
-	# Face direction hint (small highlight)
-	draw_circle(pos - Vector2(-3.0 * flip, leg_h + 32.0 - bob), 2.5, Color(0.25, 0.22, 0.35, 0.7))
+	# ── Shoes ──
+	draw_rect(Rect2(pos.x - 7.0 * flip, pos.y - 5.0, 9.0, 5.0), body)
+	draw_rect(Rect2(pos.x + 1.0 * flip, pos.y - 4.0, 8.0, 4.0), body)
 
-	# Backpack / laptop bag hint
-	draw_rect(Rect2(pos.x - 10.0 * flip - (5.0 if flip < 0 else 0.0),
-			pos.y - leg_h - 18.0 + bob, 6.0, 14.0),
-			Color(0.12, 0.12, 0.18, 1.0))
+	# ── Legs ──
+	var ll_col := cloth.lightened(0.10)
+	draw_rect(Rect2(pos.x - 8.0 * flip, pos.y - 24.0 + bob + step1, 7.0, 20.0), ll_col)
+	draw_rect(Rect2(pos.x + 2.0 * flip, pos.y - 23.0 + bob + step2, 7.0, 19.0), cloth)
+	# Knee highlight
+	draw_rect(Rect2(pos.x - 6.0 * flip, pos.y - 14.0 + bob + step1, 4.0, 3.0),
+			ll_col.lightened(0.15))
+
+	# ── Belt ──
+	draw_rect(Rect2(pos.x - 10.0, pos.y - 26.0 + bob, 20.0, 3.0), body.lightened(0.1))
+
+	# ── Jacket / torso ──
+	draw_rect(Rect2(pos.x - 10.0, pos.y - 50.0 + bob, 20.0, 26.0), cloth)
+	# Lapels
+	var lpx := pos.x - 10.0 * flip
+	var lpts := PackedVector2Array()
+	lpts.append(Vector2(lpx, pos.y - 50.0 + bob))
+	lpts.append(Vector2(lpx + 5.0 * flip, pos.y - 50.0 + bob))
+	lpts.append(Vector2(pos.x, pos.y - 38.0 + bob))
+	draw_colored_polygon(lpts, cloth.darkened(0.2))
+	# Collar
+	draw_rect(Rect2(pos.x - 4.0, pos.y - 50.0 + bob, 8.0, 5.0), cloth.lightened(0.08))
+
+	# ── Arms ──
+	draw_rect(Rect2(pos.x - 16.0 * flip, pos.y - 47.0 + bob + arm_swing * flip,  6.0, 18.0), cloth)
+	draw_rect(Rect2(pos.x + 10.0 * flip, pos.y - 47.0 + bob - arm_swing * flip,  6.0, 18.0), cloth)
+	# Hands
+	draw_circle(pos - Vector2(13.0 * flip, 30.0 - bob - arm_swing * flip), 4.0, skin)
+	draw_circle(pos + Vector2(13.0 * flip, -30.0 + bob - arm_swing * flip), 4.0, skin)
+
+	# ── Neck ──
+	draw_rect(Rect2(pos.x - 3.0, pos.y - 55.0 + bob, 6.0, 6.0), skin)
+
+	# ── Head ──
+	draw_circle(pos - Vector2(0.0, 63.0 - bob), 10.0, skin)
+	# Hair
+	draw_rect(Rect2(pos.x - 10.0, pos.y - 76.0 + bob, 20.0, 8.0), body)
+	draw_rect(Rect2(pos.x - 10.0, pos.y - 73.0 + bob, 20.0, 5.0), body.lightened(0.08))
+	# Eyes
+	var eye_y := pos.y - 64.0 + bob
+	draw_rect(Rect2(pos.x + 2.0 * flip, eye_y, 4.0, 3.0), Color(0.06, 0.06, 0.10, 1.0))
+	draw_rect(Rect2(pos.x - 6.0 * flip, eye_y, 4.0, 3.0), Color(0.15, 0.15, 0.22, 1.0))
+
+	# ── Laptop bag ──
+	# Strap over shoulder
+	draw_rect(Rect2(pos.x - 13.0 * flip, pos.y - 48.0 + bob, 4.0, 20.0),
+			Color(0.18, 0.16, 0.12, 1.0))
+	# Bag body
+	draw_rect(Rect2(pos.x - 17.0 * flip, pos.y - 34.0 + bob, 14.0, 16.0),
+			Color(0.14, 0.12, 0.10, 1.0))
 
 
 # ── Rain ──────────────────────────────────────────────────────────────────────
