@@ -535,10 +535,9 @@ func _draw_buildings() -> void:
 		var gy_front: int = b[1]
 		var w: int = b[2]
 		var h: int = b[3]  # height in elevation units
-		var top_c   := Color(b[4].hex_decode() | 0xFF000000)  # won't work — use Color.html
+		var top_c   := Color.html("#" + b[4])
 		var left_c  := Color.html("#" + b[5])
 		var right_c := Color.html("#" + b[6])
-		top_c = Color.html("#" + b[4])
 
 		_draw_building(gx, gy_front, w, h, top_c, left_c, right_c)
 
