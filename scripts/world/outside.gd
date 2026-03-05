@@ -587,8 +587,8 @@ func _nearest_neon_color(gx: float) -> Color:
 	var best_col  := Color(0.3, 0.4, 0.6)
 	for loc in _locations:
 		var d: Dictionary = loc as Dictionary
-		var lx := _loc_grid_x(d)
-		var dist := abs(gx - lx)
+		var lx: float = _loc_grid_x(d)
+		var dist: float = abs(gx - lx)
 		if dist < best_dist:
 			best_dist = dist
 			var sc_str := _str(d.get("sign_color")) if d.get("sign_color") != null else "#6688aa"
