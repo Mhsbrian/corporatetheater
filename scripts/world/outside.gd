@@ -845,7 +845,7 @@ func _draw_shop_front(gx: int, gy: int, w: int, gz_base: float) -> void:
 	var steps := int((fringe_end.x - fringe_y.x) / 8.0)
 	for fi in steps:
 		var fx := fringe_y.x + float(fi) * 8.0
-		var fy_pos := lerp(fringe_y.y, fringe_end.y, float(fi) / float(maxf(steps, 1)))
+		var fy_pos: float = lerpf(fringe_y.y, fringe_end.y, float(fi) / float(maxf(steps, 1)))
 		draw_circle(Vector2(fx, fy_pos + 3.0), 2.0, aw_col.lightened(0.15))
 
 	# Lit display window
