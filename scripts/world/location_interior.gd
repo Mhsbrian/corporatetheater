@@ -31,7 +31,7 @@ const DUST_COUNT := 22
 func _ready() -> void:
 	# Allow location_id to be passed via meta from outside.gd
 	if location_id == "" and has_meta("location_id"):
-		location_id = get_meta("location_id") as String
+		location_id = str(get_meta("location_id"))
 
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_load_location()
@@ -47,6 +47,13 @@ func _ready() -> void:
 	_build_prompt()
 
 
+# Safe string coercion — JSON nulls come in as null, not ""
+func _str(v: Variant) -> String:
+	if v == null:
+		return ""
+	return str(v)
+
+
 func _load_location() -> void:
 	if not FileAccess.file_exists(LOCATIONS_PATH):
 		return
@@ -58,7 +65,7 @@ func _load_location() -> void:
 	var locs: Array = root.get("locations", []) as Array
 	for l in locs:
 		var d: Dictionary = l as Dictionary
-		if d.get("id", "") as String == location_id:
+		if _str(d.get("id")) == location_id:
 			_loc = d
 			return
 
@@ -163,9 +170,12 @@ func _draw() -> void:
 
 
 func _draw_room() -> void:
-	var ambient_hex: String = _loc.get("ambient_color", "#050508") as String
-	var light_hex: String   = _loc.get("ambient_light", "#ffffff22") as String
-	var interior_type: String = _loc.get("interior_type", "cafe") as String
+	var ambient_hex: String = _str(_loc.get("ambient_color"))
+	if ambient_hex == "": ambient_hex = "#050508"
+	var light_hex: String   = _str(_loc.get("ambient_light"))
+	if light_hex == "": light_hex = "#ffffff22"
+	var interior_type: String = _str(_loc.get("interior_type"))
+	if interior_type == "": interior_type = "cafe"
 	var room_col := Color.from_string(ambient_hex, Color(0.02, 0.02, 0.03))
 	var light_col := Color.from_string(light_hex, Color(1.0, 1.0, 1.0, 0.12))
 
@@ -267,7 +277,9 @@ func _draw_ambient_particles() -> void:
 func _draw_npc() -> void:
 	if _loc.is_empty():
 		return
-	var npc_col := Color.from_string(_loc.get("npc_color", "#7b68ee") as String, Color(0.5, 0.4, 1.0))
+	var npc_hex: String = _str(_loc.get("npc_color"))
+	if npc_hex == "": npc_hex = "#7b68ee"
+	var npc_col := Color.from_string(npc_hex, Color(0.5, 0.4, 1.0))
 	var sx: float = _size.x * 0.60
 	var sy: float = _floor_y
 	var bob: float = sin(_npc_walk_t) * 1.2
@@ -324,8 +336,9 @@ func _start_dialogue() -> void:
 	_dialogue_active = true
 	_prompt_label.modulate.a = 0.0
 
-	var npc_id: String = _loc.get("npc_id", "") as String
-	var npc_color_hex: String = _loc.get("npc_color", "#7b68ee") as String
+	var npc_id: String = _str(_loc.get("npc_id"))
+	var npc_color_hex: String = _str(_loc.get("npc_color"))
+	if npc_color_hex == "": npc_color_hex = "#7b68ee"
 
 	var dialogue_script: Script = load(DIALOGUE_SCRIPT)
 	var dialogue: Control = Control.new()

@@ -46,6 +46,13 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
 
+# Safe string coercion — JSON nulls come in as null, not ""
+func _str(v: Variant) -> String:
+	if v == null:
+		return ""
+	return str(v)
+
+
 func _load_dialogues() -> void:
 	if not FileAccess.file_exists(DIALOGUES_PATH):
 		return
@@ -140,15 +147,15 @@ func start(npc_id: String, npc_color_hex: String) -> void:
 
 	var start_node_id: String = ""
 	if GameState.has_met(npc_id):
-		start_node_id = npc_data.get("already_met_node", "") as String
+		start_node_id = _str(npc_data.get("already_met_node"))
 	else:
 		# Check requires_digital_clue
-		var req: String = npc_data.get("requires_digital_clue", "") as String
+		var req: String = _str(npc_data.get("requires_digital_clue"))
 		if req != "" and not (req in GameState.discovered_clues):
 			# Shouldn't get here if gating is correct, but bail gracefully
 			emit_signal("dialogue_finished")
 			return
-		start_node_id = npc_data.get("start_node", "") as String
+		start_node_id = _str(npc_data.get("start_node"))
 
 	if start_node_id == "":
 		emit_signal("dialogue_finished")
@@ -171,8 +178,8 @@ func _show_node(node_id: String) -> void:
 	for child in _choices_container.get_children():
 		child.queue_free()
 
-	_speaker_label.text = _current_node.get("speaker", "") as String
-	_full_text = _current_node.get("text", "") as String
+	_speaker_label.text = _str(_current_node.get("speaker"))
+	_full_text = _str(_current_node.get("text"))
 	_text_label.text = ""
 	_typewriter_index = 0
 	_typewriter_done = false
@@ -201,13 +208,13 @@ func _show_choices() -> void:
 	for choice in choices:
 		var c: Dictionary = choice as Dictionary
 		var btn := Button.new()
-		btn.text = "> " + (c.get("text", "") as String)
+		btn.text = "> " + _str(c.get("text"))
 		btn.flat = true
 		btn.add_theme_color_override("font_color", Color(0.6, 0.9, 1.0, 1.0))
 		btn.add_theme_color_override("font_hover_color", Color(1.0, 1.0, 1.0, 1.0))
 		btn.add_theme_font_size_override("font_size", 12)
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		var next_id: String = c.get("next", "") as String
+		var next_id: String = _str(c.get("next"))
 		btn.pressed.connect(func(): _on_choice(next_id))
 		_choices_container.add_child(btn)
 
@@ -226,12 +233,13 @@ func _on_choice(next_id: String) -> void:
 
 func _finish() -> void:
 	# Process on_complete from the last node shown
-	var on_complete: Dictionary = _current_node.get("on_complete", {}) as Dictionary
-	if not on_complete.is_empty():
-		var clue_id: String = on_complete.get("discover_clue", "") as String
+	var on_complete_v = _current_node.get("on_complete")
+	if on_complete_v != null and on_complete_v is Dictionary:
+		var on_complete: Dictionary = on_complete_v as Dictionary
+		var clue_id: String = _str(on_complete.get("discover_clue"))
 		if clue_id != "":
 			GameState.discover_clue(clue_id)
-		var met_id: String = on_complete.get("set_met", "") as String
+		var met_id: String = _str(on_complete.get("set_met"))
 		if met_id != "":
 			GameState.meet_contact_in_person(met_id)
 

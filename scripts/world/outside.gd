@@ -190,9 +190,9 @@ func _handle_movement(delta: float) -> void:
 	_near_location_id = ""
 	for loc in _locations:
 		var loc_dict: Dictionary = loc as Dictionary
-		var lx: float = loc_dict.get("street_x", 0.0) as float
+		var lx: float = loc_dict.get("street_x", 0.0)
 		if abs(_player_x - lx) < INTERACT_RADIUS:
-			_near_location_id = loc_dict.get("id", "") as String
+			_near_location_id = _str(loc_dict.get("id"))
 			break
 
 
@@ -221,15 +221,23 @@ func _update_prompt(delta: float) -> void:
 
 	if _near_location_id != "":
 		var loc: Dictionary = _get_location(_near_location_id)
-		_prompt_label.text = loc.get("enter_prompt", "[ E ] enter") as String
+		var ep: String = _str(loc.get("enter_prompt"))
+		_prompt_label.text = ep if ep != "" else "[ E ] enter"
 	else:
 		_prompt_label.text = ""
+
+
+# Safe string coercion — JSON nulls come in as null, not ""
+func _str(v: Variant) -> String:
+	if v == null:
+		return ""
+	return str(v)
 
 
 func _get_location(loc_id: String) -> Dictionary:
 	for loc in _locations:
 		var d: Dictionary = loc as Dictionary
-		if d.get("id", "") as String == loc_id:
+		if _str(d.get("id")) == loc_id:
 			return d
 	return {}
 
@@ -404,12 +412,12 @@ func _draw_player() -> void:
 func _draw_location_signs() -> void:
 	for loc in _locations:
 		var d: Dictionary = loc as Dictionary
-		var world_x: float = d.get("street_x", 0.0) as float
-		var sign_col := Color.from_string(d.get("sign_color", "#ffffff") as String, Color.WHITE)
-		var glow_col := Color.from_string(d.get("sign_glow", "#888888") as String, Color.GRAY)
-		var sign_text: String = d.get("sign_text", "") as String
-		var unlock_clue: String = d.get("unlock_clue", "") as String
-		var locked: bool = (unlock_clue != "" and unlock_clue != null and
+		var world_x: float = d.get("street_x", 0.0)
+		var sign_col := Color.from_string(_str(d.get("sign_color")) if d.get("sign_color") != null else "#ffffff", Color.WHITE)
+		var glow_col := Color.from_string(_str(d.get("sign_glow")) if d.get("sign_glow") != null else "#888888", Color.GRAY)
+		var sign_text: String = _str(d.get("sign_text"))
+		var unlock_clue: String = _str(d.get("unlock_clue"))
+		var locked: bool = (unlock_clue != "" and
 				not (unlock_clue in GameState.discovered_clues))
 
 		# Use mid-layer parallax for doors/signs (same as building facades)
@@ -471,10 +479,10 @@ func _draw_minimap() -> void:
 	# Location markers
 	for loc in _locations:
 		var d: Dictionary = loc as Dictionary
-		var lx: float = d.get("street_x", 0.0) as float
-		var sign_col := Color.from_string(d.get("sign_color", "#ffffff") as String, Color.WHITE)
-		var unlock_clue: String = d.get("unlock_clue", "") as String
-		var locked: bool = (unlock_clue != "" and unlock_clue != null and
+		var lx: float = d.get("street_x", 0.0)
+		var sign_col := Color.from_string(_str(d.get("sign_color")) if d.get("sign_color") != null else "#ffffff", Color.WHITE)
+		var unlock_clue: String = _str(d.get("unlock_clue"))
+		var locked: bool = (unlock_clue != "" and
 				not (unlock_clue in GameState.discovered_clues))
 		var mx: float = 8.0 + (lx / WORLD_WIDTH) * map_w
 		var col := Color(sign_col.r, sign_col.g, sign_col.b, 0.35 if locked else 0.9)
@@ -500,14 +508,14 @@ func _try_enter(loc_id: String) -> void:
 		return
 
 	# Check unlock condition
-	var unlock_clue: String = loc.get("unlock_clue", "") as String
-	if unlock_clue != "" and unlock_clue != null:
+	var unlock_clue: String = _str(loc.get("unlock_clue"))
+	if unlock_clue != "":
 		if not (unlock_clue in GameState.discovered_clues):
 			_show_locked_message(loc)
 			return
 
 	_entering_scene = true
-	var interior_type: String = loc.get("interior_type", "") as String
+	var interior_type: String = _str(loc.get("interior_type"))
 	var scene_path: String = ""
 	match interior_type:
 		"cafe":      scene_path = CAFE_SCENE
@@ -538,7 +546,9 @@ func _try_enter(loc_id: String) -> void:
 
 
 func _show_locked_message(loc: Dictionary) -> void:
-	var name_str: String = loc.get("name", "location") as String
+	var name_str: String = _str(loc.get("name"))
+	if name_str == "":
+		name_str = "location"
 	# Temporarily flash the prompt label with a locked message
 	_prompt_label.text = name_str + " — not yet accessible"
 	_prompt_label.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4, 1.0))
