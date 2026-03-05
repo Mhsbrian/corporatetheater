@@ -83,12 +83,8 @@ func _on_clue_added(note: Dictionary) -> void:
 
 
 func _refresh_outside_button() -> void:
-	var unlocked: bool = GameState.world_unlocked()
-	btn_go_outside.disabled = not unlocked
-	if unlocked:
-		btn_go_outside.add_theme_color_override("font_color", Color(0.4, 1.0, 0.8, 1.0))
-	else:
-		btn_go_outside.add_theme_color_override("font_color", Color(0.25, 0.45, 0.38, 1.0))
+	btn_go_outside.disabled = false
+	btn_go_outside.add_theme_color_override("font_color", Color(0.4, 1.0, 0.8, 1.0))
 
 
 func _update_notes_badge() -> void:

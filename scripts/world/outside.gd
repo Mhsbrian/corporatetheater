@@ -1396,7 +1396,7 @@ func _draw_proximity_indicator(gx: float, gy: float) -> void:
 # ── Pedestrians ───────────────────────────────────────────────────────────────
 
 # Pedestrian accent palettes
-const PED_ACCENTS := [
+const PED_ACCENTS: Array[Color] = [
 	Color(0.28, 0.38, 0.55),   # grey-blue coat
 	Color(0.35, 0.22, 0.18),   # dark brown jacket
 	Color(0.18, 0.30, 0.22),   # dark green coat
@@ -1419,7 +1419,7 @@ func _draw_pedestrian(p: Dictionary) -> void:
 	var wt: float  = p["walk_t"]
 	var dir: int   = p["dir"]
 	var cidx: int  = p["col"]
-	var acc := PED_ACCENTS[cidx % PED_ACCENTS.size()]
+	var acc: Color = PED_ACCENTS[cidx % PED_ACCENTS.size()]
 	var flip := float(dir)
 
 	# Shadow
