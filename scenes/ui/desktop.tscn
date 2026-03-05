@@ -158,6 +158,14 @@ theme_override_font_sizes/font_size = 12
 text = "[ NETMAP ]"
 flat = true
 
+[node name="BtnGoOutside" type="Button" parent="Taskbar/TaskbarItems"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1.0, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "[ OUTSIDE ]"
+flat = true
+disabled = true
+
 [node name="NotificationBar" type="Label" parent="Taskbar/TaskbarItems"]
 layout_mode = 2
 size_flags_horizontal = 3

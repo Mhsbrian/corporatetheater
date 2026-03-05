@@ -8,6 +8,7 @@ signal clue_added(clue: Dictionary)
 signal contact_unlocked(contact_id: String)
 signal browser_navigate(url: String, article_id: String)
 signal note_added(note: Dictionary)
+signal contact_met_in_person(contact_id: String)
 
 const SAVE_PATH := "user://save.json"
 
@@ -15,6 +16,7 @@ const SAVE_PATH := "user://save.json"
 
 var discovered_clues: Array[String] = []
 var unlocked_contacts: Array[String] = ["elena_vasquez"]
+var met_contacts: Array[String] = []           # contacts met in person outside
 var conversation_states: Dictionary = {}       # contact_id -> last conv id
 var message_history: Dictionary = {}           # contact_id -> Array of {from, text}
 var notes: Array[Dictionary] = []              # auto-populated evidence log
@@ -170,6 +172,27 @@ const CLUE_DEFINITIONS: Dictionary = {
 		"summary": "Internal daemon log confirms coordinated actions against Vertex Mind, Parallax AI, and NeuralForge. Actions: regulatory pressure, key personnel departure, narrative suppression. Timestamps match their public collapses exactly. Referenced as 'Market Capture Phase 3.'",
 		"source": "Terminal / closedai-internal.net",
 		"severity": "critical"
+	},
+	"clue_internal_review_suppressed": {
+		"title": "Internal Review — Suppressed (CAI-IR-0091-MARCH-SUPPRESSED)",
+		"category": "evidence",
+		"summary": "Elena Vasquez provided the routing number for the suppressed internal safety review: CAI-IR-0091-MARCH-SUPPRESSED. Maxwell Holt personally signed off on burying it. Four engineers flagged anomalies in the Horizon inference pipeline. None are still at ClosedAI.",
+		"source": "In Person / Elena Vasquez",
+		"severity": "critical"
+	},
+	"clue_veil_activation_key": {
+		"title": "VEIL Activation Key — Build Config Location",
+		"category": "technical",
+		"summary": "Marcus Tull embedded the VEIL activation key format in a comment block in the deployment logs. String: VEIL-KEYGEN. Location: /srv/horizon/deploy/ on the internal server. A three-part key: government auth code, ClosedAI timestamp, and target profile hash.",
+		"source": "In Person / Marcus Tull",
+		"severity": "critical"
+	},
+	"clue_clearsky_biometric_link": {
+		"title": "Clear Sky Biometric Schema — VEIL Profile Link",
+		"category": "evidence",
+		"summary": "Priya Nair retained her working schema diagram linking Clear Sky biometric intake IDs directly to VEIL profile hashes. The pipeline processed 2.3 million individual profiles. She will send it via encrypted channel. This is the link between mass biometric collection and personalised narrative targeting.",
+		"source": "In Person / Priya Nair",
+		"severity": "critical"
 	}
 }
 
@@ -197,6 +220,7 @@ func save() -> void:
 	var data := {
 		"discovered_clues": discovered_clues,
 		"unlocked_contacts": unlocked_contacts,
+		"met_contacts": met_contacts,
 		"conversation_states": conversation_states,
 		"message_history": message_history,
 		"notes": notes,
@@ -217,6 +241,7 @@ func load_save() -> void:
 	var data: Dictionary = json.data
 	discovered_clues = _to_string_array(data.get("discovered_clues", []))
 	unlocked_contacts = _to_string_array(data.get("unlocked_contacts", ["elena_vasquez"]))
+	met_contacts = _to_string_array(data.get("met_contacts", []))
 	conversation_states = data.get("conversation_states", {})
 	message_history = data.get("message_history", {})
 	notes = data.get("notes", [])
@@ -227,6 +252,7 @@ func load_save() -> void:
 func new_game() -> void:
 	discovered_clues = []
 	unlocked_contacts = ["elena_vasquez"]
+	met_contacts = []
 	conversation_states = {}
 	message_history = {}
 	notes = []
@@ -268,6 +294,22 @@ func unlock_contact(contact_id: String) -> void:
 	unlocked_contacts.append(contact_id)
 	emit_signal("contact_unlocked", contact_id)
 	save()
+
+
+func world_unlocked() -> bool:
+	return "clue_api_endpoint" in discovered_clues
+
+
+func meet_contact_in_person(contact_id: String) -> void:
+	if contact_id in met_contacts:
+		return
+	met_contacts.append(contact_id)
+	emit_signal("contact_met_in_person", contact_id)
+	save()
+
+
+func has_met(contact_id: String) -> bool:
+	return contact_id in met_contacts
 
 
 # ── Messenger State ───────────────────────────────────────────────────────────

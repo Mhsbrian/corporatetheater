@@ -9,6 +9,7 @@ extends Control
 @onready var btn_messenger: Button = $Taskbar/TaskbarItems/BtnMessenger
 @onready var btn_notes: Button = $Taskbar/TaskbarItems/BtnNotes
 @onready var btn_network: Button = $Taskbar/TaskbarItems/BtnNetwork
+@onready var btn_go_outside: Button = $Taskbar/TaskbarItems/BtnGoOutside
 @onready var clock_label: Label = $Taskbar/TaskbarItems/ClockLabel
 @onready var notification_bar: Label = $Taskbar/TaskbarItems/NotificationBar
 @onready var app_window: Control = $MainArea/AppWindow
@@ -21,6 +22,7 @@ const BROWSER_SCENE    := "res://scenes/ui/browser.tscn"
 const MESSENGER_SCENE  := "res://scenes/ui/z_messenger.tscn"
 const NOTES_SCENE      := "res://scenes/ui/notes.tscn"
 const NETMAP_SCENE     := "res://scenes/ui/network_map.tscn"
+const OUTSIDE_SCENE    := "res://scenes/world/outside.tscn"
 
 var _feed_posts: Array = []
 var _feed_index: int = 0
@@ -37,10 +39,13 @@ func _ready() -> void:
 	btn_messenger.pressed.connect(func(): _launch_app("messenger"))
 	btn_notes.pressed.connect(func(): _launch_app("notes"))
 	btn_network.pressed.connect(func(): _launch_app("network"))
+	btn_go_outside.pressed.connect(func(): _launch_app("outside"))
 
 	GameState.clue_added.connect(_on_clue_added)
 	GameState.browser_navigate.connect(_on_browser_navigate)
 	GameState.contact_unlocked.connect(_on_contact_unlocked)
+
+	_refresh_outside_button()
 
 	_load_feed()
 	_render_feed()
@@ -74,6 +79,16 @@ func _on_clue_added(note: Dictionary) -> void:
 	_update_notes_badge()
 	_show_notification("evidence logged: " + note.get("title", ""))
 	AudioManager.play_clue_sting()
+	_refresh_outside_button()
+
+
+func _refresh_outside_button() -> void:
+	var unlocked: bool = GameState.world_unlocked()
+	btn_go_outside.disabled = not unlocked
+	if unlocked:
+		btn_go_outside.add_theme_color_override("font_color", Color(0.4, 1.0, 0.8, 1.0))
+	else:
+		btn_go_outside.add_theme_color_override("font_color", Color(0.25, 0.45, 0.38, 1.0))
 
 
 func _update_notes_badge() -> void:
@@ -229,7 +244,8 @@ func _launch_app(app: String) -> void:
 		"browser": BROWSER_SCENE,
 		"messenger": MESSENGER_SCENE,
 		"notes": NOTES_SCENE,
-		"network": NETMAP_SCENE
+		"network": NETMAP_SCENE,
+		"outside": OUTSIDE_SCENE
 	} as Dictionary).get(app, "") as String
 
 	if scene_path != "":

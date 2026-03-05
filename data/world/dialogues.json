@@ -1,0 +1,281 @@
+{
+	"dialogues": {
+		"elena_vasquez": {
+			"requires_digital_clue": "clue_api_endpoint",
+			"already_met_node": "elena_met_again",
+			"start_node": "elena_meet_1",
+			"unlocks_clue": "clue_internal_review_suppressed",
+			"nodes": {
+				"elena_meet_1": {
+					"speaker": "Elena V.",
+					"text": "You came. I wasn't sure you would.",
+					"choices": [
+						{ "text": "You told me where to find you.", "next": "elena_meet_2a" },
+						{ "text": "What couldn't you say over message?", "next": "elena_meet_2b" }
+					]
+				},
+				"elena_meet_2a": {
+					"speaker": "Elena V.",
+					"text": "I told you a lot of things. Most people don't follow through.",
+					"choices": [
+						{ "text": "I'm not most people.", "next": "elena_meet_3" }
+					]
+				},
+				"elena_meet_2b": {
+					"speaker": "Elena V.",
+					"text": "Everything. Nothing I send digitally is actually private. Even through the encryption layer.",
+					"choices": [
+						{ "text": "You think they're reading it.", "next": "elena_meet_3" }
+					]
+				},
+				"elena_meet_3": {
+					"speaker": "Elena V.",
+					"text": "There was an internal review last March. Four engineers flagged the same anomaly in the Horizon inference pipeline — outputs that shouldn't be possible without a secondary model running underneath.",
+					"choices": [
+						{ "text": "What happened to the engineers?", "next": "elena_meet_4a" },
+						{ "text": "What kind of outputs?", "next": "elena_meet_4b" }
+					]
+				},
+				"elena_meet_4a": {
+					"speaker": "Elena V.",
+					"text": "Two resigned within the week. One is still there — I think they're being watched. The fourth one... I haven't been able to reach her in six months.",
+					"choices": [
+						{ "text": "Who is she?", "next": "elena_meet_5" }
+					]
+				},
+				"elena_meet_4b": {
+					"speaker": "Elena V.",
+					"text": "Behavioural outputs. Prediction clusters that map to real individuals. Not hypothetical users. Actual people. Named in internal government files.",
+					"choices": [
+						{ "text": "And the review was buried.", "next": "elena_meet_5" }
+					]
+				},
+				"elena_meet_5": {
+					"speaker": "Elena V.",
+					"text": "The review was classified internally. No record of it in the public audit trail. Maxwell signed off on the suppression personally. I have the routing number.",
+					"choices": [
+						{ "text": "Give me the routing number.", "next": "elena_meet_6" },
+						{ "text": "Why are you telling me this?", "next": "elena_meet_6_why" }
+					]
+				},
+				"elena_meet_6_why": {
+					"speaker": "Elena V.",
+					"text": "Because I built part of it. And I need someone outside to know that it exists before I disappear too.",
+					"choices": [
+						{ "text": "Give me the routing number.", "next": "elena_meet_6" }
+					]
+				},
+				"elena_meet_6": {
+					"speaker": "Elena V.",
+					"text": "CAI-IR-0091-MARCH-SUPPRESSED. It won't mean anything yet. But when you find the right file on their internal server, it will.",
+					"choices": [
+						{ "text": "I'll find it.", "next": "elena_meet_7" }
+					]
+				},
+				"elena_meet_7": {
+					"speaker": "Elena V.",
+					"text": "Don't come back here. They watch cafés near the office. Use the terminal. And trust no one who reaches out to you first.",
+					"choices": [
+						{ "text": "Understood.", "next": null }
+					],
+					"on_complete": {
+						"discover_clue": "clue_internal_review_suppressed",
+						"set_met": "elena_vasquez"
+					}
+				},
+				"elena_met_again": {
+					"speaker": "Elena V.",
+					"text": "I've told you what I can. The rest is in the server. Don't come back here.",
+					"choices": [
+						{ "text": "Understood.", "next": null }
+					]
+				}
+			}
+		},
+		"marcus_tull": {
+			"requires_digital_clue": "clue_marcus_tull",
+			"already_met_node": "marcus_met_again",
+			"start_node": "marcus_meet_1",
+			"unlocks_clue": "clue_veil_activation_key",
+			"nodes": {
+				"marcus_meet_1": {
+					"speaker": "Marcus T.",
+					"text": "You found me. That's either impressive or very bad.",
+					"choices": [
+						{ "text": "Elena sent me.", "next": "marcus_meet_2a" },
+						{ "text": "I followed the thread.", "next": "marcus_meet_2b" }
+					]
+				},
+				"marcus_meet_2a": {
+					"speaker": "Marcus T.",
+					"text": "Elena's still talking. She's braver than I am.",
+					"choices": [
+						{ "text": "Or more desperate.", "next": "marcus_meet_3" },
+						{ "text": "She's scared.", "next": "marcus_meet_3" }
+					]
+				},
+				"marcus_meet_2b": {
+					"speaker": "Marcus T.",
+					"text": "Most people can't. I spent three years making sure of that.",
+					"choices": [
+						{ "text": "You designed the obfuscation layer.", "next": "marcus_meet_3" }
+					]
+				},
+				"marcus_meet_3": {
+					"speaker": "Marcus T.",
+					"text": "I built the scaffolding that VEIL runs on. I didn't know what it was for. That's what I told myself.",
+					"choices": [
+						{ "text": "What is VEIL actually doing?", "next": "marcus_meet_4" },
+						{ "text": "When did you figure it out?", "next": "marcus_meet_4_when" }
+					]
+				},
+				"marcus_meet_4_when": {
+					"speaker": "Marcus T.",
+					"text": "When they started giving it activation keys tied to external event triggers. That's not a model. That's a weapon waiting for a signal.",
+					"choices": [
+						{ "text": "What kind of signal?", "next": "marcus_meet_4" }
+					]
+				},
+				"marcus_meet_4": {
+					"speaker": "Marcus T.",
+					"text": "VEIL isn't a language model. It's a narrative injection engine. It generates content — posts, articles, messages — and deploys them through compromised distribution channels when triggered.",
+					"choices": [
+						{ "text": "Triggered by what?", "next": "marcus_meet_5" },
+						{ "text": "Which channels?", "next": "marcus_meet_5_channels" }
+					]
+				},
+				"marcus_meet_5_channels": {
+					"speaker": "Marcus T.",
+					"text": "Z. CNX Tech. Three smaller outlets I can't name. They have API-level access to the editorial queues. They can inject content that looks like it came from human journalists.",
+					"choices": [
+						{ "text": "Triggered by what?", "next": "marcus_meet_5" }
+					]
+				},
+				"marcus_meet_5": {
+					"speaker": "Marcus T.",
+					"text": "A three-part key. Government authorisation code, ClosedAI internal timestamp, and a target profile hash. When all three align — the system activates and runs autonomously.",
+					"choices": [
+						{ "text": "Do you have the key format?", "next": "marcus_meet_6" }
+					]
+				},
+				"marcus_meet_6": {
+					"speaker": "Marcus T.",
+					"text": "The format is in the build config I left on their internal server. I embedded it in a comment block in the deployment logs. Look for the string VEIL-KEYGEN in /srv/horizon/deploy/.",
+					"choices": [
+						{ "text": "Why did you leave it there?", "next": "marcus_meet_7" }
+					]
+				},
+				"marcus_meet_7": {
+					"speaker": "Marcus T.",
+					"text": "Insurance. In case they ever came for me. Now it's your insurance too.",
+					"choices": [
+						{ "text": "I'll find it.", "next": null }
+					],
+					"on_complete": {
+						"discover_clue": "clue_veil_activation_key",
+						"set_met": "marcus_tull"
+					}
+				},
+				"marcus_met_again": {
+					"speaker": "Marcus T.",
+					"text": "I've told you everything I know. The rest is in /srv/horizon/deploy/. Don't make me say it again.",
+					"choices": [
+						{ "text": "Got it.", "next": null }
+					]
+				}
+			}
+		},
+		"priya_nair": {
+			"requires_digital_clue": "clue_priya_contact",
+			"already_met_node": "priya_met_again",
+			"start_node": "priya_meet_1",
+			"unlocks_clue": "clue_clearsky_biometric_link",
+			"nodes": {
+				"priya_meet_1": {
+					"speaker": "Priya N.",
+					"text": "I almost didn't buzz you in. I've been watching the street for the last hour.",
+					"choices": [
+						{ "text": "No one followed me.", "next": "priya_meet_2a" },
+						{ "text": "You're right to be careful.", "next": "priya_meet_2b" }
+					]
+				},
+				"priya_meet_2a": {
+					"speaker": "Priya N.",
+					"text": "You can't be sure of that.",
+					"choices": [
+						{ "text": "No. I can't.", "next": "priya_meet_3" }
+					]
+				},
+				"priya_meet_2b": {
+					"speaker": "Priya N.",
+					"text": "The NDA I signed has a clause that lets them monitor my digital presence for five years. Every message. Every login.",
+					"choices": [
+						{ "text": "So you're already being watched.", "next": "priya_meet_3" }
+					]
+				},
+				"priya_meet_3": {
+					"speaker": "Priya N.",
+					"text": "I worked on the biometric intake pipeline for Project Clear Sky. Not the analysis side — I thought I was building a health monitoring system for government workers.",
+					"choices": [
+						{ "text": "What was it actually?", "next": "priya_meet_4" },
+						{ "text": "When did you know?", "next": "priya_meet_4_know" }
+					]
+				},
+				"priya_meet_4_know": {
+					"speaker": "Priya N.",
+					"text": "When I saw the output schema. It wasn't aggregated health data. It was individual-level emotional state prediction, cross-referenced with political affiliation flags from the Clear Sky dataset.",
+					"choices": [
+						{ "text": "What was it being used for?", "next": "priya_meet_4" }
+					]
+				},
+				"priya_meet_4": {
+					"speaker": "Priya N.",
+					"text": "The system feeds behavioural profiles into VEIL's targeting layer. It doesn't just predict what people will do. It decides who gets narratively targeted — and when.",
+					"choices": [
+						{ "text": "Targeted how?", "next": "priya_meet_5" },
+						{ "text": "How many people?", "next": "priya_meet_5_scale" }
+					]
+				},
+				"priya_meet_5_scale": {
+					"speaker": "Priya N.",
+					"text": "The intake pipeline processed 2.3 million profiles when I left. That was eighteen months ago.",
+					"choices": [
+						{ "text": "Targeted how?", "next": "priya_meet_5" }
+					]
+				},
+				"priya_meet_5": {
+					"speaker": "Priya N.",
+					"text": "Personalised disinformation. Content calibrated to each profile's specific psychological vulnerabilities. Not propaganda — surgery. One message per person. Designed to be believed.",
+					"choices": [
+						{ "text": "Is any of this documented?", "next": "priya_meet_6" }
+					]
+				},
+				"priya_meet_6": {
+					"speaker": "Priya N.",
+					"text": "I kept a schema diagram. The one I worked from. It links the biometric intake IDs directly to the VEIL profile hashes. If you can get into their API logs — you can match them.",
+					"choices": [
+						{ "text": "How do I get the schema?", "next": "priya_meet_7" }
+					]
+				},
+				"priya_meet_7": {
+					"speaker": "Priya N.",
+					"text": "I'll send it through the same channel Elena used. But if it goes silent — if I stop responding — don't look for me. Just publish what you have.",
+					"choices": [
+						{ "text": "I will.", "next": null }
+					],
+					"on_complete": {
+						"discover_clue": "clue_clearsky_biometric_link",
+						"set_met": "priya_nair"
+					}
+				},
+				"priya_met_again": {
+					"speaker": "Priya N.",
+					"text": "The schema is coming. I need more time. Don't come back here until you hear from me.",
+					"choices": [
+						{ "text": "Understood.", "next": null }
+					]
+				}
+			}
+		}
+	}
+}

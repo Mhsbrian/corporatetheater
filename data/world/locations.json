@@ -1,0 +1,55 @@
+{
+	"locations": [
+		{
+			"id": "meridian_cafe",
+			"name": "Meridian Café",
+			"sign_text": "MERIDIAN",
+			"sign_color": "#e8a045",
+			"sign_glow": "#cc7722",
+			"description": "A 24-hour café on Delancey St. Mostly empty at this hour. The staff stopped asking questions years ago.",
+			"street_x": 480,
+			"unlock_clue": null,
+			"npc_id": "elena_vasquez",
+			"npc_name": "Elena V.",
+			"npc_color": "#7b68ee",
+			"interior_type": "cafe",
+			"enter_prompt": "[ E ] enter",
+			"ambient_color": "#1a0f05",
+			"ambient_light": "#e8a04533"
+		},
+		{
+			"id": "static_bar",
+			"name": "The Static",
+			"sign_text": "STATIC",
+			"sign_color": "#ff3333",
+			"sign_glow": "#aa1111",
+			"description": "A dive bar on Crane Ave. Cash only. Three regulars who never look up.",
+			"street_x": 1100,
+			"unlock_clue": "clue_marcus_tull",
+			"npc_id": "marcus_tull",
+			"npc_name": "Marcus T.",
+			"npc_color": "#ff6b35",
+			"interior_type": "bar",
+			"enter_prompt": "[ E ] enter",
+			"ambient_color": "#0f0505",
+			"ambient_light": "#ff222222"
+		},
+		{
+			"id": "priya_apartment",
+			"name": "404 Crane Ave",
+			"sign_text": "404",
+			"sign_color": "#33ff66",
+			"sign_glow": "#119944",
+			"description": "A walk-up apartment building. Buzzed in by someone who doesn't use their name.",
+			"street_x": 1700,
+			"unlock_clue": "clue_priya_contact",
+			"npc_id": "priya_nair",
+			"npc_name": "Priya N.",
+			"npc_color": "#e8a045",
+			"interior_type": "apartment",
+			"enter_prompt": "[ E ] enter",
+			"ambient_color": "#050f05",
+			"ambient_light": "#33ff6615"
+		}
+	]
+}
