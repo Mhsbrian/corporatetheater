@@ -227,7 +227,8 @@ func _on_browser_navigate(url: String, article_id: String) -> void:
 # ── App Launcher ──────────────────────────────────────────────────────────────
 
 func _launch_app(app: String) -> void:
-	if _active_app == app:
+	# "outside" is a full-screen scene that self-destructs; always allow relaunch
+	if _active_app == app and app != "outside":
 		return
 	_active_app = app
 	_active_browser = null

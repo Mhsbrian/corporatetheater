@@ -18,6 +18,7 @@ var discovered_clues: Array[String] = []
 var unlocked_contacts: Array[String] = ["elena_vasquez"]
 var met_contacts: Array[String] = []           # contacts met in person outside
 var conversation_states: Dictionary = {}       # contact_id -> last conv id
+var completed_conversations: Array[String] = [] # "contact_id:conv_id" entries
 var message_history: Dictionary = {}           # contact_id -> Array of {from, text}
 var notes: Array[Dictionary] = []              # auto-populated evidence log
 var browser_history: Array[String] = []
@@ -222,6 +223,7 @@ func save() -> void:
 		"unlocked_contacts": unlocked_contacts,
 		"met_contacts": met_contacts,
 		"conversation_states": conversation_states,
+		"completed_conversations": completed_conversations,
 		"message_history": message_history,
 		"notes": notes,
 		"browser_history": browser_history,
@@ -243,6 +245,7 @@ func load_save() -> void:
 	unlocked_contacts = _to_string_array(data.get("unlocked_contacts", ["elena_vasquez"]))
 	met_contacts = _to_string_array(data.get("met_contacts", []))
 	conversation_states = data.get("conversation_states", {})
+	completed_conversations = _to_string_array(data.get("completed_conversations", []))
 	message_history = data.get("message_history", {})
 	notes = data.get("notes", [])
 	browser_history = _to_string_array(data.get("browser_history", []))
@@ -254,6 +257,7 @@ func new_game() -> void:
 	unlocked_contacts = ["elena_vasquez"]
 	met_contacts = []
 	conversation_states = {}
+	completed_conversations = []
 	message_history = {}
 	notes = []
 	browser_history = []
@@ -332,6 +336,17 @@ func get_messages(contact_id: String) -> Array:
 
 func get_conversation_state(contact_id: String) -> String:
 	return conversation_states.get(contact_id, "")
+
+
+func mark_conversation_complete(contact_id: String, conv_id: String) -> void:
+	var key := contact_id + ":" + conv_id
+	if key not in completed_conversations:
+		completed_conversations.append(key)
+		save()
+
+
+func is_conversation_complete(contact_id: String, conv_id: String) -> bool:
+	return (contact_id + ":" + conv_id) in completed_conversations
 
 
 # ── Browser ───────────────────────────────────────────────────────────────────

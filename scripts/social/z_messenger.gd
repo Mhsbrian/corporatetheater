@@ -161,9 +161,10 @@ func _open_contact(contact: Dictionary) -> void:
 				_add_contact_bubble(msg.get("text", ""), contact, false)
 		await _scroll_to_bottom()
 
-		# Restore choices from last saved conversation
+		# Restore choices only if the player still has pending choices
+		# (i.e. the saved conversation is not yet marked complete)
 		var saved_conv_id := GameState.get_conversation_state(contact_id)
-		if saved_conv_id != "":
+		if saved_conv_id != "" and not GameState.is_conversation_complete(contact_id, saved_conv_id):
 			var conv := _find_conversation_by_id(contact, saved_conv_id)
 			if not conv.is_empty():
 				_show_choices(contact, conv)
@@ -190,12 +191,18 @@ func _find_conversation_by_id(contact: Dictionary, conv_id: String) -> Dictionar
 
 
 func _play_conversation(contact: Dictionary, conv: Dictionary) -> void:
+	var contact_id: String = contact.get("id", "")
+	var conv_id: String = conv.get("id", "")
+
+	# Skip conversations already fully played — prevents infinite replay on reopen
+	if GameState.is_conversation_complete(contact_id, conv_id):
+		return
+
 	_is_playing = true
 	_clear_choices()
 	choices_label.visible = false
 
-	var contact_id: String = contact.get("id", "")
-	GameState.save_conversation_state(contact_id, conv.get("id", ""))
+	GameState.save_conversation_state(contact_id, conv_id)
 
 	for msg in conv.get("messages", []):
 		var text: String = msg.get("text", "")
@@ -241,6 +248,7 @@ func _play_conversation(contact: Dictionary, conv: Dictionary) -> void:
 		GameState.append_message(contact_id, "system", sys_text)
 
 	_is_playing = false
+	GameState.mark_conversation_complete(contact_id, conv_id)
 	_show_choices(contact, conv)
 
 
