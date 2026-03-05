@@ -359,7 +359,7 @@ func _draw_npc_portrait(cx: float, feet_y: float) -> void:
 
 	var s  := scale
 	var bob := _portrait_bob * s
-	var talk_bob := sin(_portrait_talk_t) * 1.5 * s if not _tw_done else 0.0
+	var talk_bob: float = sin(_portrait_talk_t) * 1.5 * s if not _tw_done else 0.0
 	var total_bob := bob + talk_bob
 	var flip := 1.0   # faces right (toward text)
 

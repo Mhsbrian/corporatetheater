@@ -972,7 +972,7 @@ func _draw_npc() -> void:
 	var npc_col := Color.html(npc_hex)
 
 	var pos := iso(_npc_gx, _npc_gy, 0.0)
-	var bob := sin(_npc_walk_t) * 1.8
+	var bob: float = sin(_npc_walk_t) * 1.8
 	_npc_walk_t += get_process_delta_time() * 1.0
 
 	# Shadow
@@ -985,7 +985,7 @@ func _draw_npc() -> void:
 
 func _draw_player() -> void:
 	var pos := iso(_player_gx, _player_gy, 0.0)
-	var bob := sin(_player_walk_t) * 2.2 if _player_moving else 0.0
+	var bob: float = sin(_player_walk_t) * 2.2 if _player_moving else 0.0
 	_draw_ellipse_iso(_player_gx, _player_gy, 0.005, 0.25, 0.10, Color(0, 0, 0, 0.55))
 	_draw_detailed_character(pos, Color(0.35, 0.35, 0.48, 1.0), bob, _player_dir, true)
 
@@ -1007,7 +1007,7 @@ func _draw_detailed_character(pos: Vector2, accent: Color,
 	draw_rect(Rect2(pos.x + 1.0 * flip, pos.y - 4.0, 8.0, 4.0), body)
 
 	# ── Legs ──
-	var step1 := sin(_player_walk_t if is_player else _npc_walk_t) * 5.0 if _player_moving else 0.0
+	var step1: float = sin(_player_walk_t if is_player else _npc_walk_t) * 5.0 if _player_moving else 0.0
 	var step2 := -step1
 	# Left leg
 	var ll_col := cloth.lightened(0.1)
@@ -1034,7 +1034,7 @@ func _draw_detailed_character(pos: Vector2, accent: Color,
 	draw_rect(Rect2(pos.x - 4.0, pos.y - 50.0 + bob, 8.0, 5.0), cloth.lightened(0.08))
 
 	# ── Arms ──
-	var arm_swing := sin(_player_walk_t if is_player else _npc_walk_t) * 7.0 if _player_moving else 0.0
+	var arm_swing: float = sin(_player_walk_t if is_player else _npc_walk_t) * 7.0 if _player_moving else 0.0
 	# Left arm
 	draw_rect(Rect2(pos.x - 16.0 * flip, pos.y - 47.0 + bob + arm_swing * flip, 6.0, 18.0), cloth)
 	# Right arm

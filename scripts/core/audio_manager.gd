@@ -52,10 +52,10 @@ func _fill_ambient_buffer() -> void:
 		_time += 1.0 / SAMPLE_RATE
 		_lfo_phase += _lfo_rate / SAMPLE_RATE
 
-		var lfo := sin(_lfo_phase * TAU) * 0.25 + 0.75
-		var s1 := sin(_time * _base_freq * TAU) * 0.35
-		var s2 := sin(_time * _detune_freq * TAU) * 0.20
-		var s3 := sin(_time * _base_freq * 2.0 * TAU) * 0.06
+		var lfo: float = sin(_lfo_phase * TAU) * 0.25 + 0.75
+		var s1: float = sin(_time * _base_freq * TAU) * 0.35
+		var s2: float = sin(_time * _detune_freq * TAU) * 0.20
+		var s3: float = sin(_time * _base_freq * 2.0 * TAU) * 0.06
 		var noise := (randf() * 2.0 - 1.0) * _noise_amp
 		var sample := (s1 + s2 + s3 + noise) * lfo * 0.55
 
@@ -126,7 +126,7 @@ func _bake_tone_burst(freqs: Array, durations: Array) -> AudioStreamWAV:
 		else:
 			env = exp(-4.0 * (seg_t - 0.005) / maxf(dur, 0.001))
 
-		var raw := sin(t * freq * TAU) * env * 0.45
+		var raw: float = sin(t * freq * TAU) * env * 0.45
 		var pcm := int(clampf(raw, -1.0, 1.0) * 32767.0)
 
 		# Little-endian 16-bit

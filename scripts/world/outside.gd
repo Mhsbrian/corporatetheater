@@ -1070,8 +1070,8 @@ func _draw_steam_vent(gx: float, gy: float) -> void:
 		var t := fmod(_time * 0.55 + float(i) * 0.38, 1.0)
 		var sz := 1.5 + t * 5.0
 		var alpha := (1.0 - t) * 0.09
-		var offset_x := sin(_time * 1.1 + float(i)) * 0.05
-		var offset_y := cos(_time * 0.8 + float(i) * 1.2) * 0.03
+		var offset_x: float = sin(_time * 1.1 + float(i)) * 0.05
+		var offset_y: float = cos(_time * 0.8 + float(i) * 1.2) * 0.03
 		var sp := iso(gx + offset_x, gy + offset_y, 0.04 + t * 0.70)
 		draw_circle(sp, sz, Color(0.72, 0.74, 0.82, alpha))
 
@@ -1430,11 +1430,11 @@ func _draw_pedestrian(p: Dictionary) -> void:
 	draw_colored_polygon(sh, Color(0, 0, 0, 0.35))
 
 	# Scale down slightly from player
-	var s := 0.80
-	var bob  := sin(wt) * 1.8 * s
-	var step1 :=  sin(wt) * 4.0 * s
-	var step2 := -step1
-	var arm_s := sin(wt) * 5.5 * s
+	var s: float = 0.80
+	var bob: float  = sin(wt) * 1.8 * s
+	var step1: float =  sin(wt) * 4.0 * s
+	var step2: float = -step1
+	var arm_s: float = sin(wt) * 5.5 * s
 
 	var body  := Color(0.08, 0.08, 0.12, 1.0)
 	var cloth := acc.darkened(0.35)
@@ -1485,16 +1485,16 @@ func _draw_player() -> void:
 
 
 func _draw_character_sprite(pos: Vector2) -> void:
-	var bob := sin(_player_walk_t) * 2.4 if _player_moving else 0.0
+	var bob: float = sin(_player_walk_t) * 2.4 if _player_moving else 0.0
 	var flip := float(_player_dir)
 
 	var body  := Color(0.08, 0.08, 0.13, 1.0)
 	var cloth := Color(0.18, 0.16, 0.26, 1.0)
 	var skin  := Color(0.55, 0.42, 0.32, 1.0)
 
-	var step1 :=  sin(_player_walk_t) * 5.5 if _player_moving else 0.0
-	var step2 := -step1
-	var arm_swing := sin(_player_walk_t) * 7.5 if _player_moving else 0.0
+	var step1: float =  sin(_player_walk_t) * 5.5 if _player_moving else 0.0
+	var step2: float = -step1
+	var arm_swing: float = sin(_player_walk_t) * 7.5 if _player_moving else 0.0
 
 	# Shoes
 	draw_rect(Rect2(pos.x - 7*flip, pos.y - 5, 9, 5), body)
